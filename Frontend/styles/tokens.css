@@ -1,0 +1,56 @@
+/* BhoomiSetu Theme Tokens & Specialized UI Styles */
+
+:root {
+  --status-draft: #64748b;
+  --status-notification: #0284c7;
+  --status-survey: #7c3aed;
+  --status-objection: #d97706;
+  --status-award: #2563eb;
+  --status-disbursed: #16a34a;
+  --status-possession: #059669;
+  --status-dispute: #dc2626;
+  --status-delayed: #b91c1c;
+}
+
+/* Map Containers */
+.bhoomi-map-container {
+  min-height: 480px;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Printable Official Notices & Gazette Awards */
+@media print {
+  nav, aside, footer, .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}

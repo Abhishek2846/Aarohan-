@@ -1,0 +1,809 @@
+@import "leaflet/dist/leaflet.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&family=Mukta:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Editorial Light Base Palette (Matches Landing Page Theme) */
+    --background: 43 23% 94%; /* #f4f1ea Warm Paper */
+    --foreground: 60 4% 9%; /* #171716 Carbon Ink */
+
+    --card: 45 100% 99%; /* #fffdf8 Crisp Paper Bright */
+    --card-foreground: 60 4% 9%; /* #171716 */
+
+    --popover: 45 100% 99%;
+    --popover-foreground: 60 4% 9%;
+
+    /* Primary Accent: Carbon Ink */
+    --primary: 60 4% 9%; /* #171716 */
+    --primary-foreground: 45 100% 99%; /* #fffdf8 */
+
+    /* Secondary: Warm Paper */
+    --secondary: 43 23% 94%; /* #f4f1ea */
+    --secondary-foreground: 60 4% 9%;
+
+    /* Muted Surfaces */
+    --muted: 40 18% 90%; /* #eae6dc */
+    --muted-foreground: 43 5% 39%; /* #68655e Graphite */
+
+    /* Accent: Editorial Terracotta Orange */
+    --accent: 14 86% 55%; /* #ef5b2a */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 41 15% 82%; /* #d8d3c9 Hairline Rule */
+    --input: 41 15% 82%;
+    --ring: 14 86% 55%; /* Terracotta focus ring */
+
+    --radius: 0.65rem;
+  }
+
+  .dark {
+    --background: 43 23% 94%;
+    --foreground: 60 4% 9%;
+
+    --card: 45 100% 99%;
+    --card-foreground: 60 4% 9%;
+
+    --popover: 45 100% 99%;
+    --popover-foreground: 60 4% 9%;
+
+    --primary: 60 4% 9%;
+    --primary-foreground: 45 100% 99%;
+
+    --secondary: 43 23% 94%;
+    --secondary-foreground: 60 4% 9%;
+
+    --muted: 40 18% 90%;
+    --muted-foreground: 43 5% 39%;
+
+    --accent: 14 86% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 41 15% 82%;
+    --input: 41 15% 82%;
+    --ring: 14 86% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased min-h-screen flex flex-col font-sans;
+    background-color: #f4f1ea;
+    color: #171716;
+  }
+}
+
+/* ══════════ Editorial Light Theme Utilities ══════════ */
+.bs-glass-panel {
+  background: rgba(255, 253, 248, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid #d8d3c9;
+  box-shadow: 0 1px 3px rgba(23, 23, 22, 0.04);
+}
+
+.bs-glass-card {
+  background: #fffdf8;
+  border: 1px solid #d8d3c9;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(23, 23, 22, 0.04);
+  transition: all 0.2s ease;
+}
+
+.bs-glass-card:hover {
+  border-color: #171716;
+  box-shadow: 0 8px 24px rgba(23, 23, 22, 0.06);
+}
+
+.bs-gold-button,
+.bs-primary-button {
+  background: #171716;
+  color: #fffdf8 !important;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(23, 23, 22, 0.1);
+  transition: all 0.2s ease;
+}
+
+.bs-gold-button:hover,
+.bs-primary-button:hover {
+  background: #2d2d2c;
+  transform: translateY(-1px);
+}
+
+.bs-accent-button {
+  background: #ef5b2a;
+  color: #ffffff !important;
+  font-weight: 700;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(239, 91, 42, 0.25);
+  transition: all 0.2s ease;
+}
+
+.bs-accent-button:hover {
+  background: #d94e20;
+  transform: translateY(-1px);
+}
+
+.bs-gradient-text {
+  color: #171716;
+  font-weight: 800;
+}
+
+.bs-tricolor-text {
+  background: linear-gradient(135deg, #ef5b2a 0%, #171716 50%, #15803d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bs-status-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid #d8d3c9;
+  background: #fffdf8;
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: #ef5b2a;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+/* Tricolor Top Bar Accent */
+.tricolor-stripe {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #ff9933 0%,
+    #ff9933 33.33%,
+    #ffffff 33.33%,
+    #ffffff 66.66%,
+    #138808 66.66%,
+    #138808 100%
+  );
+}
+
+/* Government Civic Stamp Badge */
+.civic-watermark {
+  background-image: radial-gradient(#1e3a8a 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+/* Completely Disable and Suppress Any Translator Highlight Frames */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.goog-text-highlight {
+  display: none !important;
+  visibility: hidden !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+  pointer-events: none !important;
+}
+
+/* Ensure no text hover underline/glow across elements unless explicitly focused */
+font[style] {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ══════════ Modern Harmonized Hindi & Devanagari Typography System ══════════ */
+:root {
+  /* Contemporary Devanagari Typography Harmonized with Inter & BhoomiSetu Civic Design */
+  --font-hindi: 'Poppins', 'Noto Sans Devanagari', 'Mukta', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-hindi-heading: 'Poppins', 'Noto Sans Devanagari', 'Mukta', 'Inter', sans-serif;
+  --font-hindi-natraj: var(--font-hindi); /* Backward-compatibility alias */
+}
+
+/* Base application for all Hindi text across BhoomiSetu */
+:lang(hi),
+[lang="hi"],
+.font-hindi,
+body.bhoomi-lang-hi {
+  font-family: var(--font-hindi);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings inherit geometric presence and balanced proportions */
+body.bhoomi-lang-hi h1,
+body.bhoomi-lang-hi h2 {
+  font-family: var(--font-hindi-heading);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+body.bhoomi-lang-hi h3,
+body.bhoomi-lang-hi h4,
+body.bhoomi-lang-hi h5,
+body.bhoomi-lang-hi h6 {
+  font-family: var(--font-hindi-heading);
+  letter-spacing: -0.01em;
+}
+
+/* Interactive elements maintain crisp, confident weight */
+body.bhoomi-lang-hi button,
+body.bhoomi-lang-hi .btn {
+  font-family: var(--font-hindi);
+}
+
+/* Preserve tabular monospace figures for raw hashes, IDs, and coordinates */
+body.bhoomi-lang-hi code,
+body.bhoomi-lang-hi pre,
+body.bhoomi-lang-hi .font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ══════════ Ultra-Smooth Performance & Transitions ══════════ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth page fade & slide transition */
+.page-fade-in {
+  animation: pageFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0.88;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* GPU acceleration for interactive cards, buttons, and badges */
+button, a, .card, [role="tab"] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* -------------------------------------------------------------------------- */
+/* BhoomiSetu landing page: calm editorial theme inspired by Caygnus           */
+/* -------------------------------------------------------------------------- */
+
+.bhoomi-landing {
+  --bs-paper: #f4f1ea;
+  --bs-paper-bright: #fffdf8;
+  --bs-ink: #171716;
+  --bs-muted: #68655e;
+  --bs-rule: #d8d3c9;
+  --bs-orange: #ef5b2a;
+  --bs-blue: #3159ff;
+  background: var(--bs-paper) !important;
+  color: var(--bs-ink) !important;
+  font-family: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif !important;
+  isolation: isolate;
+}
+
+.bhoomi-landing *,
+.bhoomi-landing *::before,
+.bhoomi-landing *::after {
+  box-sizing: border-box;
+}
+
+.bhoomi-landing .bhoomi-scroll-progress {
+  height: 2px !important;
+  background: transparent !important;
+  z-index: 1100 !important;
+}
+
+.bhoomi-landing .bhoomi-scroll-progress > div {
+  background: var(--bs-orange) !important;
+  box-shadow: none !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav-shell {
+  position: sticky !important;
+  top: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  width: 100% !important;
+  display: block !important;
+  padding: 0 !important;
+  pointer-events: auto !important;
+  z-index: 1000 !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 76px;
+  padding: 16px clamp(1.25rem, 4vw, 4.5rem) !important;
+  gap: clamp(1rem, 3vw, 3rem) !important;
+  background: rgba(244, 241, 234, 0.92) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--bs-rule) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:first-child {
+  gap: 0.65rem !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:first-child > div:first-child {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 8px !important;
+  background: var(--bs-ink) !important;
+  color: var(--bs-paper) !important;
+  box-shadow: none !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:first-child span {
+  color: var(--bs-ink) !important;
+  font-size: 0.86rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:nth-child(2) {
+  gap: clamp(0.85rem, 2.5vw, 2rem) !important;
+  margin-left: auto;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:nth-child(2) a {
+  color: var(--bs-muted) !important;
+  font-size: 0.76rem !important;
+  letter-spacing: 0.02em !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:nth-child(2) a:hover {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:last-child {
+  gap: 0.65rem !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:last-child > div:first-child {
+  background: rgba(23, 23, 22, 0.06) !important;
+  border: 1px solid var(--bs-rule) !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:last-child > div:first-child button {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bhoomi-landing-nav > div:last-child > a {
+  background: var(--bs-ink) !important;
+  color: var(--bs-paper-bright) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  padding: 0.58rem 1rem !important;
+}
+
+.bhoomi-landing section {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bs-hero {
+  min-height: 0 !important;
+  display: block !important;
+  padding: clamp(5.5rem, 10vw, 9rem) clamp(1.25rem, 5vw, 5rem) clamp(5rem, 9vw, 8rem) !important;
+  background: var(--bs-paper) !important;
+}
+
+.bhoomi-landing .bs-hero > div:nth-of-type(-n + 4),
+.bhoomi-landing .bs-hero > div:nth-of-type(6) {
+  display: none !important;
+}
+
+.bhoomi-landing .bs-hero-content {
+  width: 100% !important;
+  max-width: 1180px !important;
+  min-height: 610px;
+  padding: 3rem 0 !important;
+  margin: 0 auto !important;
+  text-align: left !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative !important;
+}
+
+.bhoomi-landing .bs-hero-content::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 7%;
+  right: 0;
+  width: min(39vw, 470px);
+  height: 78%;
+  border: 1.5px solid var(--bs-rule);
+  border-radius: 12px;
+  background-image: url("/bhoomi-hero-gis.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 20px 40px -15px rgba(23, 23, 22, 0.22), 0 0 0 1px rgba(23, 23, 22, 0.08);
+}
+
+.bhoomi-landing .bs-hero-content::after {
+  content: "LIVE CADASTRAL GIS / 01";
+  position: absolute;
+  z-index: 1;
+  right: clamp(1rem, 4vw, 4rem);
+  bottom: 6%;
+  padding: 0.55rem 0.75rem;
+  color: #171716;
+  background: rgba(255, 253, 248, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--bs-rule);
+  border-radius: 6px;
+  font: 700 0.62rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.14em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.bhoomi-landing .bs-hero-content > * {
+  position: relative;
+  z-index: 1;
+}
+
+.bhoomi-landing .bs-hero-content > div:first-child {
+  align-self: flex-start;
+  padding: 0 !important;
+  margin-bottom: 1.5rem !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:first-child span:last-child {
+  color: var(--bs-orange) !important;
+  font-size: 0.66rem !important;
+  letter-spacing: 0.16em !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:first-child span:first-child {
+  background: var(--bs-orange) !important;
+  box-shadow: none !important;
+}
+
+.bhoomi-landing .bs-hero h1 {
+  max-width: 820px;
+  margin: 0 0 1.5rem !important;
+  color: var(--bs-ink) !important;
+  font-size: clamp(3.25rem, 8vw, 7.4rem) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -0.075em !important;
+}
+
+.bhoomi-landing .bs-hero h1 span {
+  display: block;
+  background: none !important;
+  color: var(--bs-ink) !important;
+  -webkit-text-fill-color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bs-hero h1 span:last-child {
+  margin-top: 1rem;
+  color: var(--bs-orange) !important;
+  -webkit-text-fill-color: var(--bs-orange) !important;
+  font-size: clamp(1.15rem, 2.25vw, 1.55rem) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.bhoomi-landing .bs-hero p {
+  max-width: 650px !important;
+  margin: 0 0 2.5rem !important;
+  color: var(--bs-muted) !important;
+  font-size: clamp(1rem, 1.7vw, 1.14rem) !important;
+  line-height: 1.75 !important;
+}
+
+.bhoomi-landing .bs-hero p strong {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:nth-last-child(2) {
+  justify-content: flex-start !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:nth-last-child(2) a {
+  min-height: 48px;
+  padding: 0.82rem 1.25rem !important;
+  border: 1px solid var(--bs-ink) !important;
+  border-radius: 999px !important;
+  background: var(--bs-ink) !important;
+  color: var(--bs-paper-bright) !important;
+  box-shadow: none !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:nth-last-child(2) a[href="/citizen"] {
+  background: transparent !important;
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:last-child {
+  justify-content: flex-start !important;
+  margin-top: 2.2rem !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:last-child > div {
+  padding: 0.45rem 0.7rem !important;
+  border: 1px solid var(--bs-rule) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+.bhoomi-landing .bs-hero-content > div:last-child > div span:last-child {
+  color: var(--bs-muted) !important;
+}
+
+.bhoomi-landing .bs-about,
+.bhoomi-landing .bs-modules,
+.bhoomi-landing .bs-features,
+.bhoomi-landing .bs-workflow,
+.bhoomi-landing .bs-stats,
+.bhoomi-landing .bs-cta {
+  border-top: 1px solid var(--bs-rule);
+  background: var(--bs-paper) !important;
+}
+
+.bhoomi-landing .bs-modules,
+.bhoomi-landing .bs-workflow {
+  background: var(--bs-paper-bright) !important;
+}
+
+.bhoomi-landing .bs-about > div:first-child,
+.bhoomi-landing .bs-features > div:first-child,
+.bhoomi-landing .bs-stats > div:nth-child(-n + 3),
+.bhoomi-landing .bs-cta > div:first-child {
+  display: none !important;
+}
+
+.bhoomi-landing h2,
+.bhoomi-landing h3 {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing section p {
+  color: var(--bs-muted) !important;
+}
+
+.bhoomi-landing .bs-about h2 span,
+.bhoomi-landing .bs-cta h2 span {
+  color: var(--bs-orange) !important;
+  -webkit-text-fill-color: var(--bs-orange) !important;
+  background: none !important;
+}
+
+.bhoomi-landing .bs-about > div:nth-child(2) > div:first-child button {
+  color: var(--bs-orange) !important;
+  background: transparent !important;
+  border: 1px solid var(--bs-orange) !important;
+  border-radius: 999px !important;
+}
+
+.bhoomi-landing .bs-about-tiles {
+  position: relative;
+}
+
+.bhoomi-landing .bs-about-tile {
+  background: var(--bs-paper-bright) !important;
+  border: 1px solid var(--bs-rule) !important;
+  border-radius: 0.35rem !important;
+}
+
+.bhoomi-landing .bs-about-tile span:last-child {
+  color: var(--bs-muted) !important;
+}
+
+.bhoomi-landing .bs-modules > div > div:first-child,
+.bhoomi-landing .bs-features > div > div:first-child,
+.bhoomi-landing .bs-workflow > div > div:first-child {
+  max-width: 720px;
+  margin-left: 0 !important;
+  text-align: left !important;
+}
+
+.bhoomi-landing .bs-modules > div > div:first-child > p,
+.bhoomi-landing .bs-features > div > div:first-child > p,
+.bhoomi-landing .bs-workflow > div > div:first-child > p {
+  margin-left: 0 !important;
+}
+
+.bhoomi-landing .bs-module-card,
+.bhoomi-landing .bs-capability-card,
+.bhoomi-landing .bs-stage-card {
+  background: var(--bs-paper-bright) !important;
+  border: 1px solid var(--bs-rule) !important;
+  border-radius: 0.35rem !important;
+  box-shadow: none !important;
+}
+
+.bhoomi-landing .bs-module-card:hover,
+.bhoomi-landing .bs-capability-card:hover,
+.bhoomi-landing .bs-stage-card:hover {
+  border-color: var(--bs-ink) !important;
+  box-shadow: 0 12px 30px rgba(23, 23, 22, 0.08) !important;
+}
+
+.bhoomi-landing .bs-module-card > div:first-child,
+.bhoomi-landing .bs-capability-card > div:first-child {
+  display: none !important;
+}
+
+.bhoomi-landing .bs-module-card > div:nth-child(2),
+.bhoomi-landing .bs-capability-card > div:nth-child(2) {
+  background: var(--bs-paper) !important;
+  border: 1px solid var(--bs-rule) !important;
+  border-radius: 0.35rem !important;
+}
+
+.bhoomi-landing .bs-module-card h3,
+.bhoomi-landing .bs-capability-card h3 {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bs-module-card p,
+.bhoomi-landing .bs-capability-card p {
+  color: var(--bs-muted) !important;
+}
+
+.bhoomi-landing .bs-module-card > div:last-child {
+  color: var(--bs-orange) !important;
+}
+
+.bhoomi-landing .bs-stage-card span {
+  color: var(--bs-orange) !important;
+}
+
+.bhoomi-landing .bs-stage-card p {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bs-stat-value {
+  background: none !important;
+  color: var(--bs-ink) !important;
+  -webkit-text-fill-color: var(--bs-ink) !important;
+  font-size: clamp(2.25rem, 5vw, 4rem) !important;
+}
+
+.bhoomi-landing .bs-stat-label {
+  color: var(--bs-muted) !important;
+}
+
+.bhoomi-landing .bs-cta {
+  padding-bottom: 6rem !important;
+}
+
+.bhoomi-landing .bs-cta h2 {
+  color: var(--bs-ink) !important;
+}
+
+.bhoomi-landing .bs-cta p {
+  color: var(--bs-muted) !important;
+}
+
+.bhoomi-landing .bs-cta button {
+  background: var(--bs-ink) !important;
+  color: var(--bs-paper-bright) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 800px) {
+  .bhoomi-landing .bhoomi-landing-nav {
+    min-height: 68px;
+  }
+
+  .bhoomi-landing .bhoomi-landing-nav > div:nth-child(2) {
+    display: none !important;
+  }
+
+  .bhoomi-landing .bs-hero {
+    padding-top: 4.5rem !important;
+  }
+
+  .bhoomi-landing .bs-hero-content {
+    min-height: 0;
+    padding: 2rem 0 !important;
+  }
+
+  .bhoomi-landing .bs-hero-content::before,
+  .bhoomi-landing .bs-hero-content::after {
+    display: none;
+  }
+
+  .bhoomi-landing .bs-hero h1 {
+    font-size: clamp(3rem, 15vw, 5.5rem) !important;
+  }
+
+  .bhoomi-landing .bs-hero-content > div:nth-last-child(2) {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bhoomi-landing .bs-hero-content > div:nth-last-child(2) a {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bhoomi-landing *,
+  .bhoomi-landing *::before,
+  .bhoomi-landing *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Obsidian Dark Portal Utilities                                              */
+/* -------------------------------------------------------------------------- */
+
+.bs-glass-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e3e2e8;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.bs-glass-input:focus {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.3);
+  outline: none;
+}
+
+.bs-glow-amber {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+}
+
+.bs-glow-emerald {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+}
+
+.bs-glow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.25);
+}
+
+/* Custom Scrollbar for Obsidian Theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050508;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.4);
+}
+

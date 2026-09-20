@@ -1,0 +1,187 @@
+# ==============================================================================
+# BhoomiSetu Enterprise Monorepo - Production Git Ignore Configuration
+# Architecture: NestJS 11 (Backend) + Next.js 14 App Router (Frontend) + PostgreSQL/PostGIS
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. DEPENDENCIES & PACKAGE MANAGERS
+# ------------------------------------------------------------------------------
+node_modules/
+*/node_modules/
+*/*/node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# ------------------------------------------------------------------------------
+# 2. BUILD ARTIFACTS & COMPILATION OUTPUTS
+# ------------------------------------------------------------------------------
+.next/
+Frontend/.next/
+dist/
+Backend/api/dist/
+build/
+out/
+Frontend/out/
+*.tsbuildinfo
+Frontend/tsconfig.tsbuildinfo
+Backend/api/tsconfig.tsbuildinfo
+next-env.d.ts
+/generated/prisma
+Backend/api/generated/
+
+# ------------------------------------------------------------------------------
+# 3. ENVIRONMENT VARIABLES & SECURITY SECRETS (CRITICAL - DO NOT COMMIT)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+Backend/api/.env
+Frontend/.env
+
+# Always allow version-controlled environment templates
+!.env.example
+!Backend/api/.env.example
+!Frontend/.env.example
+
+# Cryptographic Keys, TLS Certificates & Credentials
+*.pem
+*.key
+*.crt
+*.cert
+*.pfx
+*.p12
+*.csr
+id_rsa*
+id_ed25519*
+*_rsa*
+*_ed25519*
+
+# ------------------------------------------------------------------------------
+# 4. DATABASE ENGINE BINARIES & LOCAL STORAGE (CRITICAL - DO NOT COMMIT)
+# ------------------------------------------------------------------------------
+# Database local binary files & dumps (PostgreSQL schema is in bhoomiSetu_postgresql.sql)
+Database/data/
+**/Database/data/
+*.ibd
+*.dblwr
+*.cnf
+auto.cnf
+binlog.*
+undo_*
+ibdata*
+ib_buffer_pool
+#innodb_redo/
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+*.err
+
+# ------------------------------------------------------------------------------
+# 5. RUNTIME, UPLOADS & LOCAL NETWORK ARTIFACTS
+# ------------------------------------------------------------------------------
+PUBLIC_URL.txt
+uploads/
+Backend/api/uploads/
+scratch/
+.cache/
+.temp/
+.tempmediaStorage/
+
+# ------------------------------------------------------------------------------
+# 6. LOGS & DIAGNOSTICS
+# ------------------------------------------------------------------------------
+*.log
+logs/
+Backend/api/logs/
+backend.log
+backend.err.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ------------------------------------------------------------------------------
+# 7. TEST REPORTS, COVERAGE & E2E RUNTIMES
+# ------------------------------------------------------------------------------
+coverage/
+Backend/api/coverage/
+Frontend/coverage/
+.nyc_output/
+playwright-report/
+Frontend/playwright-report/
+test-results/
+Frontend/test-results/
+.playwright/
+
+# ------------------------------------------------------------------------------
+# 8. IDE, EDITORS & AI ASSISTANT CACHES
+# ------------------------------------------------------------------------------
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+
+# VS Code directory settings
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# AI Assistant & Editor metadata caches
+.agents/
+**/.agents/
+.claude/
+**/.claude/
+.windsurf/
+**/.windsurf/
+.freebuff/
+**/.freebuff/
+
+# ------------------------------------------------------------------------------
+# 9. OPERATING SYSTEM ARTIFACTS
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Linux
+.directory
+.Trash-*

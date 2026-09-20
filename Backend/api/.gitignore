@@ -1,0 +1,52 @@
+# ==============================================================================
+# BhoomiSetu NestJS Backend - Git Ignore Configuration
+# ==============================================================================
+
+# Dependencies
+node_modules/
+dist/
+/generated/prisma
+generated/
+
+# Environment Variables & Secrets
+.env
+.env.*
+.env.local
+!.env.example
+
+# Cryptographic Keys & Certificates
+*.pem
+*.key
+*.crt
+*.cert
+
+# Logs & Diagnostics
+*.log
+logs/
+backend.log
+backend.err.log
+npm-debug.log*
+
+# Test Coverage & Reports
+coverage/
+.nyc_output/
+
+# Uploads & Temp
+uploads/
+scratch/
+.cache/
+
+# IDE & AI Assistant Caches
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+.idea/
+.agents/
+.claude/
+.windsurf/
+
+# OS Artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk

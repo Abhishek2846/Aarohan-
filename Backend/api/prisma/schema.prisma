@@ -1,0 +1,1623 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model users {
+  user_id                                                  String                      @id @default(uuid()) @db.Uuid
+  login_name                                               String                      @unique(map: "uq_users_login_name") @db.VarChar(80)
+  email                                                    String                      @unique(map: "uq_users_email") @db.VarChar(254)
+  password_hash                                            String                      @db.VarChar(255)
+  full_name                                                String                      @db.VarChar(160)
+  designation                                              String?                     @db.VarChar(160)
+  department                                               String?                     @db.VarChar(180)
+  phone_e164                                               String?                     @db.VarChar(20)
+  account_status                                           String                      @default("INVITED")
+  preferred_language                                       String                      @default("en") @db.VarChar(10)
+  mfa_enabled                                              Boolean                     @default(false)
+  last_login_at                                            DateTime?                   @db.Timestamptz(6)
+  created_at                                               DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at                                               DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  cases_assigned                                           acquisition_cases[]         @relation("CaseOfficer")
+  cases_created                                            acquisition_cases[]         @relation("CaseCreator")
+  api_idempotency_keys                                     api_idempotency_keys[]
+  audit_events                                             audit_events[]
+  auth_sessions                                            auth_sessions[]
+  awards_approved                                          award_calculations[]        @relation("AwardApprover")
+  awards_calculated                                        award_calculations[]        @relation("AwardCalculator")
+  case_quality_assessments                                 case_quality_assessments[]
+  case_risk_evaluations                                    case_risk_evaluations[]
+  stages_completed                                         case_stage_instances[]      @relation("StageCompleter")
+  transitions_acted                                        case_workflow_transitions[] @relation("TransitionActor")
+  policies_created                                         compensation_policies[]     @relation("PolicyCreator")
+  doc_approvals_acted                                      document_approvals[]        @relation("DocumentApprovalActor")
+  doc_versions_uploaded                                    document_versions[]         @relation("DocumentVersionUploader")
+  documents_approved                                       documents[]                 @relation("DocumentApprover")
+  documents_uploaded                                       documents[]                 @relation("DocumentUploader")
+  field_surveys                                            field_surveys[]
+  hearings_officered                                       grievance_hearings[]        @relation("HearingOfficer")
+  grievances_assigned                                      grievances[]                @relation("GrievanceAssignee")
+  media_assets                                             media_assets[]
+  notifications                                            notifications[]
+  offline_sync_records                                     offline_sync_records[]
+  payments_initiated                                       payment_batches[]           @relation("PaymentInitiator")
+  possessions_created                                      possession_records[]        @relation("PossessionCreator")
+  possessions_field                                        possession_records[]        @relation("PossessionFieldOfficer")
+  alignments_uploaded                                      project_alignments[]        @relation("AlignmentUploader")
+  projects_created                                         projects[]                  @relation("ProjectCreator")
+  projects_pia                                             projects[]                  @relation("ProjectPia")
+  projects_updated                                         projects[]                  @relation("ProjectUpdater")
+  statutory_notices                                        statutory_notices[]
+  user_jurisdictions_user_jurisdictions_assigned_byTousers user_jurisdictions[]        @relation("user_jurisdictions_assigned_byTousers")
+  user_jurisdictions                                       user_jurisdictions[]
+  user_preferences                                         user_preferences?
+  user_roles_user_roles_assigned_byTousers                 user_roles[]                @relation("user_roles_assigned_byTousers")
+  user_roles                                               user_roles[]
+
+  @@index([full_name], map: "idx_users_name")
+  @@index([account_status], map: "idx_users_status")
+}
+
+model roles {
+  role_code            String                 @id @db.VarChar(40)
+  display_name         String                 @db.VarChar(160)
+  description          String?                @db.VarChar(500)
+  is_system_role       Boolean                @default(true)
+  created_at           DateTime               @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  user_roles           user_roles[]
+  workflow_stage_roles workflow_stage_roles[]
+}
+
+model user_roles {
+  user_id                             String   @db.Uuid
+  role_code                           String   @db.VarChar(40)
+  assigned_by                         String?  @db.Uuid
+  assigned_at                         DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  users_user_roles_assigned_byTousers users?   @relation("user_roles_assigned_byTousers", fields: [assigned_by], references: [user_id], onUpdate: NoAction, map: "fk_user_roles_assigned_by")
+  roles                               roles    @relation(fields: [role_code], references: [role_code], onUpdate: NoAction, map: "fk_user_roles_role")
+  users                               users    @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_roles_user")
+
+  @@id([user_id, role_code])
+  @@index([role_code], map: "idx_user_roles_role")
+}
+
+model jurisdictions {
+  jurisdiction_id        String                  @id @db.Uuid
+  parent_jurisdiction_id String?                 @db.Uuid
+  jurisdiction_type      String
+  jurisdiction_code      String                  @db.VarChar(64)
+  name                   String                  @db.VarChar(160)
+  name_local             String?                 @db.VarChar(160)
+  official_code          String?                 @db.VarChar(64)
+  is_active              Boolean                 @default(true)
+  created_at             DateTime                @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at             DateTime                @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  cases_district         acquisition_cases[]     @relation("CaseDistrict")
+  cases_state            acquisition_cases[]     @relation("CaseState")
+  audit_events           audit_events[]
+  compensation_policies  compensation_policies[] @relation("PolicyJurisdiction")
+  jurisdictions          jurisdictions?          @relation("jurisdictionsTojurisdictions", fields: [parent_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_jurisdictions_parent")
+  other_jurisdictions    jurisdictions[]         @relation("jurisdictionsTojurisdictions")
+  parcels_district       parcels[]               @relation("ParcelDistrict")
+  parcels_state          parcels[]               @relation("ParcelState")
+  parcels_taluk          parcels[]               @relation("ParcelTaluk")
+  parcels_village        parcels[]               @relation("ParcelVillage")
+  project_jurisdictions  project_jurisdictions[]
+  projects_primary_state projects[]              @relation("ProjectPrimaryState")
+  user_jurisdictions     user_jurisdictions[]
+
+  @@unique([jurisdiction_type, jurisdiction_code], map: "uq_jurisdiction_type_code")
+  @@index([name], map: "idx_jurisdictions_name")
+  @@index([parent_jurisdiction_id], map: "idx_jurisdictions_parent")
+}
+
+model user_jurisdictions {
+  user_id                                     String        @db.Uuid
+  jurisdiction_id                             String        @db.Uuid
+  access_type                                 String        @default("VIEW")
+  valid_from                                  DateTime?     @db.Date
+  valid_to                                    DateTime?     @db.Date
+  assigned_by                                 String?       @db.Uuid
+  assigned_at                                 DateTime      @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  users_user_jurisdictions_assigned_byTousers users?        @relation("user_jurisdictions_assigned_byTousers", fields: [assigned_by], references: [user_id], onUpdate: NoAction, map: "fk_user_jurisdictions_assigned_by")
+  jurisdictions                               jurisdictions @relation(fields: [jurisdiction_id], references: [jurisdiction_id], onUpdate: NoAction, map: "fk_user_jurisdictions_jurisdiction")
+  users                                       users         @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_jurisdictions_user")
+
+  @@id([user_id, jurisdiction_id])
+  @@index([jurisdiction_id], map: "idx_user_jurisdictions_jurisdiction")
+}
+
+model auth_sessions {
+  session_id   String    @id @db.Uuid
+  user_id      String    @db.Uuid
+  token_hash   String    @unique(map: "uq_auth_sessions_token_hash") @db.Char(64)
+  ip_address   String?   @db.Inet
+  user_agent   String?   @db.VarChar(512)
+  created_at   DateTime  @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  last_seen_at DateTime  @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  expires_at   DateTime  @db.Timestamptz(6)
+  revoked_at   DateTime? @db.Timestamptz(6)
+  users        users     @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_auth_sessions_user")
+
+  @@index([user_id, expires_at], map: "idx_auth_sessions_user_expiry")
+}
+
+model api_idempotency_keys {
+  idempotency_key     String   @id @db.VarChar(128)
+  user_id             String?  @db.Uuid
+  request_method      String   @db.VarChar(12)
+  request_path        String   @db.VarChar(255)
+  request_fingerprint String   @db.Char(64)
+  response_status     Int?     @db.SmallInt
+  response_body       Json?
+  created_at          DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  expires_at          DateTime @db.Timestamptz(6)
+  users               users?   @relation(fields: [user_id], references: [user_id], onUpdate: NoAction, map: "fk_idempotency_user")
+
+  @@index([user_id, created_at], map: "idx_idempotency_user_created")
+}
+
+model document_types {
+  document_type_code                String                              @id @db.VarChar(40)
+  display_name                      String                              @db.VarChar(160)
+  description                       String?                             @db.VarChar(500)
+  is_publicly_visible               Boolean                             @default(false)
+  created_at                        DateTime                            @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  documents                         documents[]
+  workflow_stage_required_documents workflow_stage_required_documents[]
+}
+
+model workflow_stage_definitions {
+  stage_code                        String                              @id @db.VarChar(40)
+  stage_order                       Int                                 @unique(map: "uq_workflow_stage_order") @db.SmallInt
+  display_name                      String                              @db.VarChar(180)
+  display_name_local                String?                             @db.VarChar(180)
+  description                       String?                             @db.VarChar(500)
+  default_sla_days                  Int
+  is_terminal                       Boolean                             @default(false)
+  is_active                         Boolean                             @default(true)
+  acquisition_cases                 acquisition_cases[]
+  case_stage_instances              case_stage_instances[]
+  transitions_from                  case_workflow_transitions[]         @relation("TransitionsFrom")
+  transitions_to                    case_workflow_transitions[]         @relation("TransitionsTo")
+  workflow_stage_required_documents workflow_stage_required_documents[]
+  workflow_stage_roles              workflow_stage_roles[]
+}
+
+model workflow_stage_roles {
+  stage_code                 String                     @db.VarChar(40)
+  role_code                  String                     @db.VarChar(40)
+  can_enter                  Boolean                    @default(true)
+  can_approve                Boolean                    @default(false)
+  roles                      roles                      @relation(fields: [role_code], references: [role_code], onUpdate: NoAction, map: "fk_workflow_stage_roles_role")
+  workflow_stage_definitions workflow_stage_definitions @relation(fields: [stage_code], references: [stage_code], onDelete: Cascade, onUpdate: NoAction, map: "fk_workflow_stage_roles_stage")
+
+  @@id([stage_code, role_code])
+  @@index([role_code], map: "idx_workflow_stage_roles_role")
+}
+
+model workflow_stage_required_documents {
+  stage_code                 String                     @db.VarChar(40)
+  document_type_code         String                     @db.VarChar(40)
+  is_mandatory               Boolean                    @default(true)
+  workflow_stage_definitions workflow_stage_definitions @relation(fields: [stage_code], references: [stage_code], onDelete: Cascade, onUpdate: NoAction, map: "fk_required_documents_stage")
+  document_types             document_types             @relation(fields: [document_type_code], references: [document_type_code], onUpdate: NoAction, map: "fk_required_documents_type")
+
+  @@id([stage_code, document_type_code])
+  @@index([document_type_code], map: "idx_required_documents_type")
+}
+
+model projects {
+  project_id                    String                  @id @db.Uuid
+  project_code                  String                  @unique(map: "uq_projects_code") @db.VarChar(100)
+  title                         String                  @db.VarChar(240)
+  sector                        String                  @db.VarChar(160)
+  pia_name                      String                  @db.VarChar(240)
+  pia_user_id                   String?                 @db.Uuid
+  sponsoring_ministry           String?                 @db.VarChar(240)
+  project_status                String                  @default("PLANNING")
+  primary_state_jurisdiction_id String?                 @db.Uuid
+  estimated_budget_inr          Decimal                 @default(0) @db.Decimal(20, 2)
+  total_acquisition_area_ha     Decimal                 @default(0) @db.Decimal(18, 4)
+  start_date                    DateTime?               @db.Date
+  target_completion_date        DateTime?               @db.Date
+  description                   String?
+  external_reference            String?                 @db.VarChar(120)
+  version_no                    Int                     @default(1)
+  created_by                    String?                 @db.Uuid
+  updated_by                    String?                 @db.Uuid
+  created_at                    DateTime                @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at                    DateTime                @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  archived_at                   DateTime?               @db.Timestamptz(6)
+  acquisition_cases             acquisition_cases[]
+  documents                     documents[]
+  notifications                 notifications[]
+  project_alignments            project_alignments[]
+  project_jurisdictions         project_jurisdictions[]
+  project_parcels               project_parcels[]
+  creator                       users?                  @relation("ProjectCreator", fields: [created_by], references: [user_id], onUpdate: NoAction, map: "fk_projects_created_by")
+  pia_user                      users?                  @relation("ProjectPia", fields: [pia_user_id], references: [user_id], onUpdate: NoAction, map: "fk_projects_pia_user")
+  primary_state                 jurisdictions?          @relation("ProjectPrimaryState", fields: [primary_state_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_projects_state")
+  updater                       users?                  @relation("ProjectUpdater", fields: [updated_by], references: [user_id], onUpdate: NoAction, map: "fk_projects_updated_by")
+  statutory_notices             statutory_notices[]
+  project_risk_snapshots        project_risk_snapshots[]
+  project_inter_agency_nocs     project_inter_agency_nocs[]
+
+  @@index([primary_state_jurisdiction_id], map: "idx_projects_state")
+  @@index([project_status], map: "idx_projects_status")
+  @@index([target_completion_date], map: "idx_projects_target_date")
+}
+
+model project_jurisdictions {
+  project_id      String        @db.Uuid
+  jurisdiction_id String        @db.Uuid
+  is_primary      Boolean       @default(false)
+  jurisdictions   jurisdictions @relation(fields: [jurisdiction_id], references: [jurisdiction_id], onUpdate: NoAction, map: "fk_project_jurisdictions_jurisdiction")
+  projects        projects      @relation(fields: [project_id], references: [project_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_project_jurisdictions_project")
+
+  @@id([project_id, jurisdiction_id])
+  @@index([jurisdiction_id], map: "idx_project_jurisdictions_jurisdiction")
+}
+
+model project_alignments {
+  alignment_id       String            @id @db.Uuid
+  project_id         String            @db.Uuid
+  version_no         Int
+  alignment_name     String            @db.VarChar(180)
+  centerline_wgs84 Unsupported("geometry")
+  right_of_way_wgs84 Unsupported("geometry")?
+  alignment_metric Unsupported("geometry")?
+  metric_srid        Int?
+  buffer_width_m     Decimal           @default(0) @db.Decimal(10, 2)
+  geometry_hash      String            @db.Char(64)
+  status             String            @default("DRAFT")
+  uploaded_by        String?           @db.Uuid
+  created_at         DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  activated_at       DateTime?         @db.Timestamptz(6)
+  projects           projects          @relation(fields: [project_id], references: [project_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_project_alignments_project")
+  uploader           users?            @relation("AlignmentUploader", fields: [uploaded_by], references: [user_id], onUpdate: NoAction, map: "fk_project_alignments_uploaded_by")
+  project_parcels    project_parcels[]
+
+  @@unique([project_id, geometry_hash], map: "uq_project_alignment_hash")
+  @@unique([project_id, version_no], map: "uq_project_alignment_version")
+  @@index([project_id, status], map: "idx_project_alignments_project_status")
+}
+
+model parcel_sources {
+  parcel_source_id String    @id @db.Uuid
+  source_code      String    @unique(map: "uq_parcel_sources_code") @db.VarChar(100)
+  authority_name   String    @db.VarChar(240)
+  dataset_name     String?   @db.VarChar(240)
+  dataset_version  String?   @db.VarChar(100)
+  imported_at      DateTime? @db.Timestamptz(6)
+  created_at       DateTime  @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  parcels          parcels[]
+}
+
+model parcels {
+  parcel_id                  String            @id @db.Uuid
+  parcel_source_id           String?           @db.Uuid
+  source_record_key          String            @db.VarChar(128)
+  ulpin                      String            @unique(map: "uq_parcels_ulpin") @db.VarChar(32)
+  survey_number              String            @db.VarChar(100)
+  khasra_number              String?           @db.VarChar(100)
+  state_jurisdiction_id      String?           @db.Uuid
+  district_jurisdiction_id   String?           @db.Uuid
+  taluk_jurisdiction_id      String?           @db.Uuid
+  village_jurisdiction_id    String?           @db.Uuid
+  village_name               String            @db.VarChar(180)
+  total_area_ha              Decimal           @db.Decimal(18, 4)
+  land_use_category          String
+  parcel_status              String            @default("IDENTIFIED")
+  owner_reference            String?           @db.VarChar(80)
+  owner_name_masked          String?           @db.VarChar(180)
+  boundary_wgs84 Unsupported("geometry")
+  centroid_wgs84 Unsupported("geometry")?
+  is_disputed                Boolean           @default(false)
+  dispute_reason             String?           @db.VarChar(500)
+  estimated_market_value_inr Decimal           @default(0) @db.Decimal(20, 2)
+  record_version             Int               @default(1)
+  imported_at                DateTime?         @db.Timestamptz(6)
+  created_at                 DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at                 DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  documents                  documents[]
+  grievances                 grievances[]
+  parcel_owners              parcel_owners[]
+  district                   jurisdictions?    @relation("ParcelDistrict", fields: [district_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_parcels_district")
+  parcel_sources             parcel_sources?   @relation(fields: [parcel_source_id], references: [parcel_source_id], onUpdate: NoAction, map: "fk_parcels_source")
+  state                      jurisdictions?    @relation("ParcelState", fields: [state_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_parcels_state")
+  taluk                      jurisdictions?    @relation("ParcelTaluk", fields: [taluk_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_parcels_taluk")
+  village                    jurisdictions?    @relation("ParcelVillage", fields: [village_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_parcels_village")
+  project_parcels            project_parcels[]
+
+  @@unique([parcel_source_id, source_record_key], map: "uq_parcels_source_record")
+  @@index([is_disputed], map: "idx_parcels_disputed")
+  @@index([khasra_number], map: "idx_parcels_khasra_number")
+  @@index([parcel_status], map: "idx_parcels_status")
+  @@index([survey_number], map: "idx_parcels_survey_number")
+  @@index([village_jurisdiction_id, village_name], map: "idx_parcels_village")
+}
+
+model litigation_cases {
+  litigation_id    String   @id @db.Uuid
+  court_name       String   @db.VarChar(240)
+  case_number      String   @db.VarChar(120)
+  case_id          String?  @db.Uuid
+  parcel_id        String?  @db.Uuid
+  description      String?
+  created_by       String   @db.Uuid
+  litigation_status String  @default("FILED") @db.VarChar(40)
+  created_at       DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at       DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+
+  @@index([case_id], map: "idx_litigation_cases_case")
+  @@index([parcel_id], map: "idx_litigation_cases_parcel")
+  @@index([litigation_status], map: "idx_litigation_cases_status")
+}
+
+model project_parcels {
+  project_parcel_id          String              @id @db.Uuid
+  project_id                 String              @db.Uuid
+  parcel_id                  String              @db.Uuid
+  alignment_id               String?             @db.Uuid
+  impact_status              String              @default("IDENTIFIED")
+  impacted_area_ha           Decimal             @default(0) @db.Decimal(18, 4)
+  acquired_area_ha           Decimal             @default(0) @db.Decimal(18, 4)
+  impact_geometry_wgs84 Unsupported("geometry")?
+  intersection_calculated_at DateTime?           @db.Timestamptz(6)
+  intersection_method        String?             @db.VarChar(80)
+  notes                      String?             @db.VarChar(1000)
+  created_at                 DateTime            @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at                 DateTime            @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  case_parcels               case_parcels[]
+  alignments                 project_alignments? @relation(fields: [alignment_id], references: [alignment_id], onUpdate: NoAction, map: "fk_project_parcels_alignment")
+  parcels                    parcels             @relation(fields: [parcel_id], references: [parcel_id], onUpdate: NoAction, map: "fk_project_parcels_parcel")
+  projects                   projects            @relation(fields: [project_id], references: [project_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_project_parcels_project")
+
+  @@unique([project_id, parcel_id], map: "uq_project_parcel")
+  @@index([parcel_id], map: "idx_project_parcels_parcel")
+  @@index([project_id, impact_status], map: "idx_project_parcels_project_status")
+}
+
+model acquisition_cases {
+  case_id                    String                      @id @db.Uuid
+  case_number                String                      @unique(map: "uq_acquisition_cases_number") @db.VarChar(120)
+  project_id                 String                      @db.Uuid
+  state_jurisdiction_id      String?                     @db.Uuid
+  district_jurisdiction_id   String?                     @db.Uuid
+  current_stage_code         String                      @db.VarChar(40)
+  case_status                String                      @default("DRAFT")
+  stage_updated_at           DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  sla_deadline               DateTime?                   @db.Timestamptz(6)
+  is_sla_breached            Boolean                     @default(false)
+  days_remaining_in_sla      Int?
+  total_acquisition_area_ha  Decimal                     @default(0) @db.Decimal(18, 4)
+  total_beneficiaries_count  Int                         @default(0)
+  data_quality_score         Decimal                     @default(0) @db.Decimal(5, 2)
+  data_quality_passed_checks Int                         @default(0)
+  data_quality_total_checks  Int                         @default(0)
+  delay_risk_level           String                      @default("LOW")
+  estimated_compensation_inr Decimal                     @default(0) @db.Decimal(20, 2)
+  disbursed_compensation_inr Decimal                     @default(0) @db.Decimal(20, 2)
+  assigned_officer_user_id   String?                     @db.Uuid
+  version_no                 Int                         @default(1)
+  created_by                 String?                     @db.Uuid
+  created_at                 DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at                 DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  completed_at               DateTime?                   @db.Timestamptz(6)
+  officer                    users?                      @relation("CaseOfficer", fields: [assigned_officer_user_id], references: [user_id], onUpdate: NoAction, map: "fk_cases_assigned_officer")
+  creator                    users?                      @relation("CaseCreator", fields: [created_by], references: [user_id], onUpdate: NoAction, map: "fk_cases_created_by")
+  workflow_stage_definitions workflow_stage_definitions  @relation(fields: [current_stage_code], references: [stage_code], onUpdate: NoAction, map: "fk_cases_current_stage")
+  district                   jurisdictions?              @relation("CaseDistrict", fields: [district_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_cases_district")
+  projects                   projects                    @relation(fields: [project_id], references: [project_id], onUpdate: NoAction, map: "fk_cases_project")
+  state                      jurisdictions?              @relation("CaseState", fields: [state_jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_cases_state")
+  affected_families          affected_families[]
+  beneficiaries              beneficiaries[]
+  case_parcels               case_parcels[]
+  case_quality_assessments   case_quality_assessments[]
+  case_risk_evaluations      case_risk_evaluations[]
+  case_stage_instances       case_stage_instances[]
+  case_workflow_transitions  case_workflow_transitions[]
+  documents                  documents[]
+  field_surveys              field_surveys[]
+  grievances                 grievances[]
+  media_assets               media_assets[]
+  notifications              notifications[]
+  payment_batches            payment_batches[]
+  possession_records         possession_records[]
+  statutory_notices          statutory_notices[]
+
+  @@index([assigned_officer_user_id], map: "idx_cases_assigned_officer")
+  @@index([district_jurisdiction_id, case_status], map: "idx_cases_district_status")
+  @@index([project_id, case_status], map: "idx_cases_project_status")
+  @@index([sla_deadline, is_sla_breached], map: "idx_cases_sla")
+  @@index([current_stage_code], map: "idx_cases_stage")
+}
+
+model documents {
+  document_id        String               @id @db.Uuid
+  document_number    String               @unique(map: "uq_documents_number") @db.VarChar(120)
+  document_type_code String               @db.VarChar(40)
+  title              String               @db.VarChar(240)
+  project_id         String               @db.Uuid
+  case_id            String?              @db.Uuid
+  parcel_id          String?              @db.Uuid
+  approval_status    String               @default("PENDING_APPROVAL")
+  approval_notes     String?              @db.VarChar(2000)
+  approved_by        String?              @db.Uuid
+  approved_at        DateTime?            @db.Timestamptz(6)
+  current_version_no Int                  @default(1)
+  uploaded_by        String               @db.Uuid
+  created_at         DateTime             @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at         DateTime             @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  document_approvals document_approvals[]
+  document_versions  document_versions[]
+  approver           users?               @relation("DocumentApprover", fields: [approved_by], references: [user_id], onUpdate: NoAction, map: "fk_documents_approved_by")
+  acquisition_cases  acquisition_cases?   @relation(fields: [case_id], references: [case_id], onUpdate: NoAction, map: "fk_documents_case")
+  parcels            parcels?             @relation(fields: [parcel_id], references: [parcel_id], onUpdate: NoAction, map: "fk_documents_parcel")
+  projects           projects             @relation(fields: [project_id], references: [project_id], onUpdate: NoAction, map: "fk_documents_project")
+  document_types     document_types       @relation(fields: [document_type_code], references: [document_type_code], onUpdate: NoAction, map: "fk_documents_type")
+  uploader           users                @relation("DocumentUploader", fields: [uploaded_by], references: [user_id], onUpdate: NoAction, map: "fk_documents_uploaded_by")
+  grievance_hearings grievance_hearings[]
+  media_assets       media_assets[]
+  possession_records possession_records[] @relation("PossessionSignedDocument")
+  statutory_notices  statutory_notices[]
+
+  @@index([parcel_id], map: "idx_documents_parcel")
+  @@index([project_id, case_id], map: "idx_documents_project_case")
+  @@index([document_type_code, approval_status], map: "idx_documents_type_status")
+}
+
+model document_versions {
+  document_version_id      String               @id @db.Uuid
+  document_id              String               @db.Uuid
+  version_no               Int
+  storage_provider         String
+  storage_bucket           String               @db.VarChar(180)
+  object_key               String               @db.VarChar(500)
+  original_filename        String               @db.VarChar(255)
+  mime_type                String               @db.VarChar(160)
+  file_size_bytes          BigInt
+  sha256_hash              String               @db.Char(64)
+  encryption_key_reference String?              @db.VarChar(255)
+  change_summary           String?              @db.VarChar(1000)
+  uploaded_by              String               @db.Uuid
+  uploaded_at              DateTime             @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  document_approvals       document_approvals[]
+  documents                documents            @relation(fields: [document_id], references: [document_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_document_versions_document")
+  uploader                 users                @relation("DocumentVersionUploader", fields: [uploaded_by], references: [user_id], onUpdate: NoAction, map: "fk_document_versions_uploaded_by")
+
+  @@unique([document_id, version_no], map: "uq_document_version_number")
+  @@index([sha256_hash], map: "idx_document_versions_hash")
+  @@index([storage_provider, storage_bucket, object_key], map: "idx_document_versions_object")
+}
+
+model document_approvals {
+  document_approval_id String            @id @db.Uuid
+  document_id          String            @db.Uuid
+  document_version_id  String            @db.Uuid
+  action               String
+  actor_user_id        String            @db.Uuid
+  notes                String?           @db.VarChar(2000)
+  signature_algorithm  String?           @db.VarChar(40)
+  digital_signature    Bytes?
+  acted_at             DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  actor                users             @relation("DocumentApprovalActor", fields: [actor_user_id], references: [user_id], onUpdate: NoAction, map: "fk_document_approvals_actor")
+  documents            documents         @relation(fields: [document_id], references: [document_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_document_approvals_document")
+  document_versions    document_versions @relation(fields: [document_version_id], references: [document_version_id], onUpdate: NoAction, map: "fk_document_approvals_version")
+
+  @@index([document_id, acted_at], map: "idx_document_approvals_document_time")
+}
+
+model compensation_policies {
+  policy_id               String               @id @db.Uuid
+  policy_code             String               @unique(map: "uq_compensation_policies_code") @db.VarChar(100)
+  policy_name             String               @db.VarChar(240)
+  jurisdiction_id         String?              @db.Uuid
+  source_reference        String?              @db.VarChar(240)
+  effective_from          DateTime             @db.Date
+  effective_to            DateTime?            @db.Date
+  rural_multiplier        Decimal              @default(1) @db.Decimal(10, 4)
+  urban_multiplier        Decimal              @default(1) @db.Decimal(10, 4)
+  solatium_percent        Decimal              @default(100) @db.Decimal(8, 4)
+  annual_interest_percent Decimal              @default(12) @db.Decimal(8, 4)
+  is_active               Boolean              @default(true)
+  created_by              String?              @db.Uuid
+  created_at              DateTime             @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  award_calculations      award_calculations[]
+  creator                 users?               @relation("PolicyCreator", fields: [created_by], references: [user_id], onUpdate: NoAction, map: "fk_compensation_policies_created_by")
+  jurisdiction            jurisdictions?       @relation("PolicyJurisdiction", fields: [jurisdiction_id], references: [jurisdiction_id], onDelete: Restrict, onUpdate: NoAction, map: "fk_compensation_policies_jurisdiction")
+
+  @@index([jurisdiction_id, effective_from, effective_to], map: "idx_compensation_policies_jurisdiction_dates")
+}
+
+model award_calculations {
+  award_calculation_id     String                 @id @db.Uuid
+  case_parcel_id           String                 @db.Uuid
+  policy_id                String?                @db.Uuid
+  calculation_version      Int                    @default(1)
+  area_sqm                 Decimal                @default(0) @db.Decimal(20, 4)
+  base_market_rate_per_sqm Decimal                @default(0) @db.Decimal(20, 4)
+  multiplier_factor        Decimal                @default(1) @db.Decimal(10, 4)
+  total_market_value_inr   Decimal                @default(0) @db.Decimal(20, 2)
+  solatium_inr             Decimal                @default(0) @db.Decimal(20, 2)
+  additional_interest_inr  Decimal                @default(0) @db.Decimal(20, 2)
+  assets_on_land_inr       Decimal                @default(0) @db.Decimal(20, 2)
+  gross_award_inr          Decimal                @default(0) @db.Decimal(20, 2)
+  deductions_inr           Decimal                @default(0) @db.Decimal(20, 2)
+  net_award_inr            Decimal                @default(0) @db.Decimal(20, 2)
+  calculation_status       String                 @default("DRAFT")
+  inputs_snapshot          Json?
+  calculated_by            String?                @db.Uuid
+  approved_by              String?                @db.Uuid
+  calculated_at            DateTime               @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  approved_at              DateTime?              @db.Timestamptz(6)
+  approver                 users?                 @relation("AwardApprover", fields: [approved_by], references: [user_id], onUpdate: NoAction, map: "fk_award_calculations_approved_by")
+  calculator               users?                 @relation("AwardCalculator", fields: [calculated_by], references: [user_id], onUpdate: NoAction, map: "fk_award_calculations_calculated_by")
+  case_parcels             case_parcels           @relation(fields: [case_parcel_id], references: [case_parcel_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_award_calculations_case_parcel")
+  compensation_policies    compensation_policies? @relation(fields: [policy_id], references: [policy_id], onUpdate: NoAction, map: "fk_award_calculations_policy")
+
+  @@unique([case_parcel_id, calculation_version], map: "uq_award_case_parcel_version")
+  @@index([calculation_status], map: "idx_award_calculations_status")
+}
+
+model beneficiaries {
+  beneficiary_id        String                @id @db.Uuid
+  case_id               String                @db.Uuid
+  case_parcel_id        String?               @db.Uuid
+  beneficiary_reference String                @db.VarChar(100)
+  masked_name           String                @db.VarChar(180)
+  encrypted_legal_name  Bytes?
+  identity_token        Bytes?
+  share_percentage      Decimal               @default(100) @db.Decimal(7, 4)
+  calculated_amount_inr Decimal               @default(0) @db.Decimal(20, 2)
+  bank_account_token    Bytes?
+  bank_account_last4    String?               @db.Char(4)
+  ifsc_code             String?               @db.VarChar(20)
+  verification_status   String                @default("UNVERIFIED")
+  disbursement_status   String                @default("PENDING")
+  pfms_transaction_id   String?               @unique(map: "uq_beneficiary_pfms_transaction") @db.VarChar(160)
+  disbursed_at          DateTime?             @db.Timestamptz(6)
+  created_at            DateTime              @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at            DateTime              @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  acquisition_cases     acquisition_cases     @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_beneficiaries_case")
+  case_parcels          case_parcels?         @relation(fields: [case_parcel_id], references: [case_parcel_id], onUpdate: NoAction, map: "fk_beneficiaries_case_parcel")
+  payment_batch_items   payment_batch_items[]
+
+  @@unique([case_id, beneficiary_reference], map: "uq_beneficiary_case_reference")
+  @@index([case_id, disbursement_status], map: "idx_beneficiaries_case_status")
+}
+
+model payment_batches {
+  payment_batch_id           String                @id @db.Uuid
+  batch_number               String                @unique(map: "uq_payment_batches_number") @db.VarChar(120)
+  case_id                    String                @db.Uuid
+  total_beneficiaries        Int                   @default(0)
+  total_amount_inr           Decimal               @default(0) @db.Decimal(20, 2)
+  payment_status             String                @default("CREATED")
+  pfms_request_reference     String?               @db.VarChar(160)
+  pfms_batch_reference       String?               @unique(map: "uq_payment_batches_pfms_reference") @db.VarChar(160)
+  submission_idempotency_key String?               @unique(map: "uq_payment_batches_idempotency") @db.VarChar(128)
+  initiated_by               String?               @db.Uuid
+  initiated_at               DateTime?             @db.Timestamptz(6)
+  completed_at               DateTime?             @db.Timestamptz(6)
+  failure_reason             String?               @db.VarChar(2000)
+  created_at                 DateTime              @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at                 DateTime              @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  payment_batch_items        payment_batch_items[]
+  acquisition_cases          acquisition_cases     @relation(fields: [case_id], references: [case_id], onUpdate: NoAction, map: "fk_payment_batches_case")
+  initiator                  users?                @relation("PaymentInitiator", fields: [initiated_by], references: [user_id], onUpdate: NoAction, map: "fk_payment_batches_initiated_by")
+
+  @@index([case_id, payment_status], map: "idx_payment_batches_case_status")
+}
+
+model payment_batch_items {
+  payment_batch_item_id String          @id @db.Uuid
+  payment_batch_id      String          @db.Uuid
+  beneficiary_id        String          @db.Uuid
+  amount_inr            Decimal         @db.Decimal(20, 2)
+  item_status           String          @default("PENDING")
+  pfms_transaction_id   String?         @unique(map: "uq_payment_item_pfms_transaction") @db.VarChar(160)
+  bank_response_code    String?         @db.VarChar(80)
+  bank_response_message String?         @db.VarChar(1000)
+  submitted_at          DateTime?       @db.Timestamptz(6)
+  credited_at           DateTime?       @db.Timestamptz(6)
+  payment_batches       payment_batches @relation(fields: [payment_batch_id], references: [payment_batch_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_payment_batch_items_batch")
+  beneficiaries         beneficiaries   @relation(fields: [beneficiary_id], references: [beneficiary_id], onUpdate: NoAction, map: "fk_payment_batch_items_beneficiary")
+
+  @@unique([payment_batch_id, beneficiary_id], map: "uq_payment_batch_beneficiary")
+}
+
+model affected_families {
+  family_id                    String            @id @db.Uuid
+  case_id                      String            @db.Uuid
+  family_reference             String            @db.VarChar(100)
+  masked_head_name             String            @db.VarChar(180)
+  encrypted_head_name          Bytes?
+  vulnerability_category       String            @default("GENERAL")
+  family_members_count         Int               @default(1)
+  displaced_from_village       String?           @db.VarChar(180)
+  housing_grant_status         String            @default("ELIGIBLE")
+  subsistence_allowance_status String            @default("ELIGIBLE")
+  total_entitlement_inr        Decimal           @default(0) @db.Decimal(20, 2)
+  disbursed_amount_inr         Decimal           @default(0) @db.Decimal(20, 2)
+  created_at                   DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at                   DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  acquisition_cases            acquisition_cases @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_families_case")
+  rr_benefits                  rr_benefits[]
+
+  @@unique([case_id, family_reference], map: "uq_family_case_reference")
+  @@index([case_id], map: "idx_families_case")
+}
+
+model rr_benefits {
+  rr_benefit_id          String            @id @db.Uuid
+  family_id              String            @db.Uuid
+  benefit_type           String            @db.VarChar(100)
+  eligibility_status     String            @default("PENDING")
+  sanction_status        String            @default("NOT_STARTED")
+  entitlement_amount_inr Decimal           @default(0) @db.Decimal(20, 2)
+  disbursed_amount_inr   Decimal           @default(0) @db.Decimal(20, 2)
+  sanctioned_at          DateTime?         @db.Timestamptz(6)
+  disbursed_at           DateTime?         @db.Timestamptz(6)
+  notes                  String?           @db.VarChar(1000)
+  created_at             DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at             DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  affected_families      affected_families @relation(fields: [family_id], references: [family_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_rr_benefits_family")
+
+  @@unique([family_id, benefit_type], map: "uq_rr_family_benefit_type")
+}
+
+model grievances {
+  grievance_id            String               @id @db.Uuid
+  grievance_reference     String               @unique(map: "uq_grievances_reference") @db.VarChar(120)
+  case_id                 String?              @db.Uuid
+  parcel_id               String?              @db.Uuid
+  tracking_token_hash     String?              @unique(map: "uq_grievances_tracking_token") @db.Char(64)
+  citizen_name_masked     String?              @db.VarChar(180)
+  encrypted_citizen_name  Bytes?
+  citizen_phone_masked    String?              @db.VarChar(40)
+  encrypted_citizen_phone Bytes?
+  category                String               @db.VarChar(100)
+  details                 String
+  grievance_status        String               @default("LOGGED")
+  filed_at                DateTime             @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  sla_deadline            DateTime?            @db.Timestamptz(6)
+  assigned_to             String?              @db.Uuid
+  resolution_notes        String?
+  resolved_at             DateTime?            @db.Timestamptz(6)
+  created_at              DateTime             @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at              DateTime             @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  grievance_hearings      grievance_hearings[]
+  assignee                users?               @relation("GrievanceAssignee", fields: [assigned_to], references: [user_id], onUpdate: NoAction, map: "fk_grievances_assigned_to")
+  acquisition_cases       acquisition_cases?   @relation(fields: [case_id], references: [case_id], onUpdate: NoAction, map: "fk_grievances_case")
+  parcels                 parcels?             @relation(fields: [parcel_id], references: [parcel_id], onUpdate: NoAction, map: "fk_grievances_parcel")
+
+  @@index([case_id], map: "idx_grievances_case")
+  @@index([parcel_id], map: "idx_grievances_parcel")
+  @@index([grievance_status, sla_deadline], map: "idx_grievances_status_sla")
+}
+
+model grievance_hearings {
+  hearing_id                String     @id @db.Uuid
+  grievance_id              String     @db.Uuid
+  scheduled_at              DateTime   @db.Timestamptz(6)
+  venue                     String?    @db.VarChar(300)
+  presiding_officer_user_id String?    @db.Uuid
+  hearing_status            String     @default("SCHEDULED")
+  minutes_document_id       String?    @db.Uuid
+  outcome_notes             String?
+  created_at                DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  grievances                grievances @relation(fields: [grievance_id], references: [grievance_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_grievance_hearings_grievance")
+  documents                 documents? @relation(fields: [minutes_document_id], references: [document_id], onUpdate: NoAction, map: "fk_grievance_hearings_minutes")
+  officer                   users?     @relation("HearingOfficer", fields: [presiding_officer_user_id], references: [user_id], onUpdate: NoAction, map: "fk_grievance_hearings_officer")
+
+  @@index([scheduled_at, hearing_status], map: "idx_grievance_hearings_schedule")
+}
+
+model possession_records {
+  possession_record_id  String                 @id @db.Uuid
+  memo_number           String                 @unique(map: "uq_possession_memo_number") @db.VarChar(120)
+  case_id               String                 @db.Uuid
+  handover_date         DateTime?              @db.Timestamptz(6)
+  receiving_agency      String                 @db.VarChar(240)
+  field_officer_user_id String?                @db.Uuid
+  panchanama_signed     Boolean                @default(false)
+  possession_status     String                 @default("SCHEDULED")
+  remarks               String?
+  signed_document_id    String?                @db.Uuid
+  created_by            String?                @db.Uuid
+  created_at            DateTime               @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at            DateTime               @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  possession_media      possession_media[]
+  possession_parcels    possession_parcels[]
+  acquisition_cases     acquisition_cases      @relation(fields: [case_id], references: [case_id], onUpdate: NoAction, map: "fk_possession_case")
+  creator               users?                 @relation("PossessionCreator", fields: [created_by], references: [user_id], onUpdate: NoAction, map: "fk_possession_created_by")
+  field_officer         users?                 @relation("PossessionFieldOfficer", fields: [field_officer_user_id], references: [user_id], onUpdate: NoAction, map: "fk_possession_field_officer")
+  signed_document       documents?             @relation("PossessionSignedDocument", fields: [signed_document_id], references: [document_id], onUpdate: NoAction, map: "fk_possession_signed_document")
+  possession_witnesses  possession_witnesses[]
+
+  @@index([case_id, possession_status], map: "idx_possession_case_status")
+}
+
+model possession_parcels {
+  possession_record_id String             @db.Uuid
+  case_parcel_id       String             @db.Uuid
+  handed_over_area_ha  Decimal            @default(0) @db.Decimal(18, 4)
+  case_parcels         case_parcels       @relation(fields: [case_parcel_id], references: [case_parcel_id], onUpdate: NoAction, map: "fk_possession_parcels_case_parcel")
+  possession_records   possession_records @relation(fields: [possession_record_id], references: [possession_record_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_possession_parcels_record")
+
+  @@id([possession_record_id, case_parcel_id])
+}
+
+model notifications {
+  notification_id   String             @id @db.Uuid
+  user_id           String?            @db.Uuid
+  case_id           String?            @db.Uuid
+  project_id        String?            @db.Uuid
+  notification_type String             @db.VarChar(80)
+  severity          String             @default("INFO")
+  title             String             @db.VarChar(240)
+  message           String             @db.VarChar(2000)
+  action_url        String?            @db.VarChar(500)
+  channel           String             @default("IN_APP")
+  delivery_status   String             @default("PENDING")
+  read_at           DateTime?          @db.Timestamptz(6)
+  sent_at           DateTime?          @db.Timestamptz(6)
+  created_at        DateTime           @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  acquisition_cases acquisition_cases? @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_notifications_case")
+  projects          projects?          @relation(fields: [project_id], references: [project_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_notifications_project")
+  users             users?             @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_notifications_user")
+
+  @@index([case_id, created_at], map: "idx_notifications_case")
+  @@index([user_id, delivery_status, created_at], map: "idx_notifications_user_status")
+}
+
+model integration_outbox {
+  outbox_event_id String    @id @db.Uuid
+  event_key       String    @unique(map: "uq_outbox_event_key") @db.VarChar(180)
+  event_type      String    @db.VarChar(100)
+  aggregate_type  String    @db.VarChar(80)
+  aggregate_id    String    @db.Uuid
+  payload         Json
+  delivery_status String    @default("PENDING")
+  attempt_count   Int       @default(0)
+  next_attempt_at DateTime? @db.Timestamptz(6)
+  last_error      String?   @db.VarChar(2000)
+  created_at      DateTime  @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  delivered_at    DateTime? @db.Timestamptz(6)
+
+  @@index([delivery_status, next_attempt_at, created_at], map: "idx_outbox_delivery")
+}
+
+model audit_events {
+  audit_event_id      String         @id @db.Uuid
+  request_id          String?        @db.Uuid
+  actor_user_id       String?        @db.Uuid
+  action_code         String         @db.VarChar(100)
+  entity_type         String         @db.VarChar(80)
+  entity_id           String?        @db.Uuid
+  jurisdiction_id     String?        @db.Uuid
+  before_state        Json?
+  after_state         Json?
+  metadata            Json?
+  ip_address          String?        @db.Inet
+  previous_event_hash String?        @db.Char(64)
+  event_hash          String         @unique(map: "uq_audit_event_hash") @db.Char(64)
+  signature_algorithm String?        @db.VarChar(40)
+  digital_signature   Bytes?
+  occurred_at         DateTime       @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  actor               users?         @relation(fields: [actor_user_id], references: [user_id], onUpdate: NoAction, map: "fk_audit_actor")
+  jurisdictions       jurisdictions? @relation(fields: [jurisdiction_id], references: [jurisdiction_id], onUpdate: NoAction, map: "fk_audit_jurisdiction")
+
+  @@index([actor_user_id, occurred_at], map: "idx_audit_actor_time")
+  @@index([entity_type, entity_id, occurred_at], map: "idx_audit_entity_time")
+  @@index([jurisdiction_id, occurred_at], map: "idx_audit_jurisdiction_time")
+}
+
+model case_parcels {
+  case_parcel_id           String                     @id @db.Uuid
+  case_id                  String                     @db.Uuid
+  project_parcel_id        String                     @db.Uuid
+  case_parcel_status       String                     @default("IDENTIFIED")
+  acquired_area_ha         Decimal                    @default(0) @db.Decimal(18, 4)
+  added_at                 DateTime                   @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  removed_at               DateTime?                  @db.Timestamptz(6)
+  award_calculations       award_calculations[]
+  beneficiaries            beneficiaries[]
+  acquisition_cases        acquisition_cases          @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_case_parcels_case")
+  project_parcels          project_parcels            @relation(fields: [project_parcel_id], references: [project_parcel_id], onUpdate: NoAction, map: "fk_case_parcels_project_parcel")
+  field_surveys            field_surveys[]
+  media_assets             media_assets[]
+  possession_parcels       possession_parcels[]
+  statutory_notice_parcels statutory_notice_parcels[]
+
+  @@unique([case_id, project_parcel_id], map: "uq_case_project_parcel")
+  @@index([project_parcel_id], map: "idx_case_parcels_project_parcel")
+  @@index([case_id, case_parcel_status], map: "idx_case_parcels_status")
+}
+
+model case_stage_instances {
+  stage_instance_id          String                     @id @db.Uuid
+  case_id                    String                     @db.Uuid
+  stage_code                 String                     @db.VarChar(40)
+  sequence_no                Int
+  stage_status               String                     @default("PENDING")
+  entered_at                 DateTime?                  @db.Timestamptz(6)
+  due_at                     DateTime?                  @db.Timestamptz(6)
+  completed_at               DateTime?                  @db.Timestamptz(6)
+  completed_by               String?                    @db.Uuid
+  completion_notes           String?                    @db.VarChar(2000)
+  created_at                 DateTime                   @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  acquisition_cases          acquisition_cases          @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_case_stage_instances_case")
+  completer                  users?                     @relation("StageCompleter", fields: [completed_by], references: [user_id], onUpdate: NoAction, map: "fk_case_stage_instances_completed_by")
+  workflow_stage_definitions workflow_stage_definitions @relation(fields: [stage_code], references: [stage_code], onUpdate: NoAction, map: "fk_case_stage_instances_stage")
+
+  @@unique([case_id, sequence_no], map: "uq_case_stage_sequence")
+  @@index([stage_code, stage_status], map: "idx_case_stage_instances_stage")
+}
+
+model case_workflow_transitions {
+  transition_id            String                      @id @db.Uuid
+  case_id                  String                      @db.Uuid
+  from_stage_code          String?                     @db.VarChar(40)
+  to_stage_code            String                      @db.VarChar(40)
+  action_code              String                      @db.VarChar(60)
+  actor_user_id            String                      @db.Uuid
+  reason                   String?                     @db.VarChar(1000)
+  notes                    String?
+  expected_case_version    Int
+  resulting_case_version   Int
+  previous_transition_hash String?                     @db.Char(64)
+  transition_hash          String                      @unique(map: "uq_case_transition_hash") @db.Char(64)
+  signature_algorithm      String?                     @db.VarChar(40)
+  digital_signature        Bytes?
+  occurred_at              DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  actor                    users                       @relation("TransitionActor", fields: [actor_user_id], references: [user_id], onUpdate: NoAction, map: "fk_case_transitions_actor")
+  acquisition_cases        acquisition_cases           @relation(fields: [case_id], references: [case_id], onUpdate: NoAction, map: "fk_case_transitions_case")
+  from_stage               workflow_stage_definitions? @relation("TransitionsFrom", fields: [from_stage_code], references: [stage_code], onDelete: Restrict, onUpdate: NoAction, map: "fk_case_transitions_from_stage")
+  to_stage                 workflow_stage_definitions  @relation("TransitionsTo", fields: [to_stage_code], references: [stage_code], onUpdate: NoAction, map: "fk_case_transitions_to_stage")
+
+  @@unique([case_id, resulting_case_version], map: "uq_case_resulting_version")
+  @@index([actor_user_id, occurred_at], map: "idx_case_transitions_actor")
+  @@index([case_id, occurred_at], map: "idx_case_transitions_case_time")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model case_quality_assessments {
+  quality_assessment_id String            @id @db.Uuid
+  case_id               String            @db.Uuid
+  score                 Decimal           @db.Decimal(5, 2)
+  passed_checks         Int               @default(0)
+  total_checks          Int               @default(0)
+  missing_items         Json
+  assessed_by           String?           @db.Uuid
+  assessed_at           DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  users                 users?            @relation(fields: [assessed_by], references: [user_id], onUpdate: NoAction, map: "fk_case_quality_assessed_by")
+  acquisition_cases     acquisition_cases @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_case_quality_case")
+
+  @@index([case_id, assessed_at], map: "idx_case_quality_case_time")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model case_risk_evaluations {
+  risk_evaluation_id  String            @id @db.Uuid
+  case_id             String            @db.Uuid
+  score               Decimal           @db.Decimal(5, 2)
+  risk_level          String
+  reasons             Json
+  recommended_actions Json
+  model_version       String?           @db.VarChar(80)
+  calculated_by       String?           @db.Uuid
+  calculated_at       DateTime          @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  users               users?            @relation(fields: [calculated_by], references: [user_id], onUpdate: NoAction, map: "fk_case_risk_calculated_by")
+  acquisition_cases   acquisition_cases @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_case_risk_case")
+
+  @@index([case_id, calculated_at], map: "idx_case_risk_case_time")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model field_survey_points {
+  survey_point_id String        @id @db.Uuid
+  survey_id       String        @db.Uuid
+  point_sequence  Int
+  point_type      String        @default("OTHER")
+  location Unsupported("geometry")
+  accuracy_m      Decimal?      @db.Decimal(10, 3)
+  captured_at     DateTime?     @db.Timestamptz(6)
+  field_surveys   field_surveys @relation(fields: [survey_id], references: [survey_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_field_survey_points_survey")
+
+  @@unique([survey_id, point_sequence], map: "uq_field_survey_point_sequence")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model field_surveys {
+  survey_id             String                @id @db.Uuid
+  client_record_id      String?               @unique(map: "uq_field_surveys_client_record") @db.VarChar(160)
+  case_id               String                @db.Uuid
+  case_parcel_id        String?               @db.Uuid
+  surveyor_user_id      String                @db.Uuid
+  survey_type           String
+  device_id             String?               @db.VarChar(160)
+  survey_started_at     DateTime?             @db.Timestamptz(6)
+  surveyed_at           DateTime              @db.Timestamptz(6)
+  gps_location Unsupported("geometry")?
+  gps_accuracy_m        Decimal?              @db.Decimal(10, 3)
+  demarcation_confirmed Boolean               @default(false)
+  witness_names         Json?
+  observations          String?
+  sync_status           String                @default("LOCAL")
+  payload_hash          String?               @db.Char(64)
+  created_at            DateTime              @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at            DateTime              @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  field_survey_points   field_survey_points[]
+  acquisition_cases     acquisition_cases     @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_field_surveys_case")
+  case_parcels          case_parcels?         @relation(fields: [case_parcel_id], references: [case_parcel_id], onUpdate: NoAction, map: "fk_field_surveys_case_parcel")
+  users                 users                 @relation(fields: [surveyor_user_id], references: [user_id], onUpdate: NoAction, map: "fk_field_surveys_surveyor")
+  media_assets          media_assets[]
+
+  @@index([case_id, surveyed_at], map: "idx_field_surveys_case_time")
+  @@index([surveyor_user_id, surveyed_at], map: "idx_field_surveys_surveyor")
+  @@index([sync_status], map: "idx_field_surveys_sync_status")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model media_assets {
+  media_asset_id       String                 @id @db.Uuid
+  client_asset_id      String?                @unique(map: "uq_media_client_asset") @db.VarChar(160)
+  case_id              String?                @db.Uuid
+  case_parcel_id       String?                @db.Uuid
+  survey_id            String?                @db.Uuid
+  document_id          String?                @db.Uuid
+  storage_provider     String
+  storage_bucket       String                 @db.VarChar(180)
+  object_key           String                 @db.VarChar(500)
+  original_filename    String?                @db.VarChar(255)
+  mime_type            String                 @db.VarChar(160)
+  file_size_bytes      BigInt
+  sha256_hash          String                 @db.Char(64)
+  captured_at          DateTime?              @db.Timestamptz(6)
+  captured_by          String?                @db.Uuid
+  gps_location Unsupported("geometry")?
+  gps_accuracy_m       Decimal?               @db.Decimal(10, 3)
+  caption              String?                @db.VarChar(500)
+  created_at           DateTime               @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  users                users?                 @relation(fields: [captured_by], references: [user_id], onUpdate: NoAction, map: "fk_media_captured_by")
+  acquisition_cases    acquisition_cases?     @relation(fields: [case_id], references: [case_id], onUpdate: NoAction, map: "fk_media_case")
+  case_parcels         case_parcels?          @relation(fields: [case_parcel_id], references: [case_parcel_id], onUpdate: NoAction, map: "fk_media_case_parcel")
+  documents            documents?             @relation(fields: [document_id], references: [document_id], onUpdate: NoAction, map: "fk_media_document")
+  field_surveys        field_surveys?         @relation(fields: [survey_id], references: [survey_id], onUpdate: NoAction, map: "fk_media_survey")
+  possession_media     possession_media[]
+  possession_witnesses possession_witnesses[]
+
+  @@index([case_id, case_parcel_id], map: "idx_media_case_parcel")
+  @@index([sha256_hash], map: "idx_media_hash")
+}
+
+model offline_sync_records {
+  sync_record_id   String    @id @db.Uuid
+  client_record_id String    @unique(map: "uq_offline_sync_client_record") @db.VarChar(160)
+  user_id          String?   @db.Uuid
+  entity_type      String    @db.VarChar(80)
+  entity_id        String?   @db.Uuid
+  operation        String
+  payload_hash     String    @db.Char(64)
+  payload          Json
+  sync_status      String    @default("RECEIVED")
+  server_response  Json?
+  error_code       String?   @db.VarChar(80)
+  error_message    String?   @db.VarChar(1000)
+  received_at      DateTime  @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  applied_at       DateTime? @db.Timestamptz(6)
+  users            users?    @relation(fields: [user_id], references: [user_id], onUpdate: NoAction, map: "fk_offline_sync_user")
+
+  @@index([user_id, sync_status, received_at], map: "idx_offline_sync_user_status")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model parcel_owners {
+  parcel_owner_id         String    @id @db.Uuid
+  parcel_id               String    @db.Uuid
+  owner_reference         String    @db.VarChar(80)
+  owner_type              String    @default("INDIVIDUAL")
+  masked_name             String?   @db.VarChar(180)
+  encrypted_legal_name    Bytes?
+  identity_token          Bytes?
+  encrypted_phone         Bytes?
+  ownership_share_percent Decimal   @default(100) @db.Decimal(7, 4)
+  verification_status     String    @default("UNVERIFIED")
+  valid_from              DateTime? @db.Date
+  valid_to                DateTime? @db.Date
+  is_primary              Boolean   @default(false)
+  created_at              DateTime  @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at              DateTime  @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  parcels                 parcels   @relation(fields: [parcel_id], references: [parcel_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_parcel_owners_parcel")
+
+  @@unique([parcel_id, owner_reference], map: "uq_parcel_owner_reference")
+  @@index([parcel_id], map: "idx_parcel_owners_parcel")
+}
+
+model possession_media {
+  possession_record_id String             @db.Uuid
+  media_asset_id       String             @db.Uuid
+  evidence_type        String             @default("POSSESSION_EVIDENCE") @db.VarChar(100)
+  media_assets         media_assets       @relation(fields: [media_asset_id], references: [media_asset_id], onUpdate: NoAction, map: "fk_possession_media_asset")
+  possession_records   possession_records @relation(fields: [possession_record_id], references: [possession_record_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_possession_media_record")
+
+  @@id([possession_record_id, media_asset_id])
+}
+
+model possession_witnesses {
+  possession_witness_id     String             @id @db.Uuid
+  possession_record_id      String             @db.Uuid
+  witness_name              String             @db.VarChar(180)
+  witness_role              String?            @db.VarChar(120)
+  identity_reference_masked String?            @db.VarChar(120)
+  signature_media_asset_id  String?            @db.Uuid
+  possession_records        possession_records @relation(fields: [possession_record_id], references: [possession_record_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_possession_witnesses_record")
+  media_assets              media_assets?      @relation(fields: [signature_media_asset_id], references: [media_asset_id], onUpdate: NoAction, map: "fk_possession_witnesses_signature")
+
+  @@index([possession_record_id], map: "idx_possession_witnesses_record")
+}
+
+model schema_migrations {
+  migration_key   String   @id @db.VarChar(100)
+  checksum_sha256 String?  @db.Char(64)
+  applied_at      DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  applied_by      String?  @db.VarChar(128)
+}
+
+model statutory_notice_parcels {
+  statutory_notice_id String            @db.Uuid
+  case_parcel_id      String            @db.Uuid
+  case_parcels        case_parcels      @relation(fields: [case_parcel_id], references: [case_parcel_id], onUpdate: NoAction, map: "fk_statutory_notice_parcels_case_parcel")
+  statutory_notices   statutory_notices @relation(fields: [statutory_notice_id], references: [statutory_notice_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_statutory_notice_parcels_notice")
+
+  @@id([statutory_notice_id, case_parcel_id])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model statutory_notices {
+  statutory_notice_id      String                     @id @db.Uuid
+  notice_number            String                     @unique(map: "uq_statutory_notice_number") @db.VarChar(140)
+  project_id               String                     @db.Uuid
+  case_id                  String                     @db.Uuid
+  document_id              String?                    @db.Uuid
+  notice_type              String
+  section_reference        String                     @db.VarChar(100)
+  gazette_reference        String?                    @db.VarChar(180)
+  publication_status       String                     @default("DRAFT")
+  published_on             DateTime?                  @db.Date
+  effective_on             DateTime?                  @db.Date
+  public_summary           String?                    @db.VarChar(2000)
+  public_url               String?                    @db.VarChar(500)
+  bilingual_content        Json?
+  sha256_hash              String?                    @db.VarChar(64)
+  gazette_volume_issue     String?                    @db.VarChar(120)
+  cadastral_schedule       Json?
+  created_by               String?                    @db.Uuid
+  created_at               DateTime                   @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at               DateTime                   @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  statutory_notice_parcels statutory_notice_parcels[]
+  acquisition_cases        acquisition_cases          @relation(fields: [case_id], references: [case_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_statutory_notices_case")
+  users                    users?                     @relation(fields: [created_by], references: [user_id], onUpdate: NoAction, map: "fk_statutory_notices_created_by")
+  documents                documents?                 @relation(fields: [document_id], references: [document_id], onUpdate: NoAction, map: "fk_statutory_notices_document")
+  projects                 projects                   @relation(fields: [project_id], references: [project_id], onUpdate: NoAction, map: "fk_statutory_notices_project")
+
+  @@index([case_id, publication_status], map: "idx_statutory_notices_case_status")
+  @@index([published_on, publication_status], map: "idx_statutory_notices_published")
+}
+
+model user_preferences {
+  user_id                     String   @id @db.Uuid
+  language_code               String   @default("en") @db.VarChar(10)
+  timezone_name               String   @default("Asia/Kolkata") @db.VarChar(80)
+  email_alerts_enabled        Boolean  @default(true)
+  sms_alerts_enabled          Boolean  @default(false)
+  field_sync_alerts_enabled   Boolean  @default(true)
+  sla_alerts_enabled          Boolean  @default(true)
+  compensation_alerts_enabled Boolean  @default(true)
+  updated_at                  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  users                       users    @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user_preferences_user")
+}
+
+enum account_status {
+  INVITED
+  ACTIVE
+  SUSPENDED
+  DISABLED
+}
+
+enum jurisdiction_type {
+  NATIONAL
+  STATE
+  DISTRICT
+  TALUK
+  VILLAGE
+}
+
+enum access_type {
+  VIEW
+  EDIT
+  APPROVE
+  ADMIN
+}
+
+enum project_status {
+  PLANNING
+  IN_PROGRESS
+  STALLED
+  COMPLETED
+  CANCELLED
+}
+
+enum alignment_status {
+  DRAFT
+  ACTIVE
+  SUPERSEDED
+}
+
+enum land_use_category {
+  AGRICULTURAL
+  COMMERCIAL
+  RESIDENTIAL
+  FOREST_WATER
+  GOVERNMENT
+}
+
+enum parcel_status {
+  IDENTIFIED
+  SURVEY_PENDING
+  SURVEY_COMPLETED
+  OBJECTION_LOGGED
+  AWARDED
+  COMPENSATION_DISBURSED
+  POSSESSION_ACQUIRED
+  LITIGATION_DISPUTED
+  EXCLUDED
+}
+
+enum case_status {
+  DRAFT
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum delay_risk_level {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum stage_status {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  SKIPPED
+  REJECTED
+}
+
+enum document_approval_status {
+  PENDING_APPROVAL
+  APPROVED
+  RETURNED_FOR_REVISION
+  REJECTED
+}
+
+enum storage_provider {
+  S3
+  AZURE_BLOB
+  MINIO
+  LOCAL
+  OTHER
+}
+
+enum approval_action {
+  SUBMITTED
+  APPROVED
+  RETURNED_FOR_REVISION
+  REJECTED
+}
+
+enum verification_status {
+  UNVERIFIED
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum disbursement_status {
+  PENDING
+  INITIATED
+  CREDITED
+  BOUNCED
+}
+
+enum payment_status {
+  CREATED
+  SENT_TO_TREASURY
+  ACKNOWLEDGED
+  COMPLETED
+  PARTIALLY_FAILED
+  FAILED
+  CANCELLED
+}
+
+enum payment_item_status {
+  PENDING
+  SENT
+  CREDITED
+  BOUNCED
+  FAILED
+}
+
+enum calculation_status {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  SUPERSEDED
+}
+
+enum vulnerability_category {
+  SC
+  ST
+  BPL
+  WOMAN_HEADED
+  GENERAL
+  OTHER
+}
+
+enum grant_status {
+  NOT_ELIGIBLE
+  ELIGIBLE
+  SANCTIONED
+  DISBURSED
+}
+
+enum rr_eligibility_status {
+  PENDING
+  ELIGIBLE
+  INELIGIBLE
+}
+
+enum rr_sanction_status {
+  NOT_STARTED
+  SANCTIONED
+  DISBURSED
+  REJECTED
+}
+
+enum grievance_status {
+  LOGGED
+  HEARING_SCHEDULED
+  RESOLVED
+  DISMISSED
+  ESCALATED
+}
+
+enum hearing_status {
+  SCHEDULED
+  HELD
+  ADJOURNED
+  CANCELLED
+}
+
+enum possession_status {
+  SCHEDULED
+  COMPLETED
+  DISPUTED
+}
+
+enum notification_severity {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+  CRITICAL
+}
+
+enum notification_channel {
+  IN_APP
+  EMAIL
+  SMS
+  PUSH
+}
+
+enum notification_delivery_status {
+  PENDING
+  SENT
+  DELIVERED
+  FAILED
+  READ
+}
+
+enum litigation_status {
+  FILED
+  HEARING
+  JUDGEMENT_PENDING
+  DISPOSED
+  APPEALED
+}
+
+model state_benchmarks {
+  id                       String   @id @db.VarChar(10)
+  state                    String   @db.VarChar(100)
+  state_hi                 String   @db.VarChar(100)
+  zone                     String   @db.VarChar(20)
+  projects                 Int      @default(0)
+  target_ha                Decimal  @default(0) @db.Decimal(10, 2)
+  acquired_ha              Decimal  @default(0) @db.Decimal(10, 2)
+  completion_pct           Decimal  @default(0) @db.Decimal(5, 2)
+  avg_days                 Int      @default(0)
+  sla_compliance_pct       Decimal  @default(0) @db.Decimal(5, 2)
+  dbt_payment_pct          Decimal  @default(0) @db.Decimal(5, 2)
+  rr_completion_pct        Decimal  @default(0) @db.Decimal(5, 2)
+  grievance_resolution_pct  Decimal  @default(0) @db.Decimal(5, 2)
+  litigation_rate          Decimal  @default(0) @db.Decimal(5, 2)
+  data_quality_score       Int      @default(0)
+  budget_utilization_pct   Decimal  @default(0) @db.Decimal(5, 2)
+  status                   String   @db.VarChar(40)
+  created_at               DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at               DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model national_corridors {
+  corridor_id          String   @id @db.VarChar(50)
+  name                 String   @db.VarChar(255)
+  name_hi              String   @db.VarChar(255)
+  sector               String   @db.VarChar(50)
+  length_km            Decimal  @default(0) @db.Decimal(10, 2)
+  states_traversed     Json     @default("[]")
+  total_ha             Decimal  @default(0) @db.Decimal(10, 2)
+  acquired_ha          Decimal  @default(0) @db.Decimal(10, 2)
+  completion_pct       Decimal  @default(0) @db.Decimal(5, 2)
+  sanctioned_cr        Decimal  @default(0) @db.Decimal(12, 2)
+  disbursed_cr         Decimal  @default(0) @db.Decimal(12, 2)
+  interstate_status    String
+  interstate_status_hi String
+  risk_level           String   @db.VarChar(20)
+  lead_agency          String   @db.VarChar(100)
+  created_at           DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at           DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model central_escalations {
+  escalation_id    String   @id @db.VarChar(50)
+  title            String   @db.VarChar(255)
+  title_hi         String   @db.VarChar(255)
+  source_state     String   @db.VarChar(100)
+  corridor         String   @db.VarChar(200)
+  category         String   @db.VarChar(50)
+  urgency          String   @db.VarChar(20)
+  status           String   @db.VarChar(50)
+  submitted_date   String   @db.VarChar(50)
+  summary          String
+  summary_hi       String
+  requested_action String
+  created_at       DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at       DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model bottleneck_diagnostics {
+  diagnostic_id     String   @id @db.VarChar(50)
+  stage             String   @db.VarChar(200)
+  stage_hi          String   @db.VarChar(200)
+  root_cause        String
+  root_cause_hi     String
+  states_affected   Json     @default("[]")
+  cases_impacted    Int      @default(0)
+  avg_delay_days    Int      @default(0)
+  severity          String   @db.VarChar(20)
+  central_action    String
+  central_action_hi String
+  created_at        DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at        DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model national_standards {
+  standard_id     String   @id @db.VarChar(50)
+  code            String   @unique @db.VarChar(50)
+  title           String   @db.VarChar(200)
+  version         String   @db.VarChar(20)
+  status          String   @db.VarChar(30)
+  category        String   @db.VarChar(30)
+  compliance_rate Decimal  @default(0) @db.Decimal(5, 2)
+  summary         String
+  created_at      DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at      DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model district_metrics {
+  metric_id            String   @id @db.VarChar(50)
+  name                 String   @db.VarChar(100)
+  name_hi              String   @db.VarChar(100)
+  division             String   @db.VarChar(100)
+  dc_name              String   @db.VarChar(150)
+  target_ha            Decimal  @default(0) @db.Decimal(10, 2)
+  acquired_ha          Decimal  @default(0) @db.Decimal(10, 2)
+  completion_pct       Decimal  @default(0) @db.Decimal(5, 2)
+  active_cases         Int      @default(0)
+  sla_compliance_pct   Decimal  @default(0) @db.Decimal(5, 2)
+  avg_days_to_handover Int      @default(0)
+  compensation_cr      Decimal  @default(0) @db.Decimal(12, 2)
+  bottleneck_stage     String   @db.VarChar(150)
+  bottleneck_stage_hi  String   @db.VarChar(150)
+  status               String   @db.VarChar(40)
+  created_at           DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at           DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model state_approvals {
+  approval_id        String   @id @db.VarChar(50)
+  approval_type      String   @db.VarChar(50)
+  title              String   @db.VarChar(255)
+  title_hi           String   @db.VarChar(255)
+  project            String   @db.VarChar(255)
+  district           String   @db.VarChar(150)
+  land_area_ha       Decimal  @default(0) @db.Decimal(10, 2)
+  financial_outlay_cr Decimal @default(0) @db.Decimal(12, 2)
+  submitted_by       String   @db.VarChar(150)
+  submitted_date     String   @db.VarChar(50)
+  sla_deadline       String   @db.VarChar(50)
+  sla_hours_left     Int      @default(0)
+  is_urgent          Boolean  @default(false)
+  dossier_summary    String
+  dossier_summary_hi String
+  status             String   @db.VarChar(30)
+  created_at         DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at         DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model revenue_court_appeals {
+  appeal_id             String   @id @db.VarChar(50)
+  appeal_number         String   @unique @db.VarChar(100)
+  tribunal_court        String   @db.VarChar(200)
+  case_number           String   @db.VarChar(100)
+  appellant_name        String   @db.VarChar(150)
+  dispute_type          String   @db.VarChar(100)
+  claimed_amount_inr    Decimal  @default(0) @db.Decimal(15, 2)
+  determined_amount_inr Decimal  @default(0) @db.Decimal(15, 2)
+  hearing_date          String   @db.VarChar(50)
+  status                String   @db.VarChar(50)
+  stay_granted          Boolean  @default(false)
+  created_at            DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at            DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model field_tasks {
+  task_id            String   @id @db.VarChar(50)
+  parcel_id          String   @db.VarChar(50)
+  ulpin              String   @db.VarChar(50)
+  case_no            String   @db.VarChar(100)
+  survey_no          String   @db.VarChar(50)
+  village            String   @db.VarChar(100)
+  taluk              String   @db.VarChar(100)
+  district           String   @db.VarChar(100)
+  recorded_area_ha   Decimal  @default(0) @db.Decimal(10, 2)
+  measured_area_ha   Decimal? @db.Decimal(10, 2)
+  status             String   @db.VarChar(50)
+  priority           String   @db.VarChar(30)
+  due_date           String   @db.VarChar(50)
+  distance_km        Decimal  @default(0) @db.Decimal(6, 2)
+  bearing_deg        Int      @default(0)
+  landholder         String   @db.VarChar(200)
+  access_status      String   @db.VarChar(40)
+  correction_remarks String?
+  created_at         DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at         DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model audit_anomalies {
+  anomaly_id        String   @id @db.VarChar(50)
+  title             String   @db.VarChar(255)
+  title_hi          String   @db.VarChar(255)
+  severity          String   @db.VarChar(20)
+  case_ref          String   @db.VarChar(100)
+  parcel_ulpin      String   @db.VarChar(50)
+  district          String   @db.VarChar(100)
+  district_hi       String   @db.VarChar(100)
+  calculated_value  String   @db.VarChar(50)
+  district_avg      String   @db.VarChar(50)
+  variance_ratio    String   @db.VarChar(50)
+  variance_ratio_hi String   @db.VarChar(50)
+  statute           String   @db.VarChar(255)
+  statute_hi        String   @db.VarChar(255)
+  details           String
+  details_hi        String
+  flag_date         String   @db.VarChar(50)
+  flag_date_hi      String   @db.VarChar(50)
+  status            String   @db.VarChar(40)
+  created_at        DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at        DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model simulation_scenarios {
+  scenario_id         String   @id @db.VarChar(50)
+  name                String   @db.VarChar(150)
+  tagline             String   @db.VarChar(255)
+  base_length_km      Decimal  @default(0) @db.Decimal(6, 2)
+  base_parcels_per_km Decimal  @default(0) @db.Decimal(5, 2)
+  base_families_per_km Decimal @default(0) @db.Decimal(5, 2)
+  base_forest_ha      Decimal  @default(0) @db.Decimal(6, 2)
+  base_cost_per_km_cr Decimal  @default(0) @db.Decimal(6, 2)
+  base_months         Int      @default(0)
+  description         String
+  created_at          DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at          DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+}
+
+model project_risk_snapshots {
+  snapshot_id            String   @id @default(uuid()) @db.Uuid
+  project_id             String   @db.Uuid
+  lifecycle_checkpoint   String   @db.VarChar(60)
+  stage_code             String   @db.VarChar(40)
+  snapshot_date          DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  delay_probability_pct  Decimal  @db.Decimal(5, 2)
+  risk_level             String   @db.VarChar(20)
+  predicted_delay_days   Int
+  confidence_score_pct   Decimal  @db.Decimal(5, 2)
+  shap_factors           Json
+  feature_values         Json
+  dominant_risk_category String   @db.VarChar(60)
+  prescriptive_actions   Json
+  created_at             DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  projects               projects @relation(fields: [project_id], references: [project_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_proj_risk_snapshots_proj")
+
+  @@index([project_id, snapshot_date(sort: Desc)], map: "idx_proj_risk_snapshots_proj_time")
+  @@index([risk_level, delay_probability_pct(sort: Desc)], map: "idx_proj_risk_snapshots_level")
+}
+
+model gati_shakti_layers {
+  layer_id          String                      @id @default(uuid()) @db.Uuid
+  layer_code        String                      @unique(map: "uq_gati_shakti_layers_code") @db.VarChar(60)
+  layer_name        String                      @db.VarChar(160)
+  layer_name_hi     String                      @db.VarChar(160)
+  ministry          String                      @db.VarChar(120)
+  statutory_act     String                      @db.VarChar(240)
+  portal_name       String                      @db.VarChar(120)
+  portal_url        String?                     @db.VarChar(255)
+  color_hex         String                      @db.VarChar(20)
+  buffer_default_m  Int                         @default(100)
+  is_critical       Boolean                     @default(true)
+  created_at        DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at        DateTime                    @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  nocs              project_inter_agency_nocs[]
+}
+
+model project_inter_agency_nocs {
+  noc_id             String             @id @default(uuid()) @db.Uuid
+  project_id         String             @db.Uuid
+  layer_code         String             @db.VarChar(60)
+  agency_name        String             @db.VarChar(160)
+  agency_name_hi     String?            @db.VarChar(160)
+  clearance_type     String             @db.VarChar(120)
+  clearance_type_hi  String?            @db.VarChar(160)
+  application_no     String             @db.VarChar(100)
+  affected_area_ha   Decimal            @default(0) @db.Decimal(10, 4)
+  chainage_start     String?            @db.VarChar(50)
+  chainage_end       String?            @db.VarChar(50)
+  status             String             @db.VarChar(50)
+  sla_days_statutory Int                @default(90)
+  days_elapsed       Int                @default(0)
+  is_sla_breached    Boolean            @default(false)
+  escalation_level   String             @default("NONE") @db.VarChar(50)
+  nodal_officer      String?            @db.VarChar(160)
+  action_pending_by  String             @default("PIA") @db.VarChar(40)
+  next_milestone     String             @db.VarChar(255)
+  next_milestone_hi  String?            @db.VarChar(255)
+  statutory_order_no String?            @db.VarChar(120)
+  created_at         DateTime           @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  updated_at         DateTime           @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamptz(6)
+  projects           projects           @relation(fields: [project_id], references: [project_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_proj_inter_agency_nocs_proj")
+  gati_shakti_layer  gati_shakti_layers @relation(fields: [layer_code], references: [layer_code], onUpdate: NoAction, map: "fk_proj_inter_agency_nocs_layer")
+
+  @@index([project_id, status], map: "idx_proj_inter_agency_nocs_status")
+  @@index([layer_code], map: "idx_proj_inter_agency_nocs_layer")
+}
+

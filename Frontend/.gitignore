@@ -1,0 +1,119 @@
+# ==========================================
+# BhoomiSetu — Git Ignore Configuration
+# Next.js 14 + TypeScript + Tailwind CSS
+# ==========================================
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Next.js Build & Outputs
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Production & Packaging
+*.tgz
+*.tar.gz
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Security, Certificates & Keys
+*.pem
+*.key
+*.crt
+*.cert
+*.pfx
+*.p12
+
+# Logs & Debugging
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Test Coverage & Tooling
+coverage/
+.nyc_output/
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+.playwright/
+
+# Vercel Deployment
+.vercel
+
+# Operating System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*~
+.directory
+.Trash-*
+*.lnk
+
+# IDE & Editor Configurations
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# AI Assistant & Editor Caches
+.freebuff/
+.agents/
+.claude/
+.windsurf/
+
+# Scratch, Temporary & Cache Files
+.cache/
+.temp/
+scratch/
+.tempmediaStorage/
