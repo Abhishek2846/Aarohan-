@@ -76,6 +76,91 @@ The startup script will automatically:
 
 ---
 
+## 🌐 Public Demo with NGROK (Remote Internet Access)
+
+Expose the entire application securely over the public internet so remote evaluators or team members can interact with the live application from any PC, tablet, or smartphone without requiring local network access.
+
+### Prerequisites
+
+1. **Node.js** (v18+ or v20+)
+2. **Project dependencies**: `npm install`
+3. **Local PostgreSQL/PostGIS database** (listening on port 5432)
+4. **NGROK installed** globally or locally:
+   ```bash
+   # Install via npm
+   npm install -g ngrok
+   # Or download binary from: https://ngrok.com/download
+   ```
+5. **NGROK authenticated** (free account):
+   ```bash
+   ngrok config add-authtoken <your-auth-token>
+   ```
+
+### Verification
+
+Verify your NGROK setup in PowerShell or Command Prompt:
+
+```bash
+ngrok version
+```
+
+### Launch Public Demo
+
+Run the unified single-command public launcher:
+
+```bash
+npm run public
+```
+
+*(Note: `npm run dev:public` is also available as an alias.)*
+
+### What This Command Does Automatically
+
+1. **Pre-flight verification**: Checks that `ngrok` is installed and authenticated, and verifies that PostgreSQL is running on port 5432.
+2. **Port clearance**: Cleans up ports `3000`, `3001`, and `4040` if held by leftover background processes.
+3. **Starts NestJS Backend**: Launches the backend and polls `http://localhost:3001/v1/health` until verified healthy.
+4. **Starts NGROK Secure Tunnel**: Creates an encrypted HTTPS tunnel forwarding to port 3000 and captures the public domain from the local NGROK API.
+5. **Starts Next.js Frontend**: Configures `NEXT_PUBLIC_API_URL` to point to the public domain and starts the Next.js dev server with internal `/v1/*` reverse proxy rewrites to the backend.
+6. **Auto-Opens Browser**: Launches your default browser directly into the public NGROK URL.
+7. **Terminal Dashboard**: Displays active shareable URLs, system status, and pre-seeded demo login accounts.
+8. **Saves Links**: Persists active URLs to `PUBLIC_URL.txt` in the root folder for instant copying.
+
+### Architecture & Security Guarantees
+
+```
+REMOTE BROWSER (Anyone, Anywhere)
+       │
+       ▼  HTTPS
+ NGROK PUBLIC URL (https://xxxx.ngrok-free.dev)
+       │
+       ▼
+ LOCAL FRONTEND (Next.js - Port 3000)
+       │
+       ▼  Internal Reverse Proxy (/v1/*)
+ LOCAL BACKEND (NestJS - Port 3001)
+       │
+       ▼  Local Database Queries
+ LOCAL POSTGRESQL / POSTGIS (Port 5432)
+```
+
+- **Database Privacy**: PostgreSQL (port 5432) is strictly local and **never** exposed to the internet.
+- **Zero CORS / Cookie Issues**: Because Next.js acts as a reverse proxy under the public origin, the browser never calls `localhost` from remote machines, and cookies (`bhoomi_token`, `bhoomi_role`) work out of the box.
+- **Computer Must Remain Online**: The machine running `npm run public` must remain awake and connected to the internet.
+- **URL Lifetime**: On NGROK free accounts, your assigned static domain is reused. If restarted, verify the domain printed in the terminal dashboard.
+
+### How to Stop
+
+Press **`Ctrl + C`** in the terminal. The process manager will cleanly terminate Next.js, NestJS, and NGROK without leaving orphan processes.
+
+### Troubleshooting
+
+- **NGROK not recognized**: Ensure `ngrok` is added to your system `PATH`. Restart your terminal after installing.
+- **ERR_NGROK_4018 (Unauthenticated)**: Run `ngrok config add-authtoken <token>` with your token from [ngrok dashboard](https://dashboard.ngrok.com/get-started/your-authtoken).
+- **Port in use**: The script automatically frees ports, but you can also manually run `npx kill-port 3000 3001 4040`.
+- **Database offline**: Verify PostgreSQL is running on port 5432 using Windows Services or Docker.
+
+---
+
 ## 🔒 Enterprise Security & Compliance Features
 
 1. **DPDP Act 2023 Field-Level Encryption**:
@@ -140,3 +225,5 @@ git push -u origin main
 
 ## 📄 License
 UNLICENSED — SIH 2026 National Prototype. Built for Ministry of Electronics and Information Technology & Ministry of Rural Development.
+#   B h o o m i S e t u  
+ 
