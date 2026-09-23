@@ -72,8 +72,9 @@ export class UsersController {
     return this.usersService.createUser(body);
   }
 
+  @Roles('SYSTEM_ADMIN', 'STATE_ADMIN', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY')
   @Get()
-  @ApiOperation({ summary: 'List and filter users (Authenticated)' })
+  @ApiOperation({ summary: 'List and filter users (Admin / Ministry / State)' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiQuery({ name: 'role', required: false, description: 'Filter users by role code' })
@@ -84,6 +85,7 @@ export class UsersController {
     return this.usersService.findAll(query);
   }
 
+  @Roles('SYSTEM_ADMIN', 'STATE_ADMIN', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER')
   @Get(':id')
   @ApiOperation({ summary: 'Get user profile by ID' })
   @ApiBearerAuth()

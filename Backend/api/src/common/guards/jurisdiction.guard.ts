@@ -10,6 +10,7 @@ import {
   CHECK_JURISDICTION_KEY,
   JurisdictionCheckOptions,
 } from '../decorators/jurisdiction.decorator';
+import { isUuid } from '../utils/crypto.util';
 
 @Injectable()
 export class JurisdictionGuard implements CanActivate {
@@ -63,10 +64,24 @@ export class JurisdictionGuard implements CanActivate {
     }
 
     // Fetch user's assigned statutory jurisdictions
-    const userJurisdictions = await this.prisma.user_jurisdictions.findMany({
-      where: { user_id: user.userId },
-      include: { jurisdictions: true },
-    });
+    let userJurisdictions: any[] = [];
+    if (isUuid(user.userId)) {
+      userJurisdictions = await this.prisma.user_jurisdictions.findMany({
+        where: { user_id: user.userId },
+        include: { jurisdictions: true },
+      });
+    } else if (user.userId) {
+      const dbUser = await this.prisma.users.findFirst({
+        where: { OR: [{ login_name: user.userId }, { email: user.userId }] },
+        select: { user_id: true },
+      });
+      if (dbUser) {
+        userJurisdictions = await this.prisma.user_jurisdictions.findMany({
+          where: { user_id: dbUser.user_id },
+          include: { jurisdictions: true },
+        });
+      }
+    }
 
     const userJurisdictionIds = new Set(
       userJurisdictions.map((uj) => uj.jurisdiction_id),

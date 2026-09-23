@@ -75,6 +75,7 @@ export function getRoleNavItems(activeRole: string, t: any, lang: string = "en")
         { title: lang === "hi" ? "किसान आपत्तियां एवं अदालती मामले" : "Grievances & Court Cases", href: "/dashboard/national?tab=litigation", icon: FileText, tabId: "litigation" },
         { title: lang === "hi" ? "केंद्रीय समाधान एवं समीक्षा" : "Central Escalations", href: "/dashboard/national?tab=escalations", icon: ShieldCheck, tabId: "escalations" },
         { title: lang === "hi" ? "नीति, नियम एवं अनुपालन" : "Compliance & Standards", href: "/dashboard/national?tab=compliance", icon: Compass, tabId: "compliance" },
+        { title: lang === "hi" ? "अधिकारी एवं सत्र नियंत्रण" : "Users & Session Admin", href: "/settings", icon: Users, badge: "Admin" },
         { title: lang === "hi" ? "राष्ट्रीय रिपोर्ट एवं निर्णय" : "National Reports", href: "/dashboard/national?tab=reports", icon: Download, tabId: "reports" },
       ];
     case "STATE_AUTHORITY":
@@ -151,30 +152,38 @@ function RoleSidebarContent() {
   const searchParams = useSearchParams();
   const currentTab = searchParams ? searchParams.get("tab") : null;
 
-  if (!isAuthenticated) {
+  // Determine if current context is Citizen
+  const isCitizenContext =
+    activeRole === "CITIZEN" ||
+    pathname.startsWith("/citizen") ||
+    (pathname.startsWith("/gis") && (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN")))) ||
+    (pathname.startsWith("/gazette") && (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN"))));
+
+  const effectiveRole = isCitizenContext && (!isAuthenticated || activeRole === "CITIZEN") ? "CITIZEN" : activeRole;
+
+  if (!isAuthenticated && !isCitizenContext) {
     return null;
   }
 
-  const currentOfficer = user || (activeRole && MOCK_PROFILES[activeRole as keyof typeof MOCK_PROFILES]) || {
-    name: "Dr. Ananya Sharma, IAS",
-    designation: "Authorized Officer",
-    department: "Land Acquisition Directorate",
-  };
+  const currentOfficer =
+    (isAuthenticated && user) ||
+    (effectiveRole && MOCK_PROFILES[effectiveRole as keyof typeof MOCK_PROFILES]) ||
+    MOCK_PROFILES.CITIZEN;
 
-  const navItems = getRoleNavItems(activeRole, t, lang);
+  const navItems = getRoleNavItems(effectiveRole, t, lang);
 
   return (
-    <aside className="w-[272px] border-r border-[#d8d3c9] bg-[#f4f1ea] p-3.5 shrink-0 hidden md:flex flex-col justify-between min-h-[calc(100vh-4.5rem)]">
+    <aside className="w-[272px] border-r border-[#d8d3c9] bg-[#f4f1ea] p-3.5 shrink-0 hidden md:flex flex-col justify-between min-h-[calc(100vh-4.5rem)] relative z-20">
       <div className="space-y-1">
         {/* Designated Officer Identity Profile Card */}
         <div className="p-3 rounded-2xl border border-[#d8d3c9] bg-[#fffdf8] shadow-xs space-y-1 mb-2.5">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold text-[#ef5b2a] uppercase tracking-wider flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>{activeRole.replace("_", " ")}</span>
+              <span>{effectiveRole.replace("_", " ")}</span>
             </span>
             <span className="text-[9px] font-bold font-mono px-1.5 py-0.2 rounded bg-[#eae6dc] text-[#171716]">
-              {activeRole ? activeRole.slice(0, 4) : "AUTH"}
+              {effectiveRole ? effectiveRole.slice(0, 4) : "AUTH"}
             </span>
           </div>
           <div>
@@ -195,7 +204,7 @@ function RoleSidebarContent() {
         </div>
         {navItems.map((item) => {
           let isActive = pathname === item.href;
-          if (activeRole === "CITIZEN") {
+          if (effectiveRole === "CITIZEN") {
             if (item.href === "/gis") {
               isActive = pathname === "/gis";
             } else if (item.href === "/citizen") {
@@ -205,7 +214,7 @@ function RoleSidebarContent() {
             } else if (item.href.includes("tab=documents") || item.href.includes("tab=public")) {
               isActive = pathname === "/citizen" && (currentTab === "documents" || currentTab === "public");
             }
-          } else if (activeRole === "AUDITOR") {
+          } else if (effectiveRole === "AUDITOR") {
             if (item.href === "/gis") {
               isActive = pathname === "/gis";
             } else if (item.href === "/audit") {
@@ -277,9 +286,13 @@ function RoleSidebarContent() {
             <Link
               key={item.href + item.title}
               href={item.href}
-              onClick={() => {
-                if (typeof window !== "undefined") {
-                  window.history.pushState(null, "", item.href);
+              onClick={(e) => {
+                const isCitizenNav = effectiveRole === "CITIZEN";
+                const isGisTransition = pathname.startsWith("/gis") || item.href.startsWith("/gis");
+                if (isCitizenNav || isGisTransition) {
+                  e.preventDefault();
+                  window.location.href = item.href;
+                  return;
                 }
               }}
               className={cn(

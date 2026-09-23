@@ -51,11 +51,13 @@ interface GrievanceEntry {
 }
 
 import { useI18n } from "@/hooks/use-i18n";
+import { useAuth } from "@/hooks/use-auth";
 import { useRrQuery } from "@/hooks/queries/use-bhoomi-queries";
 
 export default function RehabilitationAndResettlementPage() {
   const { lang } = useI18n();
   const isHi = lang === "hi";
+  const { activeRole } = useAuth();
   const { data: rrData, isLoading } = useRrQuery();
 
   const [families, setFamilies] = useState<AffectedFamily[]>([
@@ -223,13 +225,15 @@ export default function RehabilitationAndResettlementPage() {
           </p>
         </div>
 
-        <Button
-          onClick={() => setFamilyModalOpen(true)}
-          className="bg-[#171716] hover:bg-[#2d2d2c] text-[#fffdf8] font-bold shadow-sm font-bold text-xs h-9 flex items-center gap-1.5 shadow-sm"
-        >
-          <Plus className="h-4 w-4" />
-          <span>{isHi ? "विस्थापित परिवार का नाम दर्ज करें" : "Register Displaced Family"}</span>
-        </Button>
+        {activeRole !== "PIA" && (
+          <Button
+            onClick={() => setFamilyModalOpen(true)}
+            className="bg-[#171716] hover:bg-[#2d2d2c] text-[#fffdf8] font-bold shadow-sm font-bold text-xs h-9 flex items-center gap-1.5 shadow-sm"
+          >
+            <Plus className="h-4 w-4" />
+            <span>{isHi ? "विस्थापित परिवार का नाम दर्ज करें" : "Register Displaced Family"}</span>
+          </Button>
+        )}
       </div>
 
       {/* R&R Entitlement Metrics */}

@@ -34,7 +34,14 @@ export function CivicHeader() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  const navItems = isAuthenticated ? getRoleNavItems(activeRole, t, lang) : [];
+  const isCitizenPath =
+    pathname.startsWith("/citizen") ||
+    (pathname.startsWith("/gis") && (activeRole === "CITIZEN" || (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN"))))) ||
+    (pathname.startsWith("/gazette") && (activeRole === "CITIZEN" || (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN")))));
+
+  const effectiveRole = isCitizenPath && (!isAuthenticated || activeRole === "CITIZEN") ? "CITIZEN" : activeRole;
+  const showNav = isAuthenticated || isCitizenPath;
+  const navItems = showNav ? getRoleNavItems(effectiveRole, t, lang) : [];
 
   return (
     <header className="civic-header sticky top-0 z-40 w-full border-b border-[#d8d3c9] bg-[#f4f1ea]/95 backdrop-blur-xl shadow-sm transition-all">
@@ -96,7 +103,7 @@ export function CivicHeader() {
         {/* Left: Mobile Toggle + Official BhoomiSetu Emblem & Name */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Mobile Drawer Button */}
-          {isAuthenticated && (
+          {showNav && (
             <Button
               variant="ghost"
               size="sm"
@@ -219,10 +226,10 @@ export function CivicHeader() {
       </div>
 
       {/* Mobile Navigation Drawer Overlay (When Hamburger is toggled on mobile) */}
-      {mobileMenuOpen && isAuthenticated && (
+      {mobileMenuOpen && showNav && (
         <div className="civic-mobile-drawer md:hidden border-t border-[#d8d3c9] bg-[#fffdf8] px-4 py-3 shadow-xl space-y-3 animate-in slide-in-from-top-2">
           <div className="flex items-center justify-between pb-2 border-b border-[#d8d3c9] text-xs font-bold text-[#68655e]">
-            <span>{t.roleNavigation} • {activeRole.replace("_", " ")}</span>
+            <span>{t.roleNavigation} • {effectiveRole.replace("_", " ")}</span>
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
@@ -241,8 +248,14 @@ export function CivicHeader() {
                 <Link
                   key={item.href + item.title}
                   href={item.href}
-                  onClick={() => {
+                  onClick={(e) => {
                     setMobileMenuOpen(false);
+                    const isCitizenNav = effectiveRole === "CITIZEN";
+                    const isGisTransition = pathname.startsWith("/gis") || item.href.startsWith("/gis");
+                    if (isCitizenNav || isGisTransition) {
+                      e.preventDefault();
+                      window.location.href = item.href;
+                    }
                   }}
                   className={cn(
                     "flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold transition-all",

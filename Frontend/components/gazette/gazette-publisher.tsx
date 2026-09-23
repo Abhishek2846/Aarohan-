@@ -47,12 +47,17 @@ import { GazettePreviewModal } from "./gazette-preview-modal";
 import { generateGazettePdf } from "@/lib/gazette-pdf-generator";
 import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/hooks/use-auth";
 
 interface GazettePublisherProps {
   initialRole?: string;
 }
 
 export function GazettePublisher({ initialRole = "DISTRICT_OFFICER" }: GazettePublisherProps) {
+  const { activeRole } = useAuth();
+  const effectiveRole = activeRole || initialRole;
+  const isCitizen = effectiveRole === "CITIZEN";
+
   const [activeTab, setActiveTab] = useState<string>("repository");
   const [selectedSection, setSelectedSection] = useState<string>("ALL");
   const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
@@ -86,6 +91,13 @@ export function GazettePublisher({ initialRole = "DISTRICT_OFFICER" }: GazettePu
   const signMutation = useSignGazetteMutation(previewNotice?.id || "");
   const publishMutation = usePublishGazetteMutation(previewNotice?.id || "");
   const { data: verificationResult, isLoading: isVerifying } = useGazetteVerificationQuery(submittedVerifyHash);
+
+  // Prevent citizen from staying on drafting tab
+  React.useEffect(() => {
+    if (isCitizen && activeTab === "drafting") {
+      setActiveTab("repository");
+    }
+  }, [isCitizen, activeTab]);
 
   // Auto-populate draft text template when project or section changes
   React.useEffect(() => {
@@ -289,13 +301,15 @@ export function GazettePublisher({ initialRole = "DISTRICT_OFFICER" }: GazettePu
           </div>
 
           <div className="flex items-center gap-2">
-            <Button
-              onClick={() => setActiveTab("drafting")}
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs gap-1.5 shadow-md"
-            >
-              <PlusCircle className="h-4 w-4" />
-              Draft New Gazette
-            </Button>
+            {!isCitizen && (
+              <Button
+                onClick={() => setActiveTab("drafting")}
+                className="bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs gap-1.5 shadow-md"
+              >
+                <PlusCircle className="h-4 w-4" />
+                Draft New Gazette
+              </Button>
+            )}
             <Button
               variant="outline"
               onClick={() => setActiveTab("verification")}
@@ -370,10 +384,12 @@ export function GazettePublisher({ initialRole = "DISTRICT_OFFICER" }: GazettePu
             <BookOpen className="h-3.5 w-3.5" />
             Statutory Gazette Repository ({filteredNotices.length})
           </TabsTrigger>
-          <TabsTrigger value="drafting" className="text-xs gap-1.5">
-            <PlusCircle className="h-3.5 w-3.5" />
-            Draft & Publish Wizard
-          </TabsTrigger>
+          {!isCitizen && (
+            <TabsTrigger value="drafting" className="text-xs gap-1.5">
+              <PlusCircle className="h-3.5 w-3.5" />
+              Draft & Publish Wizard
+            </TabsTrigger>
+          )}
           <TabsTrigger value="verification" className="text-xs gap-1.5">
             <ShieldCheck className="h-3.5 w-3.5" />
             QR Cryptographic Verifier
@@ -584,7 +600,8 @@ export function GazettePublisher({ initialRole = "DISTRICT_OFFICER" }: GazettePu
         {/* ==================================================== */}
         {/* TAB 2: STATUTORY GAZETTE DRAFTING WIZARD             */}
         {/* ==================================================== */}
-        <TabsContent value="drafting" className="space-y-6">
+        {!isCitizen && (
+          <TabsContent value="drafting" className="space-y-6">
           <Card className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
             <CardHeader className="p-6 pb-4 border-b border-slate-100 dark:border-slate-800">
               <CardTitle className="text-lg font-serif">Statutory Notification Drafter & Cadastral Compiler</CardTitle>
@@ -762,6 +779,7 @@ export function GazettePublisher({ initialRole = "DISTRICT_OFFICER" }: GazettePu
             </CardFooter>
           </Card>
         </TabsContent>
+        )}
 
         {/* ==================================================== */}
         {/* TAB 3: QR CRYPTOGRAPHIC VERIFIER                     */}

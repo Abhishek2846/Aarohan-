@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
+import { isUuid } from '../common/utils/crypto.util';
 import { v4 as uuidv4 } from 'uuid';
 import * as crypto from 'crypto';
 
@@ -80,7 +81,10 @@ export class WorkflowService {
     const currentStageCode = acquisitionCase.current_stage_code;
 
     // Verify valid user from DB
-    const validUser = (await this.prisma.users.findFirst({ where: { user_id: userId } })) || (await this.prisma.users.findFirst());
+    const validUser =
+      (isUuid(userId) ? await this.prisma.users.findFirst({ where: { user_id: userId } }) : null) ||
+      (userId ? await this.prisma.users.findFirst({ where: { OR: [{ login_name: userId }, { email: userId }] } }) : null) ||
+      (await this.prisma.users.findFirst());
     const effectiveUserId = validUser?.user_id || '22222222-2222-2222-2222-222222222201';
 
     // 2. Validate User Role for Current Stage Approval (if restrictions configured)

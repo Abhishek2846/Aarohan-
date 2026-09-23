@@ -5,6 +5,7 @@
   "description": "Centralized, GIS-enabled land acquisition & AI intelligence management platform",
   "scripts": {
     "dev": "node scripts/start-dev.js",
+    "public": "node scripts/start-public-demo.js",
     "dev:public": "node scripts/start-public-demo.js",
     "build": "node scripts/build-all.js",
     "start:backend": "npm --prefix Backend/api run start:dev",

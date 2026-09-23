@@ -20,7 +20,7 @@ async function bootstrap() {
     origin: true,
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type,Accept,Authorization,Bypass-Tunnel-Reminder,Idempotency-Key,X-Idempotency-Key',
+    allowedHeaders: 'Content-Type,Accept,Authorization,Bypass-Tunnel-Reminder,Idempotency-Key,X-Idempotency-Key,ngrok-skip-browser-warning',
     exposedHeaders: 'X-Idempotent-Replayed,X-Idempotency-Key',
   });
 

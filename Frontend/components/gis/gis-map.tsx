@@ -37,6 +37,39 @@ const GisMapDynamic = dynamic(() => import("./gis-map-client"), {
   ),
 });
 
+class MapErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any) {
+    console.warn("GisMap caught error during render/unmount:", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="w-full h-[520px] rounded-xl bg-slate-100 flex flex-col items-center justify-center text-slate-400 space-y-2 border">
+          <p className="text-xs font-semibold">GIS Map updating...</p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export function GisMap(props: GisMapProps) {
-  return <GisMapDynamic {...props} />;
+  return (
+    <MapErrorBoundary>
+      <GisMapDynamic {...props} />
+    </MapErrorBoundary>
+  );
 }

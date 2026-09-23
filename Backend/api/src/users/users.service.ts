@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
+import { isUuid } from '../common/utils/crypto.util';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { account_status, access_type } from '@prisma/client';
@@ -110,21 +111,38 @@ export class UsersService {
   }
 
   async findOne(userId: string) {
-    const user = await this.prisma.users.findUnique({
-      where: { user_id: userId },
-      include: {
-        user_roles: true,
-        user_jurisdictions: true,
-      },
-    });
+    const user = isUuid(userId)
+      ? await this.prisma.users.findUnique({
+          where: { user_id: userId },
+          include: {
+            user_roles: true,
+            user_jurisdictions: true,
+          },
+        })
+      : await this.prisma.users.findFirst({
+          where: { OR: [{ login_name: userId }, { email: userId }] },
+          include: {
+            user_roles: true,
+            user_jurisdictions: true,
+          },
+        });
     if (!user) throw new NotFoundException('User not found');
     const { password_hash, ...result } = user;
     return result;
   }
 
   async updateProfile(userId: string, data: any) {
+    let targetId = userId;
+    if (!isUuid(userId)) {
+      const user = await this.prisma.users.findFirst({
+        where: { OR: [{ login_name: userId }, { email: userId }] },
+        select: { user_id: true },
+      });
+      if (!user) throw new NotFoundException('User not found');
+      targetId = user.user_id;
+    }
     const updated = await this.prisma.users.update({
-      where: { user_id: userId },
+      where: { user_id: targetId },
       data: {
         full_name: data.full_name,
         preferred_language: data.preferred_language,

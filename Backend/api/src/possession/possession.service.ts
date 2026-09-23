@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
+import { isUuid } from '../common/utils/crypto.util';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -97,7 +98,8 @@ export class PossessionService {
     const memoNumber = data.memoNumber || `MEMO-POSS-${Date.now().toString().slice(-6)}`;
 
     const validUser =
-      (await this.prisma.users.findFirst({ where: { user_id: userId } })) ||
+      (isUuid(userId) ? await this.prisma.users.findFirst({ where: { user_id: userId } }) : null) ||
+      (userId ? await this.prisma.users.findFirst({ where: { OR: [{ login_name: userId }, { email: userId }] } }) : null) ||
       (await this.prisma.users.findFirst());
     const effectiveUserId = validUser?.user_id || '22222222-2222-2222-2222-222222222201';
 

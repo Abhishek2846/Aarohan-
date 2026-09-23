@@ -180,7 +180,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem("bhoomi_token");
         localStorage.removeItem("bhoomi_refresh_token");
         localStorage.removeItem("bhoomi_user");
-        if (!cancelled) setIsAuthenticated(false);
+        if (!cancelled) {
+          const storedRole = localStorage.getItem("bhoomi_active_role");
+          if (storedRole === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN")) {
+            setActiveRoleState("CITIZEN");
+            setUser(MOCK_PROFILES.CITIZEN);
+          }
+          setIsAuthenticated(false);
+        }
         return;
       }
 

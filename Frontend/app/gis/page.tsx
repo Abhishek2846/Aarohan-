@@ -39,6 +39,7 @@ import {
   RotateCcw,
   PenTool,
   Compass,
+  ArrowLeft,
 } from "lucide-react";
 
 // Robust matcher between Database Projects, URL query params, and GIS Corridor Presets
@@ -169,11 +170,18 @@ function resolveActivePreset(
 }
 
 function GisContent() {
-  const { user, activeRole } = useAuth();
+  const { user, activeRole, isAuthenticated } = useAuth();
   const { lang } = useI18n();
-  const isHi = lang === "hi";
-  const isCitizen = activeRole === "CITIZEN";
   const searchParams = useSearchParams();
+  const isHi = lang === "hi";
+  const isCitizen =
+    activeRole === "CITIZEN" ||
+    !isAuthenticated ||
+    searchParams?.get("role") === "citizen" ||
+    (typeof window !== "undefined" &&
+      (localStorage.getItem("bhoomi_active_role") === "CITIZEN" ||
+        document.cookie.includes("bhoomi_role=CITIZEN") ||
+        document.referrer.includes("/citizen")));
 
   // Active Project & City URL params
   const projectParam = searchParams
@@ -289,21 +297,20 @@ function GisContent() {
   };
 
   // Dynamic Parcels & Photos List based on Role and City
+  // CITIZEN receives role-shaped view: only their own masked parcel, no field photos
   const displayedParcels = useMemo(() => {
-    if (isCitizen && selectedCity.id === "bengaluru") {
+    if (isCitizen) {
       return [citizenParcel];
     }
     return selectedCity.parcels;
   }, [isCitizen, selectedCity, citizenParcel]);
 
   const displayedPhotos = useMemo(() => {
-    if (isCitizen && selectedCity.id === "bengaluru") {
-      return selectedCity.photos.filter(
-        (ph) => ph.ulpin === citizenUlpin || ph.surveyNo === "142/2A",
-      );
+    if (isCitizen) {
+      return [];
     }
     return selectedCity.photos;
-  }, [isCitizen, selectedCity, citizenUlpin]);
+  }, [isCitizen, selectedCity]);
 
   // Calculate Buffer Polygon dynamically
   const bufferPolygon = useMemo(() => {
@@ -342,9 +349,25 @@ function GisContent() {
       <div className="bg-[#fffdf8] border-[#d8d3c9] border rounded-2xl p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Left: City Selector & Corridor Info */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#ef5b2a]/10 dark:bg-blue-950/60 border border-[#d8d3c9] dark:border-blue-800 flex items-center justify-center text-blue-600 shrink-0">
-            <MapPin className="h-5 w-5 text-[#ef5b2a]" />
-          </div>
+          {isCitizen ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                window.location.href = "/citizen";
+              }}
+              className="bg-[#171716] hover:bg-[#2d2d2c] text-[#fffdf8] font-bold text-xs h-10 px-3.5 rounded-xl flex items-center gap-1.5 shadow-sm shrink-0"
+              title={isHi ? "वापस नागरिक पोर्टल पर जाएं" : "Return to Citizen Portal"}
+            >
+              <ArrowLeft className="h-4 w-4 text-[#ef5b2a]" />
+              <span>{isHi ? "वापस पोर्टल" : "Citizen Home"}</span>
+            </Button>
+          ) : (
+            <div className="w-10 h-10 rounded-xl bg-[#ef5b2a]/10 dark:bg-blue-950/60 border border-[#d8d3c9] dark:border-blue-800 flex items-center justify-center text-blue-600 shrink-0">
+              <MapPin className="h-5 w-5 text-[#ef5b2a]" />
+            </div>
+          )}
 
           <div>
             <div className="flex flex-wrap items-center gap-2">
@@ -579,7 +602,7 @@ function GisContent() {
             tileLayerType={tileLayerType}
             showBuffer={showBuffer}
             showParcels={showParcels}
-            showPhotos={showPhotos}
+            showPhotos={isCitizen ? false : showPhotos}
           />
 
           {/* Minimal Floating Map Legend */}
@@ -601,12 +624,14 @@ function GisContent() {
               <span className="w-2.5 h-2.5 bg-[#ef5b2a]/100/40 border border-blue-700 rounded-sm" />
               <span>{isHi ? "अधिग्रहित भूखंड" : "Cadastral Plot"}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 bg-emerald-600 rounded-sm text-[#171716] flex items-center justify-center text-[7px]">
-                📷
-              </span>
-              <span>{isHi ? "सत्यापित फ़ोटो" : "GPS Survey Photo"}</span>
-            </div>
+            {!isCitizen && (
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 bg-emerald-600 rounded-sm text-[#171716] flex items-center justify-center text-[7px]">
+                  📷
+                </span>
+                <span>{isHi ? "सत्यापित फ़ोटो" : "GPS Survey Photo"}</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -624,17 +649,18 @@ function GisContent() {
             >
               {isHi ? "भूखंड सूची" : "Land Plots"} ({displayedParcels.length})
             </button>
-            <button
-              onClick={() => setActiveSideTab("photos")}
-              className={`flex-1 py-1.5 rounded-lg font-semibold text-center transition-all ${
-                activeSideTab === "photos"
-                  ? "bg-[#ef5b2a]/10 text-[#ef5b2a] font-bold border border-[#ef5b2a]/30 shadow-sm"
-                  : "text-[#68655e] hover:text-[#171716] hover:bg-[#f4f1ea]"
-              }`}
-            >
-              {isHi ? "सर्वे फ़ोटो" : "Survey Photos"} ({displayedPhotos.length}
-              )
-            </button>
+            {!isCitizen && (
+              <button
+                onClick={() => setActiveSideTab("photos")}
+                className={`flex-1 py-1.5 rounded-lg font-semibold text-center transition-all ${
+                  activeSideTab === "photos"
+                    ? "bg-[#ef5b2a]/10 text-[#ef5b2a] font-bold border border-[#ef5b2a]/30 shadow-sm"
+                    : "text-[#68655e] hover:text-[#171716] hover:bg-[#f4f1ea]"
+                }`}
+              >
+                {isHi ? "सर्वे फ़ोटो" : "Survey Photos"} ({displayedPhotos.length})
+              </button>
+            )}
             <button
               onClick={() => setActiveSideTab("corridor")}
               className={`flex-1 py-1.5 rounded-lg font-semibold text-center transition-all ${

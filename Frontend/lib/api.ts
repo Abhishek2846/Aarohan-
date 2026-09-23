@@ -35,9 +35,33 @@ function trimTrailingSlash(value: string) {
 }
 
 export function getApiBaseUrl(): string {
-  // Keep the fallback pointed at NestJS so a missing .env.local cannot
-  // silently route requests to the old in-memory Next.js mock handlers.
-  return trimTrailingSlash(process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/v1");
+  const configured = process.env.NEXT_PUBLIC_API_URL;
+  if (configured) {
+    const trimmed = trimTrailingSlash(configured);
+    // If running in a browser from a remote hostname (e.g. ngrok tunnel or LAN IP)
+    // and the configured URL points to localhost or is relative, use the current public origin
+    if (
+      typeof window !== "undefined" &&
+      window.location.hostname !== "localhost" &&
+      window.location.hostname !== "127.0.0.1"
+    ) {
+      if (trimmed.startsWith("/") || trimmed.includes("localhost:") || trimmed.includes("127.0.0.1:")) {
+        return `${window.location.origin}/v1`;
+      }
+    }
+    return trimmed;
+  }
+
+  // Fallback when NEXT_PUBLIC_API_URL is undefined: use current public origin if remote, else localhost
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname !== "localhost" &&
+    window.location.hostname !== "127.0.0.1"
+  ) {
+    return `${window.location.origin}/v1`;
+  }
+
+  return "http://localhost:3001/v1";
 }
 
 function getStoredToken(key: string) {
@@ -106,6 +130,7 @@ export async function apiClient<T>(endpoint: string, options: RequestOptions = {
 
   if (!requestHeaders.has("Accept")) requestHeaders.set("Accept", "application/json");
   if (!requestHeaders.has("Bypass-Tunnel-Reminder")) requestHeaders.set("Bypass-Tunnel-Reminder", "true");
+  if (!requestHeaders.has("ngrok-skip-browser-warning")) requestHeaders.set("ngrok-skip-browser-warning", "true");
   if (body !== undefined && !isFormData && !requestHeaders.has("Content-Type")) {
     requestHeaders.set("Content-Type", "application/json");
   }

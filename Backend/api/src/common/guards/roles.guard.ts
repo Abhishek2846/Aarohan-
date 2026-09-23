@@ -3,6 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { PrismaService } from '../prisma/prisma.service';
+import { isUuid } from '../utils/crypto.util';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -41,11 +42,21 @@ export class RolesGuard implements CanActivate {
     }
 
     if (userRoleCodes.length === 0) {
-      const dbUserRoles = await this.prisma.user_roles.findMany({
-        where: { user_id: user.userId },
-        select: { role_code: true },
-      });
-      userRoleCodes = dbUserRoles.map((ur) => ur.role_code);
+      if (isUuid(user.userId)) {
+        const dbUserRoles = await this.prisma.user_roles.findMany({
+          where: { user_id: user.userId },
+          select: { role_code: true },
+        });
+        userRoleCodes = dbUserRoles.map((ur) => ur.role_code);
+      } else {
+        const dbUser = await this.prisma.users.findFirst({
+          where: { OR: [{ login_name: user.userId }, { email: user.userId }] },
+          include: { user_roles: true },
+        });
+        if (dbUser && dbUser.user_roles.length > 0) {
+          userRoleCodes = dbUser.user_roles.map((ur) => ur.role_code);
+        }
+      }
     }
 
     // Global administrative role
@@ -57,7 +68,6 @@ export class RolesGuard implements CanActivate {
     const expandedUserRoles = new Set<string>(userRoleCodes);
     if (userRoleCodes.includes('CENTRAL_MINISTRY')) {
       expandedUserRoles.add('MINISTRY_OFFICIAL');
-      expandedUserRoles.add('SYSTEM_ADMIN');
     }
     if (userRoleCodes.includes('STATE_AUTHORITY')) {
       expandedUserRoles.add('STATE_ADMIN');

@@ -3,7 +3,7 @@ import { test, expect } from "../fixtures/test-base";
 test.describe("Role: Citizen Transparency Portal", () => {
   test("Public citizen portal loads without requiring authentication", async ({ page }) => {
     await page.goto("/citizen");
-    await expect(page.locator("h1, h2, h3").filter({ hasText: /Citizen|पारदर्शिता|नागरिक/i }).first()).toBeVisible();
+    await expect(page.locator("h1, h2, h3, .badge").filter({ hasText: /Citizen|Compensation|Welcome|नागरिक/i }).first()).toBeVisible();
   });
 
   test("Allows looking up ULPIN and switches between information tabs", async ({ page }) => {

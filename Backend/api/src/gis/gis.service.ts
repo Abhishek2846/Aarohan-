@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
+import { isUuid } from '../common/utils/crypto.util';
 import {
   PublicParcelMapDto,
   PiaParcelMapDto,
@@ -244,10 +245,22 @@ export class GisService {
     let userRole = 'CITIZEN';
     let userRecord = null;
     if (userId) {
-      userRecord = await this.prisma.users.findUnique({
-        where: { user_id: userId },
-        include: { user_roles: true },
-      });
+      if (isUuid(userId)) {
+        userRecord = await this.prisma.users.findUnique({
+          where: { user_id: userId },
+          include: { user_roles: true },
+        });
+      } else {
+        userRecord = await this.prisma.users.findFirst({
+          where: {
+            OR: [
+              { login_name: userId },
+              { email: userId },
+            ],
+          },
+          include: { user_roles: true },
+        });
+      }
       if (userRecord && userRecord.user_roles.length > 0) {
         userRole = userRecord.user_roles[0].role_code;
       }

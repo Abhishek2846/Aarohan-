@@ -31,6 +31,7 @@ export class FieldController {
     };
   }
 
+  @Roles('FIELD_OFFICER', 'DISTRICT_OFFICER', 'SYSTEM_ADMIN')
   @Patch('tasks/:id/status')
   @ApiOperation({ summary: 'Update field survey task status and measurements' })
   async updateStatus(
@@ -46,6 +47,7 @@ export class FieldController {
     };
   }
 
+  @Roles('FIELD_OFFICER', 'SYSTEM_ADMIN')
   @Post('surveys')
   @ApiOperation({ summary: 'Save completed field walking survey with measured area and GPS coordinates' })
   async saveSurvey(

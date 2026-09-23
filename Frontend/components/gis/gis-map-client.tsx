@@ -58,7 +58,13 @@ function ChangeMapView({
 }) {
   const map = useMap();
   useEffect(() => {
-    map.setView(center, zoom);
+    try {
+      if (map && typeof map.setView === "function") {
+        map.setView(center, zoom);
+      }
+    } catch {
+      // Safe no-op if map is unmounting
+    }
   }, [center, zoom, map]);
   return null;
 }

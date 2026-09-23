@@ -17,6 +17,7 @@ export class AcquisitionCasesController {
     return this.casesService.createCase(body, req.user?.userId);
   }
 
+  @Roles('PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'FIELD_OFFICER', 'AUDITOR', 'SYSTEM_ADMIN')
   @Get()
   @ApiOperation({ summary: 'Search and filter cases' })
   async searchCases(@Query() query: any) {
@@ -35,6 +36,7 @@ export class AcquisitionCasesController {
   }
 
   @CheckJurisdiction({ param: 'id', resource: 'case' })
+  @Roles('PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'FIELD_OFFICER', 'AUDITOR', 'SYSTEM_ADMIN')
   @Get(':id')
   @ApiOperation({ summary: 'Get single acquisition case details' })
   async getCase(@Param('id') id: string) {
@@ -42,6 +44,7 @@ export class AcquisitionCasesController {
   }
 
   @CheckJurisdiction({ param: 'id', resource: 'case' })
+  @Roles('PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'FIELD_OFFICER', 'AUDITOR', 'SYSTEM_ADMIN')
   @Get(':id/stages')
   @ApiOperation({ summary: 'Get case stage history and timelines' })
   async getCaseStages(@Param('id') id: string) {

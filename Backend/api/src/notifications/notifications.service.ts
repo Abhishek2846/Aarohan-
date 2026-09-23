@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/prisma/prisma.service';
+import { isUuid } from '../common/utils/crypto.util';
 import { v4 as uuidv4 } from 'uuid';
 import { notification_severity, notification_channel } from '@prisma/client';
 
@@ -51,10 +52,19 @@ export class NotificationsService {
   }
 
   async getUserNotifications(userId: string) {
+    let effectiveId = userId;
+    if (!isUuid(userId)) {
+      const user = await this.prisma.users.findFirst({
+        where: { OR: [{ login_name: userId }, { email: userId }] },
+        select: { user_id: true },
+      });
+      if (!user) return [];
+      effectiveId = user.user_id;
+    }
     return this.prisma.notifications.findMany({
-      where: { user_id: userId },
+      where: { user_id: effectiveId },
       orderBy: { created_at: 'desc' },
-      take: 50
+      take: 50,
     });
   }
 

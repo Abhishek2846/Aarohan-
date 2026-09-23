@@ -17,12 +17,15 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { useI18n } from "@/hooks/use-i18n";
+import { useAuth } from "@/hooks/use-auth";
 import { usePossessionQuery } from "@/hooks/queries/use-bhoomi-queries";
 import { apiClient } from "@/lib/api";
 
 export default function PossessionHandoverPage() {
   const { lang } = useI18n();
   const isHi = lang === "hi";
+  const { activeRole } = useAuth();
+  const canGenerateMemo = activeRole === "FIELD_OFFICER" || activeRole === "DISTRICT_OFFICER" || activeRole === "STATE_AUTHORITY";
   const { data: dbHandovers = [], refetch } = usePossessionQuery();
 
   const [memoNumber, setMemoNumber] = useState("MEMO-POSS-2026-042");
@@ -113,7 +116,41 @@ export default function PossessionHandoverPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {memoGenerated ? (
+              {!canGenerateMemo ? (
+                <div className="p-6 rounded-2xl bg-[#fffdf8] border border-[#d8d3c9] space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-700">
+                      <ShieldCheck className="h-6 w-6 text-amber-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-sm text-[#171716]">
+                        {isHi ? "एजेंसी कब्जा निगरानी डेस्क (केवल अवलोकन)" : "Statutory Possession Handover View"}
+                      </h3>
+                      <p className="text-xs text-[#68655e]">
+                        {isHi
+                          ? "भूमि कानून 2013 की धारा 38 के तहत कब्जा पंचनामा सक्षम प्राधिकारी (CALA) एवं राजस्व अमीन द्वारा पूरा मुआवजा संवितरण उपरांत जारी किया जाता है।"
+                          : "Under RFCTLARR Section 38, physical possession Panchanama memos are formally executed by CALA and Field Officers after 100% PFMS DBT disbursement."}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[#f4f1ea] border border-[#d8d3c9] space-y-2 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#171716] uppercase text-[10px] tracking-wider">
+                        {isHi ? "सुपुर्दगी पात्रता मानक" : "Possession Entitlement Checklist"}
+                      </span>
+                      <Badge variant="outline" className="border-emerald-300 bg-emerald-50 text-emerald-800 text-[10px]">
+                        Section 38 Protected
+                      </Badge>
+                    </div>
+                    <ul className="space-y-1.5 text-[11px] text-[#68655e] list-disc list-inside">
+                      <li>{isHi ? "100% प्रतिकर राशि भूस्वामी के बैंक खाते में जमा होना अनिवार्य" : "100% PFMS direct benefit transfer into khatedar bank account required prior to handover."}</li>
+                      <li>{isHi ? "मौके पर पंचनामा तैयार कर जीपीएस तस्वीरें संलग्न की जाती हैं" : "Site panchanama with dual witnesses & sub-meter GNSS boundary pegs captured on field."}</li>
+                      <li>{isHi ? "परियोजना एजेंसी भौतिक रूप से जमीन का कब्जा प्राप्त करती है" : "Infrastructure agency receives physical right-of-way upon CALA endorsement."}</li>
+                    </ul>
+                  </div>
+                </div>
+              ) : memoGenerated ? (
                 <div className="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center space-y-3">
                   <CheckCircle2 className="h-12 w-12 text-emerald-600 mx-auto" />
                   <div className="space-y-1">

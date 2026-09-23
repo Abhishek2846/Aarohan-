@@ -4,6 +4,7 @@ import { PrismaService } from '../common/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import * as crypto from 'crypto';
+import { isUuid } from '../common/utils/crypto.util';
 
 @Injectable()
 export class AuthService {
@@ -235,13 +236,26 @@ export class AuthService {
   }
 
   async getMe(userId: string) {
-    const user = await this.prisma.users.findUnique({
-      where: { user_id: userId },
-      include: {
-        user_roles: { include: { roles: true } },
-        user_jurisdictions: { include: { jurisdictions: true } },
-      },
-    });
+    const user = isUuid(userId)
+      ? await this.prisma.users.findUnique({
+          where: { user_id: userId },
+          include: {
+            user_roles: { include: { roles: true } },
+            user_jurisdictions: { include: { jurisdictions: true } },
+          },
+        })
+      : await this.prisma.users.findFirst({
+          where: {
+            OR: [
+              { login_name: userId },
+              { email: userId },
+            ],
+          },
+          include: {
+            user_roles: { include: { roles: true } },
+            user_jurisdictions: { include: { jurisdictions: true } },
+          },
+        });
 
     if (!user) throw new UnauthorizedException('User not found');
 
@@ -687,7 +701,13 @@ export class AuthService {
   }) {
     let user = null;
     if (dto.userId) {
-      user = await this.prisma.users.findUnique({ where: { user_id: dto.userId } });
+      if (isUuid(dto.userId)) {
+        user = await this.prisma.users.findUnique({ where: { user_id: dto.userId } });
+      } else {
+        user = await this.prisma.users.findFirst({
+          where: { OR: [{ login_name: dto.userId }, { email: dto.userId }] },
+        });
+      }
     }
     if (!user && dto.email) {
       user = await this.prisma.users.findFirst({ where: { email: dto.email } });
@@ -769,17 +789,22 @@ export class AuthService {
   }
 
   async revokeUserSessions(targetUserId: string, revokedByOfficerId: string) {
-    const targetUser = await this.prisma.users.findUnique({
-      where: { user_id: targetUserId },
-      include: { user_roles: true },
-    });
+    const targetUser = isUuid(targetUserId)
+      ? await this.prisma.users.findUnique({
+          where: { user_id: targetUserId },
+          include: { user_roles: true },
+        })
+      : await this.prisma.users.findFirst({
+          where: { OR: [{ login_name: targetUserId }, { email: targetUserId }] },
+          include: { user_roles: true },
+        });
     if (!targetUser) {
       throw new NotFoundException(`User with ID ${targetUserId} not found`);
     }
 
     const result = await this.prisma.auth_sessions.updateMany({
       where: {
-        user_id: targetUserId,
+        user_id: targetUser.user_id,
         revoked_at: null,
       },
       data: {

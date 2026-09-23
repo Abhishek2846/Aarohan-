@@ -105,4 +105,18 @@ export class CryptoUtil {
     const rest = parts.slice(1).map((p) => `${p[0]}****`).join(' ');
     return `${first} ${rest}`;
   }
+
+  /**
+   * Check if a string is a valid UUID format
+   */
+  static isUuid(val?: string | null): boolean {
+    return isUuid(val);
+  }
 }
+
+export const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export function isUuid(val?: string | null): boolean {
+  return typeof val === 'string' && UUID_REGEX.test(val.trim());
+}
+

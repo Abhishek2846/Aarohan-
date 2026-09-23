@@ -12,12 +12,14 @@ import { Roles } from '../common/decorators/roles.decorator';
 export class RrController {
   constructor(private readonly rrService: RrService) {}
 
+  @Roles('PIA', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'SYSTEM_ADMIN')
   @Get()
   @ApiOperation({ summary: 'Get Rehabilitation & Resettlement roster, grants summary, and grievances' })
   async getRr() {
     return this.rrService.getRrOverview();
   }
 
+  @Roles('CITIZEN', 'DISTRICT_OFFICER', 'STATE_AUTHORITY', 'SYSTEM_ADMIN')
   @Post()
   @ApiOperation({ summary: 'Submit a grievance or R&R application' })
   async submitGrievance(@Body() body: any, @Req() req: any) {

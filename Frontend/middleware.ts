@@ -3,20 +3,38 @@ import type { NextRequest } from "next/server";
 import { getRoleLandingRoute } from "@/lib/auth";
 import type { UserRole } from "@/types/user";
 
-const PUBLIC_PATHS = ["/login", "/citizen", "/unauthorized", "/auth", "/verify"];
+const PUBLIC_PATHS = ["/login", "/citizen", "/unauthorized", "/auth", "/verify", "/gazette", "/gis"];
 
-// Strict statutory role-to-route permissions
+// Statutory role-to-route permissions — enforced at the Edge before any page renders.
+// CITIZEN: allowed on /gis, /gazette, /documents, /citizen, /verify only.
+// All officer dashboards, /cases, /compensation, /possession, /rr, /audit, /analytics,
+// /gati-shakti, /simulation, /survey, /settings, /projects/new block CITIZEN.
 const ROLE_ROUTE_PERMISSIONS: Record<string, UserRole[]> = {
-  "/dashboard/national": ["CENTRAL_MINISTRY"],
-  "/dashboard/state": ["STATE_AUTHORITY"],
-  "/dashboard/district": ["DISTRICT_OFFICER"],
-  "/dashboard/pia": ["PIA"],
-  "/dashboard/auditor": ["AUDITOR"],
-  "/field": ["FIELD_OFFICER"],
-  "/analytics": ["CENTRAL_MINISTRY"],
-  "/projects/new": ["PIA"],
+  // ── Exclusive home dashboards ──────────────────────────────────────────────
+  "/dashboard/national":  ["CENTRAL_MINISTRY"],
+  "/dashboard/state":     ["STATE_AUTHORITY"],
+  "/dashboard/district":  ["DISTRICT_OFFICER"],
+  "/dashboard/pia":       ["PIA"],
+  "/dashboard/auditor":   ["AUDITOR"],
+  "/field":               ["FIELD_OFFICER"],
+
+  // ── Officer-only modules (CITIZEN explicitly excluded) ─────────────────────
+  "/audit":       ["AUDITOR"],
+  "/analytics":   ["CENTRAL_MINISTRY"],
+  "/simulation":  ["CENTRAL_MINISTRY", "STATE_AUTHORITY", "DISTRICT_OFFICER", "PIA"],
+  "/cases":       ["PIA", "CENTRAL_MINISTRY", "STATE_AUTHORITY", "DISTRICT_OFFICER", "FIELD_OFFICER", "AUDITOR"],
+  "/compensation":["PIA", "CENTRAL_MINISTRY", "STATE_AUTHORITY", "DISTRICT_OFFICER", "AUDITOR"],
+  "/possession":  ["PIA", "CENTRAL_MINISTRY", "STATE_AUTHORITY", "DISTRICT_OFFICER", "FIELD_OFFICER"],
+  "/rr":          ["PIA", "STATE_AUTHORITY", "DISTRICT_OFFICER"],
+  "/survey":      ["FIELD_OFFICER", "DISTRICT_OFFICER"],
+  "/settings":    ["CENTRAL_MINISTRY", "STATE_AUTHORITY"],
+  "/projects/new":["PIA"],
+  "/projects":    ["PIA", "CENTRAL_MINISTRY", "STATE_AUTHORITY", "DISTRICT_OFFICER", "AUDITOR"],
   "/gati-shakti": ["CENTRAL_MINISTRY", "STATE_AUTHORITY", "DISTRICT_OFFICER", "PIA", "AUDITOR"],
-  "/audit": ["AUDITOR"],
+
+  // ── Shared access (CITIZEN included) ──────────────────────────────────────
+  // /gis, /gazette, /documents are NOT listed here — they are allowed for all
+  // authenticated users including CITIZEN. In-page RoleGate handles write actions.
 };
 
 export function middleware(request: NextRequest) {
@@ -26,6 +44,7 @@ export function middleware(request: NextRequest) {
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
+    pathname.startsWith("/v1") ||
     pathname.includes(".") ||
     pathname === "/"
   ) {
@@ -67,5 +86,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|v1|_next/static|_next/image|favicon.ico).*)"],
 };

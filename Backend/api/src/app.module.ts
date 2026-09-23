@@ -34,6 +34,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
 import { JurisdictionGuard } from './common/guards/jurisdiction.guard';
 import { IdempotencyInterceptor } from './common/interceptors/idempotency.interceptor';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -77,7 +78,7 @@ import { IdempotencyInterceptor } from './common/interceptors/idempotency.interc
     GatiShaktiModule,
     GazetteModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,

@@ -17,12 +17,14 @@ export class ProjectsController {
     return this.projectsService.createProject(body, req.user?.userId);
   }
 
+  @Roles('PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'AUDITOR', 'SYSTEM_ADMIN')
   @Get()
   @ApiOperation({ summary: 'Search and filter projects' })
   async searchProjects(@Query() query: any) {
     return this.projectsService.searchProjects(query);
   }
 
+  @Roles('PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'AUDITOR', 'SYSTEM_ADMIN')
   @Get(':id')
   @ApiOperation({ summary: 'Get project details' })
   async getProject(@Param('id') id: string) {
@@ -37,6 +39,7 @@ export class ProjectsController {
     return this.projectsService.updateProject(id, body);
   }
 
+  @Roles('PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'AUDITOR', 'SYSTEM_ADMIN')
   @Get(':id/alignments')
   @ApiOperation({ summary: 'Get project alignment GIS route versions' })
   async getProjectAlignments(@Param('id') id: string) {
@@ -59,6 +62,7 @@ export class ProjectsController {
     return this.projectsService.addJurisdiction(id, body.jurisdictionId, body.isPrimary);
   }
 
+  @Roles('PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'AUDITOR', 'SYSTEM_ADMIN')
   @Get(':id/progress')
   @ApiOperation({ summary: 'Get overall project progress based on cases' })
   async getProgress(@Param('id') id: string) {

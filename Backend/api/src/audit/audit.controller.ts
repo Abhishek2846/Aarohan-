@@ -39,6 +39,8 @@ export class AuditController {
     };
   }
 
+  // Auditor is strictly read-only: only State, Ministry, or System Admin may resolve or update anomaly status
+  @Roles('CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'SYSTEM_ADMIN')
   @Post('anomalies/:id/status')
   @ApiOperation({ summary: 'Update audit anomaly status' })
   async updateAnomalyStatus(@Param('id') id: string, @Body('status') status: string) {

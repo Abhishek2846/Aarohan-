@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 
 import { useI18n } from "@/hooks/use-i18n";
+import { useAuth } from "@/hooks/use-auth";
 import { useCompensationQuery, usePfmsDispatchMutation } from "@/hooks/queries/use-bhoomi-queries";
 import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -49,6 +50,8 @@ interface Beneficiary {
 export default function CompensationPaymentPage() {
   const { lang } = useI18n();
   const isHi = lang === "hi";
+  const { activeRole } = useAuth();
+  const canDispatchPfms = activeRole === "DISTRICT_OFFICER" || activeRole === "STATE_AUTHORITY";
   const { data: compData, isLoading: isCompLoading } = useCompensationQuery();
   const pfmsMutation = usePfmsDispatchMutation();
 
@@ -182,20 +185,26 @@ export default function CompensationPaymentPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button
-            onClick={handleDispatchPFMS}
-            disabled={pfmsBatchStatus === "TRANSMITTING"}
-            className="bg-[#171716] hover:bg-[#2d2d2c] text-[#fffdf8] font-bold shadow-sm text-xs h-9 flex items-center gap-2 shadow-sm"
-          >
-            <RefreshCw className={`h-3.5 w-3.5 ${pfmsBatchStatus === "TRANSMITTING" ? "animate-spin" : ""}`} />
-            <span>
-              {pfmsBatchStatus === "TRANSMITTING"
-                ? (isHi ? "बैंक खाते में पैसा भेजा जा रहा है..." : "Processing Bank Transfer...")
-                : pfmsBatchStatus === "DISBURSED"
-                ? (isHi ? "बैंक खाते में मुआवजा भेजा जा चुका है" : "Direct Bank Payments Sent")
-                : (isHi ? "सीधे बैंक खाते में मुआवजा भेजें" : "Send Direct Bank Payments")}
-            </span>
-          </Button>
+          {canDispatchPfms ? (
+            <Button
+              onClick={handleDispatchPFMS}
+              disabled={pfmsBatchStatus === "TRANSMITTING"}
+              className="bg-[#171716] hover:bg-[#2d2d2c] text-[#fffdf8] font-bold shadow-sm text-xs h-9 flex items-center gap-2 shadow-sm"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${pfmsBatchStatus === "TRANSMITTING" ? "animate-spin" : ""}`} />
+              <span>
+                {pfmsBatchStatus === "TRANSMITTING"
+                  ? (isHi ? "बैंक खाते में पैसा भेजा जा रहा है..." : "Processing Bank Transfer...")
+                  : pfmsBatchStatus === "DISBURSED"
+                  ? (isHi ? "बैंक खाते में मुआवजा भेजा जा चुका है" : "Direct Bank Payments Sent")
+                  : (isHi ? "सीधे बैंक खाते में मुआवजा भेजें" : "Send Direct Bank Payments")}
+              </span>
+            </Button>
+          ) : (
+            <Badge variant="outline" className="text-[11px] font-mono border-amber-300 bg-amber-50/60 text-amber-800 py-1 px-2.5">
+              PFMS Dispatch: CALA / State Authority Desk
+            </Badge>
+          )}
         </div>
       </div>
 
