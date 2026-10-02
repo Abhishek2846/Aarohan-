@@ -1,8 +1,8 @@
-# 🏞️ BhoomiSetu (भूमि-सेतु) | Enterprise Land Acquisition & AI Intelligence Platform
+# 🏞️ Aarohan (आरोहण) | Enterprise Land Acquisition & AI Intelligence Platform
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6+-blue.svg)](https://www.typescriptlang.org/)
 [![NestJS](https://img.shields.io/badge/NestJS-11.0+-red.svg)](https://nestjs.com/)
-[![Next.js](https://img.shields.io/badge/Next.js-14.0+-black.svg)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-14.2+-black.svg)](https://nextjs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791.svg)](https://www.postgresql.org/)
 [![PostGIS](https://img.shields.io/badge/PostGIS-Spatial_Enabled-green.svg)](https://postgis.net/)
 [![DPDP Act](https://img.shields.io/badge/DPDP_Act_2023-Compliant_AES--256--GCM-success.svg)](https://www.meity.gov.in/)
@@ -32,14 +32,14 @@
 13. [Environment Configuration Reference](#-environment-configuration-reference)
 14. [Complete Step-by-Step Reproduction & Deployment Guide](#-complete-step-by-step-reproduction--deployment-guide)
 15. [Automated Verification & Test Suites](#-automated-verification--test-suites)
-16. [Public Cloud & NGROK Tunnel Architecture](#-public-cloud--ngrok-tunnel-architecture)
+16. [Public Cloud & Tunnel Architecture](#-public-cloud--tunnel-architecture)
 17. [License & Intellectual Property](#-license--intellectual-property)
 
 ---
 
 ## 🏛️ Executive Summary & Vision
 
-**BhoomiSetu (भूमि-सेतु)** is an enterprise-grade, centralized, GIS-enabled, role-based Land Acquisition and Resettlement Lifecycle Management Platform architected for India's linear national infrastructure corridors (Highways, Expressways, Dedicated Freight Corridors, High-Speed Rail, Renewable Energy Grids, and Industrial Corridors).
+**Aarohan (आरोहण)** is an enterprise-grade, centralized, GIS-enabled, role-based Land Acquisition and Resettlement Lifecycle Management Platform architected for India's linear national infrastructure corridors (Highways, Expressways, Dedicated Freight Corridors, High-Speed Rail, Renewable Energy Grids, and Industrial Corridors).
 
 ### Key Industry Problems Addressed:
 1. **Prolonged Statutory Delays:** Average linear infrastructure acquisition spans 36–54 months due to fragmented offline handoffs across village Amins, District Collectors, and Central Ministries.
@@ -48,13 +48,13 @@
 4. **Data Privacy Vulnerabilities:** Leakage of citizen PII (Aadhaar, bank account numbers, circle rate records) violating the Digital Personal Data Protection (DPDP) Act 2023.
 5. **Inter-Agency Clearance Bottlenecks:** Lack of spatial alignment with PM GatiShakti national GIS layers causing unexpected collisions with forest reserves, wildlife sanctuaries, and defense assets.
 
-BhoomiSetu digitizes and binds every stakeholder into a unified cryptographic ledger, eliminating bottlenecks while enforcing 100% legal compliance.
+Aarohan digitizes and binds every stakeholder into a unified cryptographic ledger, eliminating bottlenecks while enforcing 100% legal compliance.
 
 ---
 
 ## ⚖️ Statutory Framework & Legal Compliance
 
-BhoomiSetu directly codifies and enforces the following statutory mandates:
+Aarohan directly codifies and enforces the following statutory mandates:
 
 | Mandate / Act | Code / Section | System Implementation |
 | :--- | :--- | :--- |
@@ -109,7 +109,7 @@ The platform enforces a deterministic state machine across **12 statutory stages
 
 ## 💰 Statutory Compensation & Tax-Exemption Engine
 
-BhoomiSetu integrates a mathematical calculation engine strictly matching the First Schedule of the RFCTLARR Act 2013 and Section 10(37) of the Income Tax Act 1961.
+Aarohan integrates a mathematical calculation engine strictly matching the First Schedule of the RFCTLARR Act 2013 and Section 10(37) of the Income Tax Act 1961.
 
 ### 1. Land Valuation Mathematical Formulation
 
@@ -139,7 +139,7 @@ $$\text{Gross Award} = \text{Multiplied Value} + \text{Solatium} + \text{Additio
 
 ## 🗺️ PM GatiShakti GIS & Cadastral Spatial Engine
 
-BhoomiSetu operates an enterprise spatial engine built on **PostgreSQL / PostGIS** conforming to the BISAG-N PM GatiShakti National Master Plan (NMP) data specifications.
+Aarohan operates an enterprise spatial engine built on **PostgreSQL / PostGIS** conforming to the BISAG-N PM GatiShakti National Master Plan (NMP) data specifications.
 
 ```
        PROJECT CORRIDOR ALIGNMENT (LineString / MultiLineString WGS84)
@@ -172,7 +172,7 @@ CADASTRAL PARCELS            GATI SHAKTI LAYERS            FIELD SURVEY GPS
 
 ## 🧠 AI Intelligence, Predictive ML & Simulation Subsystems
 
-BhoomiSetu features specialized AI services running inside the NestJS engine:
+Aarohan features specialized AI services running inside the NestJS engine:
 
 ### 1. 90-Day Statutory Delay Prediction Engine
 Predicts whether a land acquisition project will cross the critical **90-Day Delay Threshold** beyond statutory SLAs:
@@ -185,7 +185,7 @@ Predicts whether a land acquisition project will cross the critical **90-Day Del
 - **TreeSHAP Explainability:** Returns exact feature attribution weights (e.g., `+22.4% delay risk from unresolved forest NOC`).
 - **Prescriptive Actions:** Yields actionable statutory remedies (e.g., *"Convene Section 15(2) Joint Hearing within 7 days to reduce expected delay by 18 days"*).
 
-### 2. Multilingual NLP Assistant (Bhoomi AI)
+### 2. Multilingual NLP Assistant (Aarohan AI)
 - Fully conversational assistant supporting **English** and **Hindi (हिंदी)**.
 - Context-aware intent detection for:
   - Case status inquiries (`CASE_STATUS`)
@@ -210,7 +210,7 @@ Continuously scans database records to detect inconsistencies:
 
 ## 🔒 DPDP Act 2023 Field-Level Encryption & Security Architecture
 
-To guarantee strict compliance with the **Digital Personal Data Protection (DPDP) Act 2023**, BhoomiSetu implements zero-trust cryptographic protections:
+To guarantee strict compliance with the **Digital Personal Data Protection (DPDP) Act 2023**, Aarohan implements zero-trust cryptographic protections:
 
 ```
 [Plaintext Citizen Data]
@@ -261,7 +261,7 @@ The platform defines **7 distinct user personas**, each equipped with tailored d
 | `DISTRICT_OFFICER` | District Collector / CALA | Section 15 objection hearings, award calculations, PFMS payment approvals. | `dc.bengaluru@karnataka.gov.in` |
 | `FIELD_OFFICER` | Revenue Inspector / Amin | GPS field survey, boundary demarcation, geotagged camera evidence capture. | `s.patil@karnataka.gov.in` |
 | `AUDITOR` | CAG / Vigilance Auditor | Merkle audit ledger verification, anomaly investigations, compliance scoring. | `kn.raghavan@cag.gov.in` |
-| `CITIZEN` | Affected Landowner | Land parcel lookup, claim verification, objection filing, DBT payment tracking. | `citizen@public.bhoomsetu.gov.in` |
+| `CITIZEN` | Affected Landowner | Land parcel lookup, claim verification, objection filing, DBT payment tracking. | `citizen@public.aarohan.gov.in` |
 
 > 🔑 **Demo Password for all seeded accounts:** `aarohan2026`
 
@@ -269,57 +269,72 @@ The platform defines **7 distinct user personas**, each equipped with tailored d
 
 ## 🖥️ Frontend Application Topology & Component Catalog
 
-Built using **Next.js 14 App Router** with React 18, Tailwind CSS, Radix UI primitives, Lucide Icons, Leaflet GIS, and Recharts.
+Built using **Next.js 14 App Router** with React 18, Tailwind CSS, Radix UI primitives, Lucide Icons, Leaflet GIS, Recharts, and Framer Motion.
 
 ### Frontend Route Map (34 Routes)
 
 ```
 Frontend/app/
-├── (auth)/
-│   ├── login/                     # Secure biometric/credentials login with role selector
-│   ├── auth/callback/             # OAuth2 / Parichay SSO callback handler
-│   ├── auth/parichay-gateway/     # National Single Sign-On simulation portal
-│   └── unauthorized/              # 403 Forbidden role-gate fallthrough screen
-├── dashboard/                     # Role-based adaptive root dashboard
-│   ├── national/                  # Central Ministry GIS national corridor command center
-│   ├── state/                     # State Revenue Department project sanction dashboard
-│   ├── district/                  # CALA / District Collector statutory SLA roster
-│   ├── pia/                       # Implementing Agency (NHAI/Railways) alignment cockpit
-│   └── auditor/                   # CAG Cryptographic Audit & Anomaly Intelligence console
-├── projects/                      # Corridor infrastructure portfolio
-│   ├── new/                       # Multi-step project creation wizard
-│   ├── [id]/                      # Detailed project overview and milestones
-│   └── [id]/alignment/            # Interactive GeoJSON alignment & ROW buffer editor
-├── cases/                         # Statutory acquisition case manager
-│   ├── new/                       # New case registration wizard
-│   └── [id]/                      # Case 360° cockpit: stages, parcels, documents, awards
-├── gis/                           # Full-screen GIS cadastral mapping portal
-├── gati-shakti/                   # PM GatiShakti multi-agency geo-clearance screener
-├── compensation/                  # Statutory award calculation & PFMS batch payment center
-├── possession/                    # Section 38 possession memo & panchnama generator
-├── rr/                            # Resettlement & Rehabilitation Schedule II benefits ledger
-├── survey/                        # Field operations and joint demarcation planner
-├── field/                         # Mobile-first surveyor PWA with camera & GPS capture
-├── gazette/                       # Bilingual Section 11/19 gazette publishing center
-├── verify/gazette/                # Public cryptographic QR verification portal
-├── citizen/                       # Citizen public portal: claims, tracking & grievances
-├── documents/                     # DMS with versioning, SHA-256 checks & viewer
-├── analytics/                     # Macro cross-state performance & SLA compliance analytics
-├── simulation/                    # What-If policy & corridor alignment simulation sandbox
-├── audit/                         # Cryptographic Merkle audit chain inspector
-├── profile/                       # User profile, digital signature & credential manager
-└── settings/                      # Platform parameters & DPDP privacy configurations
+├── page.tsx                          # Landing page & public portal entry
+├── login/                            # Secure credentials login with role selector
+├── auth/
+│   ├── callback/                     # OAuth2 / Parichay SSO callback handler
+│   └── parichay-gateway/             # National Single Sign-On simulation portal
+├── unauthorized/                     # 403 Forbidden role-gate fallthrough screen
+├── dashboard/                        # Role-based adaptive root dashboard redirector
+│   ├── national/                     # Central Ministry GIS national corridor command center
+│   ├── state/                        # State Revenue Department project sanction dashboard
+│   ├── district/                     # CALA / District Collector statutory SLA roster
+│   ├── pia/                          # Implementing Agency (NHAI/Railways) alignment cockpit
+│   └── auditor/                      # CAG Cryptographic Audit & Anomaly Intelligence console
+├── projects/                         # Corridor infrastructure portfolio
+│   ├── new/                          # Multi-step project creation wizard
+│   ├── [id]/                         # Detailed project overview and milestones
+│   └── [id]/alignment/               # Interactive GeoJSON alignment & ROW buffer editor
+├── cases/                            # Statutory acquisition case manager
+│   ├── new/                          # New case registration wizard
+│   └── [id]/                         # Case 360° cockpit: stages, parcels, documents, awards
+├── gis/                              # Full-screen GIS cadastral mapping portal
+├── gati-shakti/                      # PM GatiShakti multi-agency geo-clearance screener
+├── compensation/                     # Statutory award calculation & PFMS batch payment center
+├── possession/                       # Section 38 possession memo & panchnama generator
+├── rr/                               # Resettlement & Rehabilitation Schedule II benefits ledger
+├── survey/                           # Field operations and joint demarcation planner
+├── field/                            # Mobile-first surveyor PWA with camera & GPS capture
+├── gazette/                          # Bilingual Section 11/19 gazette publishing center
+├── verify/gazette/                   # Public cryptographic QR verification portal
+├── citizen/                          # Citizen public portal: claims, tracking & grievances
+├── documents/                        # DMS with versioning, SHA-256 checks & viewer
+├── analytics/                        # Macro cross-state performance & SLA compliance analytics
+├── simulation/                       # What-If policy & corridor alignment simulation sandbox
+├── audit/                            # Cryptographic Merkle audit chain inspector
+├── profile/                          # User profile, digital signature & credential manager
+├── settings/                         # Platform parameters & DPDP privacy configurations
+└── api/v1/                           # Next.js API proxy routes (reverse proxy to NestJS)
+    ├── analytics/
+    ├── audit/
+    ├── auth/
+    ├── cases/[id]/
+    ├── compensation/
+    ├── documents/
+    ├── gis/
+    ├── parcels/[id]/
+    ├── projects/[id]/
+    ├── rr/
+    └── workflow/
 ```
 
 ### Component Architecture
 
-- **`components/ai/`**: `bhoomi-ai-chatbot.tsx`, `project-delay-risk-card.tsx`, `lifecycle-risk-trajectory.tsx`, `portfolio-risk-overview.tsx`, `role-based-delay-intelligence.tsx`.
+- **`components/ai/`**: `bhoomi-ai-chatbot.tsx` (Aarohan AI Assistant), `project-delay-risk-card.tsx`, `lifecycle-risk-trajectory.tsx`, `portfolio-risk-overview.tsx`, `role-based-delay-intelligence.tsx`.
 - **`components/gis/`**: `gis-map.tsx`, `gis-map-client.tsx`, `alignment-drawer.tsx`, `spatial-query-panel.tsx`, `geotagged-photo-viewer.tsx`.
 - **`components/gati-shakti/`**: `gati-shakti-map.tsx`, `gati-shakti-map-client.tsx`, `gati-shakti-screener.tsx`.
 - **`components/field/`**: `camera-capture.tsx` (EXIF timestamp & GPS watermarking), `survey-form.tsx`, `sync-status-indicator.tsx`.
 - **`components/gazette/`**: `gazette-publisher.tsx`, `gazette-preview-modal.tsx`.
 - **`components/advanced/`**: `parcel-digital-twin-viewer.tsx`, `audit-trail-viewer.tsx`, `explainable-delay-risk.tsx`, `impact-simulation-interface.tsx`, `data-quality-score-indicator.tsx`.
-- **`components/common/`**: `role-gate.tsx`, `data-quality-widget.tsx`, `risk-indicator.tsx`, `stat-card.tsx`, `confirm-dialog.tsx`.
+- **`components/layout/`**: `civic-header.tsx`, `civic-footer.tsx`, `role-sidebar.tsx`, `notification-drawer.tsx`.
+- **`components/common/`**: `role-gate.tsx`, `data-quality-widget.tsx`, `risk-indicator.tsx`, `stat-card.tsx`, `confirm-dialog.tsx`, `breadcrumbs.tsx`, `empty-state.tsx`, `status-badge.tsx`.
+- **`components/ui/`**: `bhoomi-emblem.tsx` (National Emblem SVG), `button.tsx`, `card.tsx`, `dialog.tsx`, `input.tsx`, `badge.tsx`, `progress.tsx`, `separator.tsx`, `skeleton.tsx`, `table.tsx`, `tabs.tsx`, `textarea.tsx`, `toast.tsx`.
 
 ---
 
@@ -429,7 +444,7 @@ The relational and spatial database schema encompasses **66 tables** structured 
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        BHOOMISETU RELATIONAL DATA MODEL                │
+│                         AAROHAN RELATIONAL DATA MODEL                  │
 └────────────────────────────────────────────────────────────────────────┘
 
  [Core Users & Security]       [Spatial GIS & Alignment]       [Statutory RFCTLARR Workflow]
@@ -468,7 +483,7 @@ The relational and spatial database schema encompasses **66 tables** structured 
 ## 📂 Monorepo Directory Layout
 
 ```
-d:\BhoomiSetuV3/
+d:\Aarohan/
 ├── Backend/
 │   └── api/                          # NestJS 11 Enterprise API Service
 │       ├── src/
@@ -486,11 +501,13 @@ d:\BhoomiSetuV3/
 │       │   ├── gazette/              # Section 11/19 bilingual notice builder, digital signing
 │       │   ├── gis/                  # PostGIS corridor buffer, spatial query engine
 │       │   ├── grievances/           # Public grievance registration & hearing scheduler
+│       │   ├── integrations/         # External system connectors & outbox processor
 │       │   ├── litigation/           # High Court / Revenue Court dispute tracking
 │       │   ├── notifications/        # In-app notifications & email/SMS outbox
 │       │   ├── parcels/              # Authoritative cadastral parcels, ULPIN registry
 │       │   ├── possession/           # Section 38 possession memo, panchnama & witness records
 │       │   ├── projects/             # Linear infrastructure corridor projects & alignments
+│       │   ├── reports/              # PDF/CSV report generation & export services
 │       │   ├── rr/                   # Resettlement & Rehabilitation Schedule II benefits
 │       │   ├── simulation/           # What-If policy scenarios & impact simulations
 │       │   ├── users/                # Enterprise user directory, roles & jurisdictions
@@ -499,26 +516,32 @@ d:\BhoomiSetuV3/
 │       │   └── schema.prisma         # Prisma Schema mapping all 66 relational models
 │       ├── scripts/
 │       │   ├── seed-postgresql.cjs   # Enterprise idempotent database seeder with PostGIS data
+│       │   ├── seed_encrypted_pii.cjs # Encrypted PII test data seeder
+│       │   ├── update_gazette_schema.cjs # Gazette schema migration script
 │       │   └── verify_pii_and_revocation.cjs # DPDP crypto & kill-switch test runner
 │       └── package.json
 ├── Frontend/                         # Next.js 14 App Router Web Application
 │   ├── app/                          # 34 distinct application routes & layouts
 │   ├── components/                   # UI components, GIS map renderers, AI widgets
+│   ├── hooks/                        # React Query data-fetching hooks & custom hooks
 │   ├── lib/                          # API clients, DPDP data formatters, GeoJSON utilities
-│   ├── public/                       # National emblems, static GIS assets, icons
+│   ├── types/                        # TypeScript type definitions & domain interfaces
+│   ├── styles/                       # Design tokens & CSS custom properties
+│   ├── public/                       # National emblems, static GIS assets, PWA icons
+│   ├── tests/                        # Playwright E2E, accessibility, visual & responsive tests
 │   └── package.json
 ├── Database/
 │   ├── bhoomiSetu_postgresql.sql     # Canonical PostgreSQL DDL with PostGIS geometries
+│   ├── normalize-postgresql-schema.ps1 # Schema normalization utility
 │   └── README.md                     # Database architectural overview & spatial indexes
 ├── scripts/
 │   ├── build-all.js                  # Unified monorepo build runner
 │   ├── start-dev.js                  # Concurrent dev server with automated port management
-│   ├── start-public-demo.js          # Unified NGROK tunnel launcher with reverse proxy
+│   ├── start-public-demo.js          # Unified tunnel launcher with reverse proxy
 │   └── free-ports.js                 # Cross-platform socket and port cleanup utility
-├── replace.py                        # Codename migration & automated rebranding script
 ├── .env.example                      # Root environment template
 ├── package.json                      # Unified root monorepo scripts
-└── README.md                         # Complete project documentation
+└── README.md                         # Complete project documentation (this file)
 ```
 
 ---
@@ -528,7 +551,7 @@ d:\BhoomiSetuV3/
 ### 1. Backend (`Backend/api/.env`)
 
 ```ini
-# Network Port Configuration
+# Server Network Configuration
 PORT=3001
 NODE_ENV=development
 FRONTEND_URL="http://localhost:3000"
@@ -558,7 +581,7 @@ PFMS_API_URL="https://mock-pfms-gateway.gov.in/api/v1"
 PFMS_API_KEY="mock_key"
 ULPIN_REGISTRY_URL="https://mock-ulpin-registry.gov.in/api/v1"
 
-# Document Storage Configuration
+# Uploads & Storage Configuration
 UPLOAD_STORAGE_PATH="./uploads"
 
 # Statutory Compensation Tax Settings (Section 10(37) overrides for agricultural)
@@ -571,14 +594,14 @@ COMPENSATION_TAX_RATE=30
 # Base API URL pointing to the NestJS Backend
 NEXT_PUBLIC_API_URL=http://localhost:3001/v1
 
-# In Public NGROK mode, this is dynamically overridden to point to the secure tunnel origin
+# In Public tunnel mode, this is dynamically overridden to point to the secure tunnel origin
 ```
 
 ---
 
 ## 🚀 Complete Step-by-Step Reproduction & Deployment Guide
 
-Follow this guide to spin up a completely fresh, functional instance of BhoomiSetu on any Windows, macOS, or Linux workstation:
+Follow this guide to spin up a completely fresh, functional instance of Aarohan on any Windows, macOS, or Linux workstation:
 
 ### Step 1: System Prerequisites
 Ensure the following runtimes are installed:
@@ -591,8 +614,8 @@ Ensure the following runtimes are installed:
 Open PowerShell or Terminal:
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_ORGANIZATION/BhoomiSetu.git
-cd BhoomiSetu
+git clone https://github.com/Abhishek2846/Aarohan-.git
+cd Aarohan-
 
 # Install root dependencies
 npm install
@@ -657,13 +680,13 @@ npm run dev
 2. NestJS Backend starts on `http://localhost:3001/v1` (Swagger docs available at `http://localhost:3001/api/docs`).
 3. Next.js Frontend starts on `http://localhost:3000`.
 4. Shareable local Wi-Fi links are written to `PUBLIC_URL.txt`.
-5. Your default browser automatically launches directly into the BhoomiSetu login screen.
+5. Your default browser automatically launches directly into the Aarohan login screen.
 
 ---
 
 ## 🧪 Automated Verification & Test Suites
 
-The codebase includes end-to-end automated verification scripts to validate cryptographic integrity:
+The codebase includes end-to-end automated verification scripts and comprehensive test suites:
 
 ### 1. DPDP PII Encryption & Session Kill Switch Verification
 Runs automated tests verifying AES-256-GCM encryption, name/Aadhaar/PAN masking, and instantaneous JWT session invalidation:
@@ -672,7 +695,29 @@ node Backend/api/scripts/verify_pii_and_revocation.cjs
 ```
 *Expected Output: `✅ ALL 7 SECURITY & COMPLIANCE TESTS PASSED SUCCESSFULLY!`*
 
-### 2. Full Monorepo Production Build Verification
+### 2. Playwright E2E Test Suites
+Comprehensive browser-based test suites covering multiple dimensions:
+```bash
+# Run all E2E tests
+npm --prefix Frontend run test:e2e
+
+# Visual regression tests
+npm --prefix Frontend run test:visual
+
+# Accessibility (a11y) tests
+npm --prefix Frontend run test:a11y
+
+# Responsive layout tests
+npm --prefix Frontend run test:responsive
+
+# Interactive test UI
+npm --prefix Frontend run test:e2e:ui
+
+# View HTML test report
+npm --prefix Frontend run test:report
+```
+
+### 3. Full Monorepo Production Build Verification
 Verifies TypeScript compilation, Next.js page generation, and asset bundling across both services:
 ```bash
 npm run build
@@ -680,9 +725,9 @@ npm run build
 
 ---
 
-## 🌐 Public Cloud & NGROK Tunnel Architecture
+## 🌐 Public Cloud & Tunnel Architecture
 
-BhoomiSetu includes a public tunnel launcher enabling remote evaluators, field workers, and team members to access the live local instance over an encrypted HTTPS connection without port forwarding:
+Aarohan includes a public tunnel launcher enabling remote evaluators, field workers, and team members to access the live local instance over an encrypted HTTPS connection without port forwarding:
 
 ```bash
 npm run public
