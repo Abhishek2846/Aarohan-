@@ -1,17 +1,17 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("BhoomiSetu Comprehensive Hindi Translation Verification", () => {
+test.describe("Aarohan Comprehensive Hindi Translation Verification", () => {
   test.beforeEach(async ({ context }) => {
     // Set authenticated PIA officer session with Hindi as active language
     await context.addCookies([
-      { name: "bhoomi_token", value: "jwt_mock_pia_1001", domain: "localhost", path: "/" },
-      { name: "bhoomi_role", value: "PIA", domain: "localhost", path: "/" },
+      { name: "aarohan_token", value: "jwt_mock_pia_1001", domain: "localhost", path: "/" },
+      { name: "aarohan_role", value: "PIA", domain: "localhost", path: "/" },
     ]);
 
     await context.addInitScript(() => {
-      localStorage.setItem("bhoomi_lang", "hi");
-      localStorage.setItem("bhoomi_token", "jwt_mock_pia_1001");
-      localStorage.setItem("bhoomi_active_role", "PIA");
+      localStorage.setItem("aarohan_lang", "hi");
+      localStorage.setItem("aarohan_token", "jwt_mock_pia_1001");
+      localStorage.setItem("aarohan_active_role", "PIA");
     });
   });
 
@@ -143,13 +143,13 @@ test.describe("BhoomiSetu Comprehensive Hindi Translation Verification", () => {
   test("9. Central Ministry National Dashboard and Analytics translate correctly", async ({ browser }) => {
     const context = await browser.newContext();
     await context.addCookies([
-      { name: "bhoomi_token", value: "jwt_mock_min_1001", domain: "localhost", path: "/" },
-      { name: "bhoomi_role", value: "CENTRAL_MINISTRY", domain: "localhost", path: "/" },
+      { name: "aarohan_token", value: "jwt_mock_min_1001", domain: "localhost", path: "/" },
+      { name: "aarohan_role", value: "CENTRAL_MINISTRY", domain: "localhost", path: "/" },
     ]);
     await context.addInitScript(() => {
-      localStorage.setItem("bhoomi_lang", "hi");
-      localStorage.setItem("bhoomi_token", "jwt_mock_min_1001");
-      localStorage.setItem("bhoomi_active_role", "CENTRAL_MINISTRY");
+      localStorage.setItem("aarohan_lang", "hi");
+      localStorage.setItem("aarohan_token", "jwt_mock_min_1001");
+      localStorage.setItem("aarohan_active_role", "CENTRAL_MINISTRY");
     });
     const page = await context.newPage();
 
@@ -169,13 +169,13 @@ test.describe("BhoomiSetu Comprehensive Hindi Translation Verification", () => {
   test("10. District Officer Dashboard translates correctly", async ({ browser }) => {
     const context = await browser.newContext();
     await context.addCookies([
-      { name: "bhoomi_token", value: "jwt_mock_dist_1001", domain: "localhost", path: "/" },
-      { name: "bhoomi_role", value: "DISTRICT_OFFICER", domain: "localhost", path: "/" },
+      { name: "aarohan_token", value: "jwt_mock_dist_1001", domain: "localhost", path: "/" },
+      { name: "aarohan_role", value: "DISTRICT_OFFICER", domain: "localhost", path: "/" },
     ]);
     await context.addInitScript(() => {
-      localStorage.setItem("bhoomi_lang", "hi");
-      localStorage.setItem("bhoomi_token", "jwt_mock_dist_1001");
-      localStorage.setItem("bhoomi_active_role", "DISTRICT_OFFICER");
+      localStorage.setItem("aarohan_lang", "hi");
+      localStorage.setItem("aarohan_token", "jwt_mock_dist_1001");
+      localStorage.setItem("aarohan_active_role", "DISTRICT_OFFICER");
     });
     const page = await context.newPage();
 
@@ -191,13 +191,13 @@ test.describe("BhoomiSetu Comprehensive Hindi Translation Verification", () => {
   test("11. Auditor Console and Audit Trail translate correctly", async ({ browser }) => {
     const context = await browser.newContext();
     await context.addCookies([
-      { name: "bhoomi_token", value: "jwt_mock_aud_1001", domain: "localhost", path: "/" },
-      { name: "bhoomi_role", value: "AUDITOR", domain: "localhost", path: "/" },
+      { name: "aarohan_token", value: "jwt_mock_aud_1001", domain: "localhost", path: "/" },
+      { name: "aarohan_role", value: "AUDITOR", domain: "localhost", path: "/" },
     ]);
     await context.addInitScript(() => {
-      localStorage.setItem("bhoomi_lang", "hi");
-      localStorage.setItem("bhoomi_token", "jwt_mock_aud_1001");
-      localStorage.setItem("bhoomi_active_role", "AUDITOR");
+      localStorage.setItem("aarohan_lang", "hi");
+      localStorage.setItem("aarohan_token", "jwt_mock_aud_1001");
+      localStorage.setItem("aarohan_active_role", "AUDITOR");
     });
     const page = await context.newPage();
 
@@ -216,13 +216,13 @@ test.describe("BhoomiSetu Comprehensive Hindi Translation Verification", () => {
   test("12. Citizen Portal translates to farmer-friendly Hindi", async ({ browser }) => {
     const context = await browser.newContext();
     await context.addCookies([
-      { name: "bhoomi_token", value: "jwt_mock_cit_1001", domain: "localhost", path: "/" },
-      { name: "bhoomi_role", value: "CITIZEN", domain: "localhost", path: "/" },
+      { name: "aarohan_token", value: "jwt_mock_cit_1001", domain: "localhost", path: "/" },
+      { name: "aarohan_role", value: "CITIZEN", domain: "localhost", path: "/" },
     ]);
     await context.addInitScript(() => {
-      localStorage.setItem("bhoomi_lang", "hi");
-      localStorage.setItem("bhoomi_token", "jwt_mock_cit_1001");
-      localStorage.setItem("bhoomi_active_role", "CITIZEN");
+      localStorage.setItem("aarohan_lang", "hi");
+      localStorage.setItem("aarohan_token", "jwt_mock_cit_1001");
+      localStorage.setItem("aarohan_active_role", "CITIZEN");
     });
     const page = await context.newPage();
 

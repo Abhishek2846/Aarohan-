@@ -116,7 +116,7 @@ export interface TranslationDictionary {
 export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
   en: {
     // Brand & Header
-    appName: "BhoomiSetu",
+    appName: "Aarohan",
     appTagline: "National Land Acquisition, Fair Compensation & Digital Maps",
     portalHeader: "GOVERNMENT OF INDIA • FAIR LAND ACQUISITION & FARMER REFORMS",
     sihBadge: "SIH 2026 • SIH26016",
@@ -125,7 +125,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     activePersona: "Active Role",
     switchPersona: "Switch User Role",
     evaluatorRole: "User Role",
-    evaluatorDesc: "Preview BhoomiSetu under different official and citizen perspectives",
+    evaluatorDesc: "Preview Aarohan under different official and citizen perspectives",
     officer: "Officer",
 
     // Sidebar & Navigation
@@ -224,11 +224,11 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     privacyPolicy: "Privacy Policy",
     termsOfService: "Terms of Service",
     openApi: "Official Open API",
-    copyright: "© 2026 BhoomiSetu Platform • Ministry of Rural Development & Partner Agencies",
+    copyright: "© 2026 Aarohan Platform • Ministry of Rural Development & Partner Agencies",
   },
   hi: {
     // Brand & Header
-    appName: "भूमिसेतु",
+    appName: "आरोहण",
     appTagline: "राष्ट्रीय भूमि अधिग्रहण, उचित मुआवजा एवं डिजिटल नक्शा मंच",
     portalHeader: "भारत सरकार • निष्पक्ष भूमि अधिग्रहण एवं किसान अधिकार",
     sihBadge: "एस.आई.एच 2026 • SIH26016",
@@ -237,7 +237,7 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     activePersona: "सक्रिय भूमिका",
     switchPersona: "भूमिका बदलें",
     evaluatorRole: "उपयोगकर्ता भूमिका",
-    evaluatorDesc: "विभिन्न अधिकारियों एवं किसानों के नजरिए से भूमिसेतु देखें",
+    evaluatorDesc: "विभिन्न अधिकारियों एवं किसानों के नजरिए से आरोहण देखें",
     officer: "अधिकारी",
 
     // Sidebar & Navigation
@@ -336,6 +336,6 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     privacyPolicy: "गोपनीयता नीति",
     termsOfService: "सेवा की शर्तें",
     openApi: "आधिकारिक ओपन एपीआई",
-    copyright: "© 2026 भूमिसेतु मंच • ग्रामीण विकास मंत्रालय एवं सहभागी एजेंसियां",
+    copyright: "© 2026 आरोहण मंच • ग्रामीण विकास मंत्रालय एवं सहभागी एजेंसियां",
   },
 };

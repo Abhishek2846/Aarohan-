@@ -303,7 +303,7 @@ export function ParcelDigitalTwinViewer({
               <div className="relative aspect-video rounded-lg overflow-hidden bg-slate-950 border border-slate-800 flex items-end">
                 <div className="w-full bg-[#171716]/95 p-2.5 text-[10px] font-mono space-y-0.5 border-t-2 border-[#ef5b2a]">
                   <p className="text-[#ef5b2a] font-bold">
-                    BHOOMISETU STATUTORY FIELD EVIDENCE • GOVT OF INDIA
+                    AAROHAN STATUTORY FIELD EVIDENCE • GOVT OF INDIA
                   </p>
                   <p className="text-slate-200">
                     ULPIN: {p.ulpin} | SURVEY: #{p.surveyNo} | ACCURACY: ±1.4M

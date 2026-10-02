@@ -58,8 +58,8 @@ export function middleware(request: NextRequest) {
   }
 
   // Check auth token and role in cookie
-  const token = request.cookies.get("bhoomi_token")?.value;
-  const role = request.cookies.get("bhoomi_role")?.value as UserRole | undefined;
+  const token = request.cookies.get("aarohan_token")?.value;
+  const role = request.cookies.get("aarohan_role")?.value as UserRole | undefined;
 
   if (!token) {
     const loginUrl = new URL("/login", request.url);

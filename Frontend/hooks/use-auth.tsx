@@ -9,7 +9,7 @@ function hasSessionCookie() {
 
   return document.cookie.split(";").some((cookie) => {
     const [name, ...valueParts] = cookie.trim().split("=");
-    return name === "bhoomi_token" && valueParts.join("=").length > 0;
+    return name === "aarohan_token" && valueParts.join("=").length > 0;
   });
 }
 
@@ -59,12 +59,12 @@ function toUserProfile(raw: any, fallbackRole: UserRole = "CITIZEN"): UserProfil
 
 function persistSession(token: string, refreshToken: string | undefined, profile: UserProfile) {
   if (typeof window === "undefined") return;
-  localStorage.setItem("bhoomi_token", token);
-  if (refreshToken) localStorage.setItem("bhoomi_refresh_token", refreshToken);
-  localStorage.setItem("bhoomi_active_role", profile.role);
-  localStorage.setItem("bhoomi_user", JSON.stringify(profile));
-  document.cookie = `bhoomi_token=${encodeURIComponent(token)}; path=/; max-age=28800; SameSite=Lax`;
-  document.cookie = `bhoomi_role=${profile.role}; path=/; max-age=28800; SameSite=Lax`;
+  localStorage.setItem("aarohan_token", token);
+  if (refreshToken) localStorage.setItem("aarohan_refresh_token", refreshToken);
+  localStorage.setItem("aarohan_active_role", profile.role);
+  localStorage.setItem("aarohan_user", JSON.stringify(profile));
+  document.cookie = `aarohan_token=${encodeURIComponent(token)}; path=/; max-age=28800; SameSite=Lax`;
+  document.cookie = `aarohan_role=${profile.role}; path=/; max-age=28800; SameSite=Lax`;
 }
 
 export const MOCK_PROFILES: Record<UserRole, UserProfile> = {
@@ -125,7 +125,7 @@ export const MOCK_PROFILES: Record<UserRole, UserProfile> = {
   CITIZEN: {
     id: "usr_citizen_01",
     name: "Rameshwar Sharma",
-    email: "citizen@public.bhoomsetu.gov.in",
+    email: "citizen@public.aarohan.gov.in",
     phone: "+91 98765 43210",
     role: "CITIZEN",
     designation: "Registered Landholder & Khatedar",
@@ -174,15 +174,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const hydrateSession = async () => {
       if (typeof window === "undefined") return;
 
-      const savedToken = localStorage.getItem("bhoomi_token");
+      const savedToken = localStorage.getItem("aarohan_token");
       const hasCookieSession = hasSessionCookie();
       if (!savedToken || !hasCookieSession) {
-        localStorage.removeItem("bhoomi_token");
-        localStorage.removeItem("bhoomi_refresh_token");
-        localStorage.removeItem("bhoomi_user");
+        localStorage.removeItem("aarohan_token");
+        localStorage.removeItem("aarohan_refresh_token");
+        localStorage.removeItem("aarohan_user");
         if (!cancelled) {
-          const storedRole = localStorage.getItem("bhoomi_active_role");
-          if (storedRole === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN")) {
+          const storedRole = localStorage.getItem("aarohan_active_role");
+          if (storedRole === "CITIZEN" || document.cookie.includes("aarohan_role=CITIZEN")) {
             setActiveRoleState("CITIZEN");
             setUser(MOCK_PROFILES.CITIZEN);
           }
@@ -191,7 +191,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      const cachedUser = localStorage.getItem("bhoomi_user");
+      const cachedUser = localStorage.getItem("aarohan_user");
       if (cachedUser) {
         try {
           const profile = toUserProfile(JSON.parse(cachedUser));
@@ -201,7 +201,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setIsAuthenticated(true);
           }
         } catch {
-          localStorage.removeItem("bhoomi_user");
+          localStorage.removeItem("aarohan_user");
         }
       }
 
@@ -212,15 +212,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setUser(profile);
           setActiveRoleState(profile.role);
           setIsAuthenticated(true);
-          localStorage.setItem("bhoomi_user", JSON.stringify(profile));
+          localStorage.setItem("aarohan_user", JSON.stringify(profile));
         }
       } catch (error) {
         if (error instanceof ApiError && error.status === 401) {
-          localStorage.removeItem("bhoomi_token");
-          localStorage.removeItem("bhoomi_refresh_token");
-          localStorage.removeItem("bhoomi_user");
-          document.cookie = "bhoomi_token=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          document.cookie = "bhoomi_role=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          localStorage.removeItem("aarohan_token");
+          localStorage.removeItem("aarohan_refresh_token");
+          localStorage.removeItem("aarohan_user");
+          document.cookie = "aarohan_token=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          document.cookie = "aarohan_role=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
           if (!cancelled) setIsAuthenticated(false);
         }
       }
@@ -236,8 +236,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const setRole = (role: UserRole) => {
     setActiveRoleState(role);
     if (typeof window !== "undefined") {
-      localStorage.setItem("bhoomi_active_role", role);
-      document.cookie = `bhoomi_role=${role}; path=/; max-age=86400`;
+      localStorage.setItem("aarohan_active_role", role);
+      document.cookie = `aarohan_role=${role}; path=/; max-age=86400`;
     }
   };
 
@@ -266,12 +266,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     setIsAuthenticated(false);
     if (typeof window !== "undefined") {
-      localStorage.removeItem("bhoomi_token");
-      localStorage.removeItem("bhoomi_refresh_token");
-      localStorage.removeItem("bhoomi_active_role");
-      localStorage.removeItem("bhoomi_user");
-      document.cookie = "bhoomi_token=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      document.cookie = "bhoomi_role=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      localStorage.removeItem("aarohan_token");
+      localStorage.removeItem("aarohan_refresh_token");
+      localStorage.removeItem("aarohan_active_role");
+      localStorage.removeItem("aarohan_user");
+      document.cookie = "aarohan_token=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      document.cookie = "aarohan_role=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       window.location.href = "/";
     }
   };

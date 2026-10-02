@@ -15,7 +15,7 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     // Log technical details safely for telemetry without exposing sensitive data
-    console.error("BhoomiSetu Application Runtime Error:", error);
+    console.error("Aarohan Application Runtime Error:", error);
   }, [error]);
 
   return (

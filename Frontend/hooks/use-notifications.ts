@@ -6,7 +6,7 @@ import { CivicNotification, INITIAL_NOTIFICATIONS, mockWebSocket } from "@/lib/w
 export function useNotifications() {
   const [notifications, setNotifications] = useState<CivicNotification[]>(() => {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("bhoomi_notifications");
+      const stored = localStorage.getItem("aarohan_notifications");
       if (stored) {
         try {
           return JSON.parse(stored);
@@ -24,7 +24,7 @@ export function useNotifications() {
     setNotifications(items);
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem("bhoomi_notifications", JSON.stringify(items));
+        localStorage.setItem("aarohan_notifications", JSON.stringify(items));
       } catch {}
     }
   };
@@ -39,7 +39,7 @@ export function useNotifications() {
         const next = [incoming, ...prev];
         if (typeof window !== "undefined") {
           try {
-            localStorage.setItem("bhoomi_notifications", JSON.stringify(next));
+            localStorage.setItem("aarohan_notifications", JSON.stringify(next));
           } catch {}
         }
         return next;
@@ -61,7 +61,7 @@ export function useNotifications() {
       const updated = prev.map((n) => (n.id === id ? { ...n, read: true } : n));
       if (typeof window !== "undefined") {
         try {
-          localStorage.setItem("bhoomi_notifications", JSON.stringify(updated));
+          localStorage.setItem("aarohan_notifications", JSON.stringify(updated));
         } catch {}
       }
       return updated;
@@ -73,7 +73,7 @@ export function useNotifications() {
       const updated = prev.map((n) => ({ ...n, read: true }));
       if (typeof window !== "undefined") {
         try {
-          localStorage.setItem("bhoomi_notifications", JSON.stringify(updated));
+          localStorage.setItem("aarohan_notifications", JSON.stringify(updated));
         } catch {}
       }
       return updated;

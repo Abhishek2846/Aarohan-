@@ -41,7 +41,7 @@ function LoginForm() {
 
   const [selectedRole, setSelectedRole] = useState<UserRole>("CENTRAL_MINISTRY");
   const [email, setEmail] = useState("ananya.sharma@nic.in");
-  const [password, setPassword] = useState("bhoomi2026");
+  const [password, setPassword] = useState("aarohan2026");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -61,19 +61,19 @@ function LoginForm() {
   useEffect(() => {
     if (currentBackendCred) {
       setEmail(currentBackendCred.email || currentBackendCred.loginName || "");
-      setPassword(currentBackendCred.password || "bhoomi2026");
+      setPassword(currentBackendCred.password || "aarohan2026");
       setEditEmail(currentBackendCred.email || "");
       setEditLoginName(currentBackendCred.loginName || "");
-      setEditPassword(currentBackendCred.password || "bhoomi2026");
+      setEditPassword(currentBackendCred.password || "aarohan2026");
       setEditFullName(currentBackendCred.fullName || "");
     } else {
       const profile = MOCK_PROFILES[selectedRole];
       if (profile) {
         setEmail(profile.email);
-        setPassword("bhoomi2026");
+        setPassword("aarohan2026");
         setEditEmail(profile.email);
         setEditLoginName(profile.email.split("@")[0]);
-        setEditPassword("bhoomi2026");
+        setEditPassword("aarohan2026");
         setEditFullName(profile.name);
       }
     }
@@ -147,7 +147,7 @@ function LoginForm() {
       await login(email, password, selectedRole);
       setLoading(false);
       const target = resolveTargetRoute(selectedRole);
-      // Use window.location.href to guarantee cookies (bhoomi_token & bhoomi_role)
+      // Use window.location.href to guarantee cookies (aarohan_token & aarohan_role)
       // are synchronously committed to browser networking stack before Next.js middleware runs.
       window.location.href = target;
     } catch (err: any) {
@@ -177,7 +177,7 @@ function LoginForm() {
           className="inline-flex items-center gap-1.5 text-xs text-[#68655e] hover:text-[#ef5b2a] transition-colors font-medium"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          <span>{lang === "hi" ? "मुख्य पोर्टल पर वापस जाएं" : "Back to BhoomiSetu"}</span>
+          <span>{lang === "hi" ? "मुख्य पोर्टल पर वापस जाएं" : "Back to Aarohan"}</span>
         </Link>
       </div>
 
@@ -193,8 +193,8 @@ function LoginForm() {
               </h1>
               <p className="text-xs text-[#68655e] mt-0.5">
                 {lang === "hi"
-                  ? "भूमिसेतु • राष्ट्रीय भूमि अधिग्रहण प्रबंधन मंच"
-                  : "BhoomiSetu • National Land Acquisition Platform"}
+                  ? "आरोहण • राष्ट्रीय भूमि अधिग्रहण प्रबंधन मंच"
+                  : "Aarohan • National Land Acquisition Platform"}
               </p>
             </div>
           </div>

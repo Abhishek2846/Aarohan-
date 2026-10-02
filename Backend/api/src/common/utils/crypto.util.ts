@@ -4,7 +4,7 @@ export class CryptoUtil {
   private static readonly ALGORITHM = 'aes-256-gcm';
   private static readonly KEY = crypto
     .createHash('sha256')
-    .update(process.env.ENCRYPTION_KEY || 'bhoomi-setu-enterprise-pii-secret-key-32bytes')
+    .update(process.env.ENCRYPTION_KEY || 'aarohan-enterprise-pii-secret-key-32bytes')
     .digest();
 
   /**

@@ -27,8 +27,8 @@ export class ApiError extends Error {
   }
 }
 
-const ACCESS_TOKEN_KEY = "bhoomi_token";
-const REFRESH_TOKEN_KEY = "bhoomi_refresh_token";
+const ACCESS_TOKEN_KEY = "aarohan_token";
+const REFRESH_TOKEN_KEY = "aarohan_refresh_token";
 
 function trimTrailingSlash(value: string) {
   return value.replace(/\/+$/, "");
@@ -117,7 +117,7 @@ async function refreshAccessToken() {
   if (!accessToken) return null;
 
   window.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-  document.cookie = `bhoomi_token=${encodeURIComponent(accessToken)}; path=/; max-age=28800; SameSite=Lax`;
+  document.cookie = `aarohan_token=${encodeURIComponent(accessToken)}; path=/; max-age=28800; SameSite=Lax`;
   return accessToken as string;
 }
 
@@ -135,7 +135,7 @@ export async function apiClient<T>(endpoint: string, options: RequestOptions = {
     requestHeaders.set("Content-Type", "application/json");
   }
 
-  const token = getStoredToken(ACCESS_TOKEN_KEY) || getStoredToken("bhoomi_auth_token");
+  const token = getStoredToken(ACCESS_TOKEN_KEY) || getStoredToken("aarohan_auth_token");
   if (token && !requestHeaders.has("Authorization")) {
     requestHeaders.set("Authorization", `Bearer ${token}`);
   }

@@ -161,7 +161,7 @@ export class AgentActionService {
               metadata: {
                 actionType,
                 payload,
-                submittedVia: 'BhoomiSetu AI Agentic Assistant',
+                submittedVia: 'Aarohan AI Agentic Assistant',
               },
               event_hash: `hash_${Date.now()}_${uuidv4().substring(0, 8)}`,
               ip_address: null,

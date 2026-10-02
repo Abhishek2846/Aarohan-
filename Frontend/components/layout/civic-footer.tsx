@@ -28,7 +28,7 @@ export function CivicFooter() {
           <div className="text-left">
             <div className="flex items-center gap-2">
               <span className="font-bold text-[#171716] text-sm">
-                {isHi ? "भूमिसेतु (BhoomiSetu)" : "BhoomiSetu"}
+                {isHi ? "आरोहण (Aarohan)" : "Aarohan"}
               </span>
               <span className="text-[10px] bg-[#ef5b2a]/10 text-[#ef5b2a] font-bold px-2 py-0.5 rounded-full border border-[#ef5b2a]/30">
                 {isHi ? "भारत सरकार" : "Govt. of India"}
@@ -55,10 +55,10 @@ export function CivicFooter() {
           <div className="flex items-center gap-1.5">
             <Mail className="h-3.5 w-3.5 text-[#ef5b2a] shrink-0" />
             <a
-              href="mailto:helpdesk-bhoomi@gov.in"
+              href="mailto:helpdesk-aarohan@gov.in"
               className="hover:text-[#ef5b2a] transition-colors font-semibold text-[#171716]"
             >
-              helpdesk-bhoomi@gov.in
+              helpdesk-aarohan@gov.in
             </a>
           </div>
           <span className="hidden sm:inline text-[#d8d3c9]">•</span>
@@ -76,7 +76,7 @@ export function CivicFooter() {
               : "Designed & Hosted by National Informatics Centre (NIC)"}
           </p>
           <p className="text-[10px] text-[#68655e]/80">
-            © 2026 BhoomiSetu National Platform. SIH-2026.
+            © 2026 Aarohan National Platform. SIH-2026.
           </p>
         </div>
       </div>

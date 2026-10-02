@@ -179,8 +179,8 @@ function GisContent() {
     !isAuthenticated ||
     searchParams?.get("role") === "citizen" ||
     (typeof window !== "undefined" &&
-      (localStorage.getItem("bhoomi_active_role") === "CITIZEN" ||
-        document.cookie.includes("bhoomi_role=CITIZEN") ||
+      (localStorage.getItem("aarohan_active_role") === "CITIZEN" ||
+        document.cookie.includes("aarohan_role=CITIZEN") ||
         document.referrer.includes("/citizen")));
 
   // Active Project & City URL params
@@ -293,7 +293,7 @@ function GisContent() {
     setSelectedParcel(null);
     setSelectedPhoto(null);
     setIsCityModalOpen(false);
-    sessionStorage.setItem("bhoomi_gis_city_chosen", "true");
+    sessionStorage.setItem("aarohan_gis_city_chosen", "true");
   };
 
   // Dynamic Parcels & Photos List based on Role and City

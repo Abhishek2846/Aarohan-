@@ -114,7 +114,7 @@ export default function ProfilePage() {
             </CardHeader>
             <CardContent className="text-[11px] text-emerald-800 dark:text-emerald-300 space-y-1">
               <p>Issuer: National Informatics Centre CA (NICCA)</p>
-              <p>Serial: 4F9B-2026-BHOOMI-09A</p>
+              <p>Serial: 4F9B-2026-AAROHAN-09A</p>
               <p className="text-[10px] text-emerald-600">Valid until: 31 Dec 2026</p>
             </CardContent>
           </Card>

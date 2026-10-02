@@ -1,7 +1,7 @@
 {
-  "name": "BhoomiSetu Field Surveyor PWA",
-  "short_name": "BhoomiField",
-  "description": "Offline-First Land Demarcation, GPS Boundary Verification, and Geo-Tagged Field Photo Evidence for BhoomiSetu.",
+  "name": "Aarohan Field Surveyor PWA",
+  "short_name": "AarohanField",
+  "description": "Offline-First Land Demarcation, GPS Boundary Verification, and Geo-Tagged Field Photo Evidence for Aarohan.",
   "start_url": "/field",
   "display": "standalone",
   "background_color": "#0A2540",

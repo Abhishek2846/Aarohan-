@@ -55,7 +55,7 @@ export default function NotFound() {
         </div>
 
         <div className="pt-4 border-t border-[#d8d3c9] text-[10px] text-[#68655e] font-mono">
-          BhoomiSetu National Land Acquisition Management System • SIH26016
+          Aarohan National Land Acquisition Management System • SIH26016
         </div>
       </div>
     </div>

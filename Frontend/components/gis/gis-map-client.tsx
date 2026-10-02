@@ -181,7 +181,7 @@ export default function GisMapClient({
 
         <TileLayer
           url={getTileUrl()}
-          attribution='&copy; <a href="https://osm.org">OpenStreetMap</a> | ISRO Bhuvan GIS Services | BhoomiSetu'
+          attribution='&copy; <a href="https://osm.org">OpenStreetMap</a> | ISRO Bhuvan GIS Services | Aarohan'
         />
 
         {/* 1. Dynamic Corridor Right-of-Way Buffer Polygon */}

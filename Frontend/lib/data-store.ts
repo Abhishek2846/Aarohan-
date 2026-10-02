@@ -309,7 +309,7 @@ class DataStore {
 
   // Projects CRUD
   getProjects(): Project[] {
-    return this.getStorage<Project[]>("bhoomi_projects", INITIAL_PROJECTS);
+    return this.getStorage<Project[]>("aarohan_projects", INITIAL_PROJECTS);
   }
 
   getProjectById(id: string): Project | undefined {
@@ -327,7 +327,7 @@ class DataStore {
       updatedAt: new Date().toISOString(),
     };
     projects.unshift(newPrj);
-    this.setStorage("bhoomi_projects", projects);
+    this.setStorage("aarohan_projects", projects);
     return newPrj;
   }
 
@@ -340,13 +340,13 @@ class DataStore {
       ...updates,
       updatedAt: new Date().toISOString(),
     };
-    this.setStorage("bhoomi_projects", projects);
+    this.setStorage("aarohan_projects", projects);
     return projects[idx];
   }
 
   // Cases CRUD
   getCases(): AcquisitionCase[] {
-    return this.getStorage<AcquisitionCase[]>("bhoomi_cases", INITIAL_CASES);
+    return this.getStorage<AcquisitionCase[]>("aarohan_cases", INITIAL_CASES);
   }
 
   getCaseById(id: string): AcquisitionCase | undefined {
@@ -395,7 +395,7 @@ class DataStore {
       updatedAt: new Date().toISOString(),
     };
     cases.unshift(newCase);
-    this.setStorage("bhoomi_cases", cases);
+    this.setStorage("aarohan_cases", cases);
     return newCase;
   }
 
@@ -415,13 +415,13 @@ class DataStore {
         score: Math.min(100, cases[idx].dataQuality.score + 5),
       },
     };
-    this.setStorage("bhoomi_cases", cases);
+    this.setStorage("aarohan_cases", cases);
     return cases[idx];
   }
 
   // Documents CRUD
   getDocuments(): SystemDocument[] {
-    return this.getStorage<SystemDocument[]>("bhoomi_documents", INITIAL_DOCUMENTS);
+    return this.getStorage<SystemDocument[]>("aarohan_documents", INITIAL_DOCUMENTS);
   }
 
   addDocument(doc: Omit<SystemDocument, "id" | "uploadedAt" | "version" | "approvalStatus" | "versions">): SystemDocument {
@@ -443,7 +443,7 @@ class DataStore {
       ],
     };
     docs.unshift(newDoc);
-    this.setStorage("bhoomi_documents", docs);
+    this.setStorage("aarohan_documents", docs);
     return newDoc;
   }
 
@@ -454,7 +454,7 @@ class DataStore {
       docs[idx].approvalStatus = status;
       docs[idx].approvalNotes = notes;
       docs[idx].approvedBy = approver;
-      this.setStorage("bhoomi_documents", docs);
+      this.setStorage("aarohan_documents", docs);
     }
   }
 }

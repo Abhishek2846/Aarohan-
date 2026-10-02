@@ -13,7 +13,7 @@ export default function Loading() {
           Loading Statutory Workspace...
         </p>
         <p className="text-[11px] text-[#68655e]">
-          Connecting to BhoomiSetu Cadastral Records & GIS Engine
+          Connecting to Aarohan Cadastral Records & GIS Engine
         </p>
       </div>
     </div>

@@ -25,7 +25,7 @@ export class UsersService {
     });
     if (existing) throw new ConflictException(`User with email "${data.email}" already exists`);
 
-    const rawPassword = data.password && typeof data.password === 'string' ? data.password : 'bhoomi2026';
+    const rawPassword = data.password && typeof data.password === 'string' ? data.password : 'aarohan2026';
     const hashedPassword = await bcrypt.hash(rawPassword, 10);
     const loginName = data.login_name || data.email.split('@')[0];
 

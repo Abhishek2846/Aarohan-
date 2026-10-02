@@ -755,7 +755,7 @@ export default function SurveyPage() {
         <div className="min-h-screen bg-[#f4f1ea] flex items-center justify-center p-6 text-[#171716]">
           <div className="flex flex-col items-center gap-3">
             <div className="w-8 h-8 rounded-full border-3 border-[#ef5b2a] border-t-transparent animate-spin" />
-            <p className="text-sm font-semibold">Loading BhoomiSetu Walking Survey...</p>
+            <p className="text-sm font-semibold">Loading Aarohan Walking Survey...</p>
           </div>
         </div>
       }

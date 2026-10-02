@@ -29,7 +29,7 @@ const localIp = getLocalIpAddress();
 freePorts([BACKEND_PORT, FRONTEND_PORT]);
 
 console.log('\n========================================');
-console.log('      BhoomiSetu Development Server     ');
+console.log('      Aarohan Development Server     ');
 console.log('========================================\n');
 console.log(`Local PC Browser → http://localhost:${FRONTEND_PORT}`);
 console.log(`Same Wi-Fi PC   → http://${localIp}:${FRONTEND_PORT}`);
@@ -40,7 +40,7 @@ console.log('Starting NestJS Backend and Next.js Frontend in parallel...\n');
 const publicUrlFile = path.join(rootDir, 'PUBLIC_URL.txt');
 fs.writeFileSync(
   publicUrlFile,
-  `==================================================\n  BHOOMISETU SHAREABLE DEMO LINKS\n==================================================\n\n1. Same Wi-Fi / Local Network Link :\n   http://${localIp}:${FRONTEND_PORT}\n\n2. Local Host Link :\n   http://localhost:${FRONTEND_PORT}\n\nBackend API URL : http://${localIp}:${BACKEND_PORT}/v1\n`,
+  `==================================================\n  AAROHAN SHAREABLE DEMO LINKS\n==================================================\n\n1. Same Wi-Fi / Local Network Link :\n   http://${localIp}:${FRONTEND_PORT}\n\n2. Local Host Link :\n   http://localhost:${FRONTEND_PORT}\n\nBackend API URL : http://${localIp}:${BACKEND_PORT}/v1\n`,
   'utf8'
 );
 
@@ -84,7 +84,7 @@ setTimeout(() => {
 
 function printFinalBanner() {
   console.log('\n\x1b[42m\x1b[30m\x1b[1m                                                            \x1b[0m');
-  console.log('\x1b[42m\x1b[30m\x1b[1m  🚀 BHOOMISETU APPLICATION IS LIVE & READY ON PORT 3000!   \x1b[0m');
+  console.log('\x1b[42m\x1b[30m\x1b[1m  🚀 AAROHAN APPLICATION IS LIVE & READY ON PORT 3000!   \x1b[0m');
   console.log('\x1b[42m\x1b[30m\x1b[1m                                                            \x1b[0m\n');
   console.log(`  👉 Local Browser Link     : \x1b[1m\x1b[33mhttp://localhost:${FRONTEND_PORT}\x1b[0m`);
   console.log(`  👉 Same Wi-Fi Other PC    : \x1b[1m\x1b[36mhttp://${localIp}:${FRONTEND_PORT}\x1b[0m`);
@@ -119,7 +119,7 @@ frontendProc.stdout.on('data', (data) => prefixOutput(data, 'FRONTEND', '32'));
 frontendProc.stderr.on('data', (data) => prefixOutput(data, 'FRONTEND', '33'));
 
 function killProcesses() {
-  console.log('\n\nShutting down BhoomiSetu development servers...');
+  console.log('\n\nShutting down Aarohan development servers...');
   if (isWin) {
     if (backendProc.pid) exec(`taskkill /pid ${backendProc.pid} /t /f`);
     if (frontendProc.pid) exec(`taskkill /pid ${frontendProc.pid} /t /f`);

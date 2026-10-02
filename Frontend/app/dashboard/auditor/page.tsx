@@ -553,7 +553,7 @@ function AuditorConsoleContent() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "BhoomiSetu_CAG_Audit_Ledger_Export.csv");
+    link.setAttribute("download", "Aarohan_CAG_Audit_Ledger_Export.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -1493,7 +1493,7 @@ function AuditorConsoleContent() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border bg-[#f4f1ea] border-[#d8d3c9] text-xs">
                 <div className="space-y-1">
                   <span className="font-bold text-[#171716]">
-                    BhoomiSetu_National_Audit_Ledger_2026.csv
+                    Aarohan_National_Audit_Ledger_2026.csv
                   </span>
                   <p className="text-[#68655e] text-[11px]">
                     {isHi

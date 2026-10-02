@@ -1,4 +1,4 @@
-const CACHE_NAME = "bhoomi-field-v1";
+const CACHE_NAME = "aarohan-field-v1";
 const OFFLINE_URLS = [
   "/field",
   "/manifest.json",
@@ -63,7 +63,7 @@ self.addEventListener("fetch", (event) => {
 
 // Background Sync Event Handler
 self.addEventListener("sync", (event) => {
-  if (event.tag === "bhoomi-field-sync") {
+  if (event.tag === "aarohan-field-sync") {
     event.waitUntil(
       self.clients.matchAll().then((clients) => {
         clients.forEach((client) => {

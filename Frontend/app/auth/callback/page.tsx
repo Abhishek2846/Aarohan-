@@ -24,13 +24,13 @@ function CallbackHandler() {
 
     if (token) {
       // Save tokens and session cookies
-      localStorage.setItem("bhoomi_token", token);
-      localStorage.setItem("bhoomi_active_role", role);
+      localStorage.setItem("aarohan_token", token);
+      localStorage.setItem("aarohan_active_role", role);
       if (refreshToken) {
-        localStorage.setItem("bhoomi_refresh_token", refreshToken);
+        localStorage.setItem("aarohan_refresh_token", refreshToken);
       }
-      document.cookie = `bhoomi_token=${token}; path=/; max-age=86400`;
-      document.cookie = `bhoomi_role=${role}; path=/; max-age=86400`;
+      document.cookie = `aarohan_token=${token}; path=/; max-age=86400`;
+      document.cookie = `aarohan_role=${role}; path=/; max-age=86400`;
 
       setStatus("Jan Parichay Credentials Verified! Launching Authorized Workspace...");
 

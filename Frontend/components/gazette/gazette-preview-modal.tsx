@@ -316,7 +316,7 @@ export function GazettePreviewModal({ notice, isOpen, onClose }: GazettePreviewM
             </div>
 
             <div className="text-center text-[10px] text-slate-500 mt-6 border-t border-slate-200 dark:border-slate-800 pt-3">
-              Published by the Directorate of Printing, Government of India / State Gazette Authority. Integrated with BhoomiSetu under Section 4 of the Information Technology Act 2000.
+              Published by the Directorate of Printing, Government of India / State Gazette Authority. Integrated with Aarohan under Section 4 of the Information Technology Act 2000.
             </div>
           </div>
         </div>

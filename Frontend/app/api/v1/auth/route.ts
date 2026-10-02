@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     const roleId = body.role || "PIA";
     const matchedRole = USER_ROLES.find((r) => r.id === roleId) || USER_ROLES[0];
 
-    const token = `jwt_bhoomi_${roleId.toLowerCase()}_${Date.now()}`;
+    const token = `jwt_aarohan_${roleId.toLowerCase()}_${Date.now()}`;
 
     return NextResponse.json({
       status: "SUCCESS",
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       user: {
         id: `USR-${roleId}-01`,
         name: roleId === "CITIZEN" ? "Ramesh Kumar" : "Abhishek Patil",
-        email: `${roleId.toLowerCase()}@bhoomisetu.gov.in`,
+        email: `${roleId.toLowerCase()}@aarohan.gov.in`,
         role: roleId,
         designation: matchedRole.label,
         department: "Land Acquisition Directorate",

@@ -12,7 +12,7 @@ test.describe("Interactions: Navigation, Header & Sidebar", () => {
 
     // Verify Hindi text rendered
     const textHi = await page.locator("body").innerText();
-    expect(textHi).toContain("भूमिसेतु");
+    expect(textHi).toContain("आरोहण");
 
     // Click English
     const enBtn = page.locator("button:has-text('EN')").first();
@@ -20,7 +20,7 @@ test.describe("Interactions: Navigation, Header & Sidebar", () => {
     await page.waitForTimeout(300);
 
     const textEn = await page.locator("body").innerText();
-    expect(textEn).toContain("BhoomiSetu");
+    expect(textEn).toContain("Aarohan");
   });
 
   test("Role sidebar highlights active route and navigates correctly", async ({ page, baseURL }) => {

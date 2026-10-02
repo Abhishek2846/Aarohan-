@@ -28,7 +28,7 @@ const GisMapDynamic = dynamic(() => import("./gis-map-client"), {
     <div className="w-full h-[520px] rounded-xl bg-slate-100 dark:bg-slate-900 flex flex-col items-center justify-center text-slate-400 space-y-2 border">
       <div className="w-8 h-8 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
       <p className="text-xs font-semibold">
-        Initializing BhoomiSetu Spatial GIS Engine...
+        Initializing Aarohan Spatial GIS Engine...
       </p>
       <p className="text-[11px] text-slate-500">
         Connecting to Cadastral Tile Services & ISRO Bhuvan

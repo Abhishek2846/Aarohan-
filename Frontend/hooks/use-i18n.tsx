@@ -221,7 +221,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   // Sync with LocalStorage and Event Listeners
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("bhoomi_lang") as LanguageCode;
+      const stored = localStorage.getItem("aarohan_lang") as LanguageCode;
       if (stored === "en" || stored === "hi") {
         setLangState(stored);
       }
@@ -230,7 +230,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     }
 
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === "bhoomi_lang" && (e.newValue === "en" || e.newValue === "hi")) {
+      if (e.key === "aarohan_lang" && (e.newValue === "en" || e.newValue === "hi")) {
         setLangState(e.newValue as LanguageCode);
       }
     };
@@ -242,11 +242,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     };
 
     window.addEventListener("storage", handleStorageChange);
-    window.addEventListener("bhoomi_lang_change" as any, handleCustomChange);
+    window.addEventListener("aarohan_lang_change" as any, handleCustomChange);
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("bhoomi_lang_change" as any, handleCustomChange);
+      window.removeEventListener("aarohan_lang_change" as any, handleCustomChange);
     };
   }, []);
 
@@ -257,7 +257,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = lang;
 
     if (lang === "hi") {
-      document.body.classList.add("bhoomi-lang-hi");
+      document.body.classList.add("aarohan-lang-hi");
 
       // 1. Immediately translate all pre-existing DOM elements on the current page
       applyDOMTranslation(document.body);
@@ -321,7 +321,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
         observer.disconnect();
       };
     } else {
-      document.body.classList.remove("bhoomi-lang-hi");
+      document.body.classList.remove("aarohan-lang-hi");
       restoreDOMEnglish(document.body);
 
       const t1 = setTimeout(() => {
@@ -337,9 +337,9 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const setLanguage = useCallback((newLang: LanguageCode) => {
     setLangState(newLang);
     try {
-      localStorage.setItem("bhoomi_lang", newLang);
+      localStorage.setItem("aarohan_lang", newLang);
       window.dispatchEvent(
-        new CustomEvent("bhoomi_lang_change", { detail: newLang })
+        new CustomEvent("aarohan_lang_change", { detail: newLang })
       );
     } catch (e) {
       // Ignore

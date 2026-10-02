@@ -596,7 +596,7 @@ const NATIONAL_STANDARDS: NationalStandard[] = [
   },
   {
     id: "STD-03",
-    code: "OGC-WFS-BHOOMI-3.0",
+    code: "OGC-WFS-AAROHAN-3.0",
     title: "OpenGIS Web Feature Service Interoperability for Multi-State Corridors",
     version: "v3.0",
     status: "MANDATORY",
@@ -808,7 +808,7 @@ function NationalDashboardContent() {
   // Handle Exporting PDF
   const handleExportPdf = () => {
     const pdfPayload: CentralMinistryPdfData = {
-      reportTitle: "BhoomiSetu National Infrastructure Land Acquisition & R&R Oversight Review",
+      reportTitle: "Aarohan National Infrastructure Land Acquisition & R&R Oversight Review",
       totalProjects: 48,
       totalCases: 1842,
       completedCases: 1498,
@@ -839,7 +839,7 @@ function NationalDashboardContent() {
       setIsPolicyModalOpen(false);
       setPolicySubject("");
       setPolicyContent("");
-      showToast("National Policy Advisory circular broadcasted to 28 State Revenue Departments via BhoomiSetu.");
+      showToast("National Policy Advisory circular broadcasted to 28 State Revenue Departments via Aarohan.");
     }, 1200);
   };
 
@@ -2372,7 +2372,7 @@ function NationalDashboardContent() {
                 <CheckCircle2 className="h-12 w-12 text-[#15803d] mx-auto" />
                 <h4 className="text-sm font-bold text-[#171716]">Policy Circular Transmitted Successfully!</h4>
                 <p className="text-xs text-[#68655e]">
-                  Dispatched to 28 State Revenue Departments and SLAO units via BhoomiSetu secure channel.
+                  Dispatched to 28 State Revenue Departments and SLAO units via Aarohan secure channel.
                 </p>
               </div>
             ) : (

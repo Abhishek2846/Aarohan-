@@ -291,7 +291,7 @@ export function useUploadDocumentMutation() {
           project_id: newDoc.projectId,
           case_id: newDoc.caseId,
           original_filename: newDoc.fileSize || "document.txt",
-          file_content: newDoc.title || "BhoomiSetu document",
+          file_content: newDoc.title || "Aarohan document",
         }),
       }).then(unwrapApiData),
     onSuccess: () => {
@@ -674,7 +674,7 @@ export function useSimulationScenariosQuery() {
 }
 
 // ==========================================
-// 19. BhoomiSetu AI & ML Intelligence Hooks
+// 19. Aarohan AI & ML Intelligence Hooks
 // ==========================================
 export interface AiChatRequest {
   query: string;

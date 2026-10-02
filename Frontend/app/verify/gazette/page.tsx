@@ -42,7 +42,7 @@ function GazetteVerifyContent() {
       {isLoading ? (
         <Card className="p-12 text-center text-slate-500">
           <div className="w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-xs">Querying BhoomiSetu Blockchain / eGazette Ledger...</p>
+          <p className="text-xs">Querying Aarohan Blockchain / eGazette Ledger...</p>
         </Card>
       ) : result ? (
         <Card className={`border-2 shadow-lg ${

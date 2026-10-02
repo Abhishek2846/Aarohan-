@@ -352,7 +352,7 @@ export class GazetteService {
     return {
       verified: true,
       status: 'VERIFIED_AUTHENTIC',
-      message: 'Official Government eGazette statutory notification cryptographically authenticated against BhoomiSetu Blockchain/SHA-256 Ledger.',
+      message: 'Official Government eGazette statutory notification cryptographically authenticated against Aarohan Blockchain/SHA-256 Ledger.',
       noticeNumber: notice.notice_number,
       gazetteReference: notice.gazette_reference || 'PENDING_REGISTRATION',
       gazetteVolumeIssue: notice.gazette_volume_issue || 'Extraordinary Press',

@@ -171,7 +171,7 @@ export class AuthService {
 
     const isPasswordValid =
       (await bcrypt.compare(loginDto.password, user.password_hash)) ||
-      loginDto.password === 'bhoomi2026' ||
+      loginDto.password === 'aarohan2026' ||
       (AuthService.activePasswords[user.user_id] && loginDto.password === AuthService.activePasswords[user.user_id]);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
@@ -478,7 +478,7 @@ export class AuthService {
 
   async initiateParichayLogin(role?: string, redirectPath?: string) {
     const isLive = process.env.PARICHAY_LIVE === 'true';
-    const clientId = process.env.PARICHAY_CLIENT_ID || 'bhoomi-setu-client-01';
+    const clientId = process.env.PARICHAY_CLIENT_ID || 'aarohan-client-01';
     const callbackUrl = process.env.PARICHAY_CALLBACK_URL || 'http://localhost:3001/v1/auth/parichay/callback';
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
 
@@ -641,13 +641,13 @@ export class AuthService {
   }
 
   private static activePasswords: Record<string, string> = {
-    CENTRAL_MINISTRY: 'bhoomi2026',
-    PIA: 'bhoomi2026',
-    STATE_AUTHORITY: 'bhoomi2026',
-    DISTRICT_OFFICER: 'bhoomi2026',
-    FIELD_OFFICER: 'bhoomi2026',
-    AUDITOR: 'bhoomi2026',
-    CITIZEN: 'bhoomi2026',
+    CENTRAL_MINISTRY: 'aarohan2026',
+    PIA: 'aarohan2026',
+    STATE_AUTHORITY: 'aarohan2026',
+    DISTRICT_OFFICER: 'aarohan2026',
+    FIELD_OFFICER: 'aarohan2026',
+    AUDITOR: 'aarohan2026',
+    CITIZEN: 'aarohan2026',
   };
 
   async getCredentials() {
@@ -668,7 +668,7 @@ export class AuthService {
         AuthService.activePasswords[primaryRole] ||
         AuthService.activePasswords[u.email] ||
         AuthService.activePasswords[u.login_name] ||
-        'bhoomi2026';
+        'aarohan2026';
 
       rolesMap[primaryRole] = {
         userId: u.user_id,
@@ -753,7 +753,7 @@ export class AuthService {
       AuthService.activePasswords[updatedUser.user_id] ||
       AuthService.activePasswords[primaryRole] ||
       dto.password ||
-      'bhoomi2026';
+      'aarohan2026';
 
     return {
       status: 'success',

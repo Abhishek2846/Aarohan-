@@ -36,8 +36,8 @@ export function CivicHeader() {
 
   const isCitizenPath =
     pathname.startsWith("/citizen") ||
-    (pathname.startsWith("/gis") && (activeRole === "CITIZEN" || (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN"))))) ||
-    (pathname.startsWith("/gazette") && (activeRole === "CITIZEN" || (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN")))));
+    (pathname.startsWith("/gis") && (activeRole === "CITIZEN" || (typeof window !== "undefined" && (localStorage.getItem("aarohan_active_role") === "CITIZEN" || document.cookie.includes("aarohan_role=CITIZEN"))))) ||
+    (pathname.startsWith("/gazette") && (activeRole === "CITIZEN" || (typeof window !== "undefined" && (localStorage.getItem("aarohan_active_role") === "CITIZEN" || document.cookie.includes("aarohan_role=CITIZEN")))));
 
   const effectiveRole = isCitizenPath && (!isAuthenticated || activeRole === "CITIZEN") ? "CITIZEN" : activeRole;
   const showNav = isAuthenticated || isCitizenPath;
@@ -100,7 +100,7 @@ export function CivicHeader() {
 
       {/* Main Navigation Header */}
       <div className="civic-header-main container mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4">
-        {/* Left: Mobile Toggle + Official BhoomiSetu Emblem & Name */}
+        {/* Left: Mobile Toggle + Official Aarohan Emblem & Name */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Mobile Drawer Button */}
           {showNav && (
@@ -116,7 +116,7 @@ export function CivicHeader() {
           )}
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0" title="BhoomiSetu Home">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0" title="Aarohan Home">
             <BhoomiEmblem className="w-9 h-9 sm:w-10 sm:h-10 group-hover:scale-105 transition-transform" />
             <div>
               <div className="flex items-center gap-1.5 sm:gap-2">
@@ -124,7 +124,7 @@ export function CivicHeader() {
                   {t.appName}
                 </span>
                 <span className="text-[10px] sm:text-xs bg-[#ef5b2a]/10 text-[#ef5b2a] font-bold px-2 py-0.5 rounded-full border border-[#ef5b2a]/30 font-hindi">
-                  {lang === "hi" ? "BhoomiSetu" : "भूमिसेतु"}
+                  {lang === "hi" ? "Aarohan" : "आरोहण"}
                 </span>
               </div>
               <p className="text-[10px] sm:text-[11px] text-[#68655e] -mt-0.5 line-clamp-1 max-w-[200px] sm:max-w-none">

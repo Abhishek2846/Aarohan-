@@ -15,7 +15,7 @@ export class PrismaService
   constructor() {
     const connectionString =
       process.env.DATABASE_URL ||
-      'postgresql://bhoomi:bhoomi_pass@127.0.0.1:5432/bhoomi_setu?schema=public';
+      'postgresql://bhoomi:aarohan_pass@127.0.0.1:5432/aarohan_setu?schema=public';
     const adapter = new PrismaPg({ connectionString });
     super({ adapter });
   }

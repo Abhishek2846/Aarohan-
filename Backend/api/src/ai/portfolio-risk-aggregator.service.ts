@@ -87,7 +87,7 @@ export class PortfolioRiskAggregatorService {
       projects = [
         {
           project_id: '00000000-0000-0000-0000-000000000001',
-          project_code: 'BHOOMI-BLR-01',
+          project_code: 'AAROHAN-BLR-01',
           title: 'Bengaluru STRR Satellite Ring Road Corridor',
           sector: 'HIGHWAYS',
           estimated_budget_inr: 2850000000,
@@ -95,7 +95,7 @@ export class PortfolioRiskAggregatorService {
         },
         {
           project_id: '00000000-0000-0000-0000-000000000002',
-          project_code: 'BHOOMI-WDFC-02',
+          project_code: 'AAROHAN-WDFC-02',
           title: 'Western Dedicated Freight Corridor (Segment 4)',
           sector: 'RAILWAYS',
           estimated_budget_inr: 4200000000,
@@ -103,7 +103,7 @@ export class PortfolioRiskAggregatorService {
         },
         {
           project_id: '00000000-0000-0000-0000-000000000003',
-          project_code: 'BHOOMI-DEL-MUM-03',
+          project_code: 'AAROHAN-DEL-MUM-03',
           title: 'Delhi Mumbai Expressway Urban Connector',
           sector: 'HIGHWAYS',
           estimated_budget_inr: 3400000000,
@@ -111,7 +111,7 @@ export class PortfolioRiskAggregatorService {
         },
         {
           project_id: '00000000-0000-0000-0000-000000000004',
-          project_code: 'BHOOMI-SOLAR-04',
+          project_code: 'AAROHAN-SOLAR-04',
           title: 'Pavagada Phase-III Ultra Mega Solar Park',
           sector: 'RENEWABLE_ENERGY',
           estimated_budget_inr: 1200000000,
@@ -119,7 +119,7 @@ export class PortfolioRiskAggregatorService {
         },
         {
           project_id: '00000000-0000-0000-0000-000000000005',
-          project_code: 'BHOOMI-VAD-05',
+          project_code: 'AAROHAN-VAD-05',
           title: 'Vadodara Ring Road Multimodal Transport Hub',
           sector: 'URBAN_INFRASTRUCTURE',
           estimated_budget_inr: 1850000000,

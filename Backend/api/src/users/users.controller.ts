@@ -31,8 +31,8 @@ export class UsersController {
         },
         password: {
           type: 'string',
-          example: 'bhoomi2026',
-          description: 'Initial login password (defaults to bhoomi2026)',
+          example: 'aarohan2026',
+          description: 'Initial login password (defaults to aarohan2026)',
         },
         login_name: {
           type: 'string',

@@ -566,7 +566,7 @@ function FieldSurveyorDashboardContent() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold text-[#171716]">BhoomiSetu Field Surveyor PWA</h1>
+                <h1 className="text-lg font-bold text-[#171716]">Aarohan Field Surveyor PWA</h1>
                 <Badge variant="outline" className="text-[10px] text-[#ef5b2a] border-[#ef5b2a]/30 font-mono">
                   v2.6-OFFLINE READY
                 </Badge>
@@ -2356,7 +2356,7 @@ export default function FieldOfficerPWAPage() {
       fallback={
         <div className="max-w-4xl mx-auto p-8 text-center text-xs text-[#68655e] space-y-2">
           <RefreshCw className="h-6 w-6 animate-spin mx-auto text-[#ef5b2a]" />
-          <p>Loading BhoomiSetu Field Surveyor PWA Workstation...</p>
+          <p>Loading Aarohan Field Surveyor PWA Workstation...</p>
         </div>
       }
     >

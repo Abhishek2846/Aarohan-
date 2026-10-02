@@ -317,11 +317,11 @@ export function BhoomiAiChatbot() {
       sender: "ai",
       text: isHi
         ? role === "CITIZEN"
-          ? `नमस्ते! मैं **भूमिसेतु AI सहायक** हूँ। मैं आपके प्रश्नों का उत्तर देने के साथ-साथ सीधे **मुआवजा गणना (100% तोषण)**, **ई-राजपत्र सार्वजनिक सूचनाएं**, **0% कर छूट**, एवं **धारा 15 की आपत्ति** तैयार करने में आपकी सहायता कर सकता हूँ।`
-          : `नमस्ते! मैं **भूमिसेतु AI सहायक** हूँ। मैं आपके प्रश्नों का उत्तर देने के साथ-साथ सीधे **मुआवजा गणना (100% तोषण)**, **ई-राजपत्र सत्यापन**, **पीएम गति शक्ति एनओसी**, एवं **धारा 15 की आपत्ति** तैयार करने में सक्षम हूँ।`
+          ? `नमस्ते! मैं **आरोहण AI सहायक** हूँ। मैं आपके प्रश्नों का उत्तर देने के साथ-साथ सीधे **मुआवजा गणना (100% तोषण)**, **ई-राजपत्र सार्वजनिक सूचनाएं**, **0% कर छूट**, एवं **धारा 15 की आपत्ति** तैयार करने में आपकी सहायता कर सकता हूँ।`
+          : `नमस्ते! मैं **आरोहण AI सहायक** हूँ। मैं आपके प्रश्नों का उत्तर देने के साथ-साथ सीधे **मुआवजा गणना (100% तोषण)**, **ई-राजपत्र सत्यापन**, **पीएम गति शक्ति एनओसी**, एवं **धारा 15 की आपत्ति** तैयार करने में सक्षम हूँ।`
         : role === "CITIZEN"
-          ? `Welcome to **BhoomiSetu AI Assistant**! I provide intelligent support for your land acquisition queries, **statutory compensation (100% Solatium & 0% Tax)**, **e-Gazette public notices**, and **filing Section 15 objections**.`
-          : `Welcome to **BhoomiSetu AI Assistant**! I provide intelligent support for **statutory compensation (100% Solatium & 0% Tax)**, **e-Gazette verification**, **PM Gati Shakti clearances**, and **Section 15 objection filing**.`,
+          ? `Welcome to **Aarohan AI Assistant**! I provide intelligent support for your land acquisition queries, **statutory compensation (100% Solatium & 0% Tax)**, **e-Gazette public notices**, and **filing Section 15 objections**.`
+          : `Welcome to **Aarohan AI Assistant**! I provide intelligent support for **statutory compensation (100% Solatium & 0% Tax)**, **e-Gazette verification**, **PM Gati Shakti clearances**, and **Section 15 objection filing**.`,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       suggestedQuestions:
         role === "CITIZEN"
@@ -441,16 +441,16 @@ export function BhoomiAiChatbot() {
   };
 
   const handleExportTranscript = () => {
-    const header = `# BhoomiSetu AI Assistant Consultation Transcript\nDate: ${new Date().toLocaleString()}\nUser Role: ${role}\nLanguage: ${chatLang}\n\n---\n\n`;
+    const header = `# Aarohan AI Assistant Consultation Transcript\nDate: ${new Date().toLocaleString()}\nUser Role: ${role}\nLanguage: ${chatLang}\n\n---\n\n`;
     const body = messages
-      .map((m) => `[${m.timestamp}] ${m.sender === "user" ? "User" : "BhoomiSetu AI"}:\n${m.text}\n`)
+      .map((m) => `[${m.timestamp}] ${m.sender === "user" ? "User" : "Aarohan AI"}:\n${m.text}\n`)
       .join("\n---\n\n");
 
     const blob = new Blob([header + body], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `BhoomiSetu_AI_Transcript_${Date.now().toString().slice(-6)}.md`;
+    a.download = `Aarohan_AI_Transcript_${Date.now().toString().slice(-6)}.md`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -611,14 +611,14 @@ export function BhoomiAiChatbot() {
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-50 bg-[#171716] hover:bg-[#2d2d2c] text-[#fffdf8] p-3.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all hover:scale-105 border border-[#ef5b2a]/40 group"
-          title="Open BhoomiSetu AI Agent"
+          title="Open Aarohan AI Agent"
         >
           <div className="relative">
             <Bot className="h-6 w-6 text-[#ef5b2a] group-hover:rotate-12 transition-transform" />
             <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
           </div>
           <span className="text-xs font-black tracking-wide pr-1 hidden sm:inline">
-            BhoomiSetu AI Agent
+            Aarohan AI Agent
           </span>
         </button>
       )}
@@ -640,7 +640,7 @@ export function BhoomiAiChatbot() {
               </div>
               <div>
                 <CardTitle className="text-sm font-black flex items-center gap-2 text-[#fffdf8]">
-                  <span>BhoomiSetu AI Assistant</span>
+                  <span>Aarohan AI Assistant</span>
                   <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/40 text-[9px] py-0 px-1.5 font-mono">
                     {role}
                   </Badge>
@@ -804,7 +804,7 @@ export function BhoomiAiChatbot() {
                       <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#d8d3c9]/50 text-[10px] text-slate-500">
                         <span className="font-bold text-[#ef5b2a] flex items-center gap-1">
                           <Sparkles className="h-3 w-3" />
-                          BhoomiSetu AI
+                          Aarohan AI
                         </span>
                         <div className="flex items-center gap-1.5">
                           <button
@@ -1000,7 +1000,7 @@ export function BhoomiAiChatbot() {
             {(chatMutation.isPending || detectIntentMutation.isPending || executeActionMutation.isPending) && (
               <div className="flex items-center gap-2 text-xs text-[#68655e] p-2 bg-[#fffdf8] rounded-xl border border-[#d8d3c9] w-fit shadow-xs">
                 <RefreshCw className="h-3.5 w-3.5 animate-spin text-[#ef5b2a]" />
-                <span>{isHi ? "भूमिसेतु AI प्रश्न का विश्लेषण कर रहा है..." : "BhoomiSetu AI Agent is retrieving verified records..."}</span>
+                <span>{isHi ? "आरोहण AI प्रश्न का विश्लेषण कर रहा है..." : "Aarohan AI Agent is retrieving verified records..."}</span>
               </div>
             )}
             <div ref={messagesEndRef} />

@@ -11,7 +11,7 @@ export class AppController {
   getHealth() {
     return {
       status: 'ok',
-      service: 'bhoomi-setu-api',
+      service: 'aarohan-api',
       timestamp: new Date().toISOString(),
       uptimeSeconds: Math.floor(process.uptime()),
     };
@@ -24,7 +24,7 @@ export class AppController {
   getUnversionedHealth() {
     return {
       status: 'ok',
-      service: 'bhoomi-setu-api',
+      service: 'aarohan-api',
       timestamp: new Date().toISOString(),
       uptimeSeconds: Math.floor(process.uptime()),
     };

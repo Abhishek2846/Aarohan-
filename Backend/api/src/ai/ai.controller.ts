@@ -97,7 +97,7 @@ export class AiController {
   @Public()
   @Throttle({ default: { limit: 20, ttl: 60000 } })
   @Post('chat')
-  @ApiOperation({ summary: 'Bhoomi AI Copilot conversational endpoint (Public & Officer)' })
+  @ApiOperation({ summary: 'Aarohan AI Copilot conversational endpoint (Public & Officer)' })
   async chat(@Body() body: ChatMessageRequestDto) {
     return {
       status: 'success',

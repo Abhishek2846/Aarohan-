@@ -156,8 +156,8 @@ function RoleSidebarContent() {
   const isCitizenContext =
     activeRole === "CITIZEN" ||
     pathname.startsWith("/citizen") ||
-    (pathname.startsWith("/gis") && (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN")))) ||
-    (pathname.startsWith("/gazette") && (typeof window !== "undefined" && (localStorage.getItem("bhoomi_active_role") === "CITIZEN" || document.cookie.includes("bhoomi_role=CITIZEN"))));
+    (pathname.startsWith("/gis") && (typeof window !== "undefined" && (localStorage.getItem("aarohan_active_role") === "CITIZEN" || document.cookie.includes("aarohan_role=CITIZEN")))) ||
+    (pathname.startsWith("/gazette") && (typeof window !== "undefined" && (localStorage.getItem("aarohan_active_role") === "CITIZEN" || document.cookie.includes("aarohan_role=CITIZEN"))));
 
   const effectiveRole = isCitizenContext && (!isAuthenticated || activeRole === "CITIZEN") ? "CITIZEN" : activeRole;
 

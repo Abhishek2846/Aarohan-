@@ -83,7 +83,7 @@ export class NlpAssistantService {
       queryLower.includes('batao') ||
       queryLower.includes('karo');
 
-    const sources: string[] = ['BhoomiSetu PostgreSQL Database', 'RFCTLARR Act 2013 Statutory Rules'];
+    const sources: string[] = ['Aarohan PostgreSQL Database', 'RFCTLARR Act 2013 Statutory Rules'];
     const deepLinks: DeepLinkItem[] = [];
     const dataRef: Record<string, any> = {};
 
@@ -113,8 +113,8 @@ export class NlpAssistantService {
 
       return {
         answer: isHi
-          ? `नमस्ते! मैं **भूमिसेतु AI सहायक** हूँ। मैं भूमि अधिग्रहण, मुआवजा (100% तोषण व 0% कर छूट), ई-राजपत्र अधिसूचनाओं, पीएम गति शक्ति एनओसी और विलंब रडार में आपकी सहायता कर सकता हूँ।`
-          : `Hello! I am the **BhoomiSetu AI Assistant**, your intelligent advisor for land acquisition, compensation awards (100% Solatium & 0% Tax), official e-Gazette publications, PM Gati Shakti clearances, and AI delay forecasting.`,
+          ? `नमस्ते! मैं **आरोहण AI सहायक** हूँ। मैं भूमि अधिग्रहण, मुआवजा (100% तोषण व 0% कर छूट), ई-राजपत्र अधिसूचनाओं, पीएम गति शक्ति एनओसी और विलंब रडार में आपकी सहायता कर सकता हूँ।`
+          : `Hello! I am the **Aarohan AI Assistant**, your intelligent advisor for land acquisition, compensation awards (100% Solatium & 0% Tax), official e-Gazette publications, PM Gati Shakti clearances, and AI delay forecasting.`,
         intent: 'GREETING',
         sourcesUsed: sources,
         suggestedQuestions: suggested,
@@ -152,8 +152,8 @@ export class NlpAssistantService {
 
       return {
         answer: isHi
-          ? `मैं **भूमिसेतु AI सहायक (BhoomiSetu AI Agent)** हूँ—राष्ट्रीय अवसंरचना भूमि अधिग्रहण का एकीकृत इंटेलिजेंस इंजन।\n\nमैं इन मुख्य क्षेत्रों में सहायता प्रदान करता हूँ:\n1. **🌾 वैधानिक मुआवजा एवं तोषण (Sections 23 & 30)**: बाजार मूल्य, 1.25x-2.0x ग्रामीण गुणक, **100% तोषण (Solatium)**, 12% ब्याज व **धारा 96 के तहत 100% कर छूट** का सटीक हिसाब।\n2. **📜 आधिकारिक ई-राजपत्र (eGazette.gov.in)**: धारा 11(1), 15(2), 19(1) और 23/30 की अधिसूचनाओं का सत्यापन, SHA-256 ब्लॉकचेन हैश व द्विभाषी पीडीएफ जनरेशन।\n3. **⚡ पीएम गति शक्ति राष्ट्रीय मास्टर प्लान**: वन (MoEFCC), रेलवे, रक्षा व यूटिलिटी अंतर-विभागीय अनापत्ति प्रमाणपत्रों (NOC) का वास्तविक समय पर ट्रैकिंग।\n4. **⏳ 90-दिवसीय एआई विलंब रडार**: एसएचएपी (SHAP) मॉडल द्वारा रुकावटों का निदान व समय सीमा पूर्वानुमान।\n5. **📝 धारा 15 आपत्ति फॉर्म**: किसानों के लिए सीधे ऑनलाइन आपत्ति दर्ज करना व एसडीएम कोर्ट में सुनवाई तय करना।`
-          : `I am the **BhoomiSetu AI Agent**, the centralized domain intelligence engine for national infrastructure land acquisition in India.\n\nHere is what I can assist you with:\n1. **🌾 Statutory Compensation & Solatium (Sections 23 & 30)**: Live calculation with rural multipliers, **100% Mandatory Solatium**, 12% statutory interest, and **0% Tax under Section 96**.\n2. **📜 Official Bilingual e-Gazette (eGazette.gov.in)**: Instant retrieval and SHA-256 cryptographic verification of Section 11(1), 15(2), 19(1), and 23/30 Gazette notifications.\n3. **⚡ PM Gati Shakti NMP Clearances**: Tracking multi-agency NOCs (Forest, Railway, Wildlife, Defence) and statutory SLA breach escalations.\n4. **⏳ AI 90-Day Delay Radar**: ML-driven project risk assessment with SHAP explainability and root-cause bottleneck diagnostics.\n5. **📝 Section 15 Objection Filing**: Preparing pre-filled statutory objection forms for Sub-Divisional Magistrate (CALA) adjudication.`,
+          ? `मैं **आरोहण AI सहायक (Aarohan AI Agent)** हूँ—राष्ट्रीय अवसंरचना भूमि अधिग्रहण का एकीकृत इंटेलिजेंस इंजन।\n\nमैं इन मुख्य क्षेत्रों में सहायता प्रदान करता हूँ:\n1. **🌾 वैधानिक मुआवजा एवं तोषण (Sections 23 & 30)**: बाजार मूल्य, 1.25x-2.0x ग्रामीण गुणक, **100% तोषण (Solatium)**, 12% ब्याज व **धारा 96 के तहत 100% कर छूट** का सटीक हिसाब।\n2. **📜 आधिकारिक ई-राजपत्र (eGazette.gov.in)**: धारा 11(1), 15(2), 19(1) और 23/30 की अधिसूचनाओं का सत्यापन, SHA-256 ब्लॉकचेन हैश व द्विभाषी पीडीएफ जनरेशन।\n3. **⚡ पीएम गति शक्ति राष्ट्रीय मास्टर प्लान**: वन (MoEFCC), रेलवे, रक्षा व यूटिलिटी अंतर-विभागीय अनापत्ति प्रमाणपत्रों (NOC) का वास्तविक समय पर ट्रैकिंग।\n4. **⏳ 90-दिवसीय एआई विलंब रडार**: एसएचएपी (SHAP) मॉडल द्वारा रुकावटों का निदान व समय सीमा पूर्वानुमान।\n5. **📝 धारा 15 आपत्ति फॉर्म**: किसानों के लिए सीधे ऑनलाइन आपत्ति दर्ज करना व एसडीएम कोर्ट में सुनवाई तय करना।`
+          : `I am the **Aarohan AI Agent**, the centralized domain intelligence engine for national infrastructure land acquisition in India.\n\nHere is what I can assist you with:\n1. **🌾 Statutory Compensation & Solatium (Sections 23 & 30)**: Live calculation with rural multipliers, **100% Mandatory Solatium**, 12% statutory interest, and **0% Tax under Section 96**.\n2. **📜 Official Bilingual e-Gazette (eGazette.gov.in)**: Instant retrieval and SHA-256 cryptographic verification of Section 11(1), 15(2), 19(1), and 23/30 Gazette notifications.\n3. **⚡ PM Gati Shakti NMP Clearances**: Tracking multi-agency NOCs (Forest, Railway, Wildlife, Defence) and statutory SLA breach escalations.\n4. **⏳ AI 90-Day Delay Radar**: ML-driven project risk assessment with SHAP explainability and root-cause bottleneck diagnostics.\n5. **📝 Section 15 Objection Filing**: Preparing pre-filled statutory objection forms for Sub-Divisional Magistrate (CALA) adjudication.`,
         intent: 'IDENTITY_QUERY',
         sourcesUsed: sources,
         deepLinks,
@@ -517,7 +517,7 @@ export class NlpAssistantService {
           ? `### ⏳ एआई 90-दिवसीय विलंब रडार एवं रूट-कॉज विश्लेषण (AI Delay Radar)\n\nमशीन लर्निंग मॉडल (XGBoost + SHAP) द्वारा मूल्यांकित राष्ट्रीय परियोजनाएं:\n\n${pSummaries}\n\n**प्रमुख विलंब कारक (Top SHAP Drivers)**:\n- **धारा 15 आपत्तियों का विलंब**: एसएलएओ कोर्ट में आपत्तियों का निस्तारण समय से न होना (+42 दिन)\n- **वन एवं पर्यावरण मंजूरी (NOCs)**: स्टेज-1 वन स्वीकृति में देरी (+55 दिन)\n- **डीबीटी भुगतान सत्यापन**: बैंक खातों व आधार लिंकिंग का सत्यापन लंबित (+18 दिन)\n\n> **सकारात्मक कारक**: ULPIN भू-आधार से 100% कैडस्ट्रल मैपिंग होने से विवादों में 40% की कमी दर्ज हुई है।`
           : `### ⏳ AI 90-Day Delay Radar & SHAP Explainability Engine\n\nPredictive machine learning evaluation across national infrastructure corridors:\n\n${pSummaries}\n\n**Dominant SHAP Delay Drivers**:\n- **Section 15 Hearing Bottlenecks**: Pending resolution of landowner objections in CALA/SDM court (+42 days impact)\n- **Stage-1 Forest Clearances**: Multi-agency clearances pending under Forest Conservation Act (+55 days impact)\n- **PFMS DBT Validation**: Awaiting bank mandate verification for direct compensation credit (+18 days impact)\n\n> **Mitigating Factors**: Corridors with 100% ULPIN Bhu-Aadhaar integration show a 40% reduction in litigation stays.`,
         intent: 'DELAY_RISK_QUERY',
-        sourcesUsed: [...sources, 'BhoomiSetu ML Delay Prediction Engine', 'TreeSHAP Feature Explainer'],
+        sourcesUsed: [...sources, 'Aarohan ML Delay Prediction Engine', 'TreeSHAP Feature Explainer'],
         deepLinks,
         suggestedQuestions: [
           isHi ? 'पूर्ण 90-दिन विलंब रडार कंसोल देखें' : 'View full 90-day Delay Radar Console',
@@ -609,8 +609,8 @@ export class NlpAssistantService {
 
     return {
       answer: isHi
-        ? `मैंने आपके प्रश्न **"${queryRaw}"** का विश्लेषण किया है।\n\nभूमिसेतु प्रणाली में आपके लिए उपलब्ध मुख्य सेवाएं:\n- **🌾 मुआवजा व 100% तोषण**: धारा 23/30 गणना व धारा 96 कर-मुक्त प्रमाण।\n- **📜 ई-राजपत्र अधिसूचनाएं**: धारा 11, 15, 19 व 23 के आधिकारिक प्रकाशन व सत्यापन।\n- **⚡ पीएम गति शक्ति**: विभिन्न मंत्रालयों से अंतर-विभागीय एनओसी स्थिति।\n- **📝 धारा 15 आपत्ति**: सीधे ऑनलाइन आपत्ति फॉर्म भरें।\n\nकृपया अधिक विशिष्ट विवरण जानने के लिए नीचे दिए गए सुझावों पर क्लिक करें:`
-        : `I have analyzed your query regarding **"${queryRaw}"**.\n\nKey statutory services available in BhoomiSetu:\n- **🌾 Statutory Compensation**: Section 23/30 awards, 100% Solatium, and Section 96 0% tax exemption proof.\n- **📜 Official e-Gazette**: Verification of Section 11, 15, 19, and 23 notices with SHA-256 QR codes.\n- **⚡ PM Gati Shakti NMP**: Tracking inter-agency clearances across infrastructure corridors.\n- **📝 Section 15 Objection Filing**: File legal objections directly with the Sub-Divisional Magistrate.\n\nSelect any topic below or ask a specific question:`,
+        ? `मैंने आपके प्रश्न **"${queryRaw}"** का विश्लेषण किया है।\n\nआरोहण प्रणाली में आपके लिए उपलब्ध मुख्य सेवाएं:\n- **🌾 मुआवजा व 100% तोषण**: धारा 23/30 गणना व धारा 96 कर-मुक्त प्रमाण।\n- **📜 ई-राजपत्र अधिसूचनाएं**: धारा 11, 15, 19 व 23 के आधिकारिक प्रकाशन व सत्यापन।\n- **⚡ पीएम गति शक्ति**: विभिन्न मंत्रालयों से अंतर-विभागीय एनओसी स्थिति।\n- **📝 धारा 15 आपत्ति**: सीधे ऑनलाइन आपत्ति फॉर्म भरें।\n\nकृपया अधिक विशिष्ट विवरण जानने के लिए नीचे दिए गए सुझावों पर क्लिक करें:`
+        : `I have analyzed your query regarding **"${queryRaw}"**.\n\nKey statutory services available in Aarohan:\n- **🌾 Statutory Compensation**: Section 23/30 awards, 100% Solatium, and Section 96 0% tax exemption proof.\n- **📜 Official e-Gazette**: Verification of Section 11, 15, 19, and 23 notices with SHA-256 QR codes.\n- **⚡ PM Gati Shakti NMP**: Tracking inter-agency clearances across infrastructure corridors.\n- **📝 Section 15 Objection Filing**: File legal objections directly with the Sub-Divisional Magistrate.\n\nSelect any topic below or ask a specific question:`,
       intent: 'GENERAL_QUERY',
       sourcesUsed: sources,
       deepLinks,

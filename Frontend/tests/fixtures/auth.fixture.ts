@@ -29,13 +29,13 @@ export async function authenticateAsRole(page: Page, role: UserRole, baseURL?: s
   // Add cookies to browser context
   await page.context().addCookies([
     {
-      name: "bhoomi_token",
+      name: "aarohan_token",
       value: mockToken,
       domain: new URL(targetBase).hostname,
       path: "/",
     },
     {
-      name: "bhoomi_role",
+      name: "aarohan_role",
       value: role,
       domain: new URL(targetBase).hostname,
       path: "/",
@@ -45,9 +45,9 @@ export async function authenticateAsRole(page: Page, role: UserRole, baseURL?: s
   // Pre-seed localStorage before page scripts execute via init script
   await page.addInitScript(
     ({ r, t }) => {
-      localStorage.setItem("bhoomi_token", t);
-      localStorage.setItem("bhoomi_auth_token", t);
-      localStorage.setItem("bhoomi_active_role", r);
+      localStorage.setItem("aarohan_token", t);
+      localStorage.setItem("aarohan_auth_token", t);
+      localStorage.setItem("aarohan_active_role", r);
     },
     { r: role, t: mockToken }
   );

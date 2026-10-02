@@ -82,7 +82,7 @@ export function GatiShaktiScreener({
   const urlProjectId = searchParams ? searchParams.get("project") : null;
 
   const [selectedProjectId, setSelectedProjectId] = useState<string>(
-    urlProjectId || defaultProjectId || "BHOOMI-SEED-01"
+    urlProjectId || defaultProjectId || "AAROHAN-SEED-01"
   );
 
   // Sync when searchParams changes
@@ -1128,7 +1128,7 @@ export function GatiShaktiScreener({
             National PMO Matrix Unavailable
           </h3>
           <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-            Unable to fetch multi-project regulatory clearance metrics. Please verify connectivity with the BhoomiSetu backend API.
+            Unable to fetch multi-project regulatory clearance metrics. Please verify connectivity with the Aarohan backend API.
           </p>
           <Button
             size="sm"

@@ -1,5 +1,5 @@
 {
-  "name": "bhoomi-setu-workspace",
+  "name": "aarohan-workspace",
   "version": "1.0.0",
   "private": true,
   "description": "Centralized, GIS-enabled land acquisition & AI intelligence management platform",
@@ -12,14 +12,14 @@
     "start:frontend": "npm --prefix Frontend run dev"
   },
   "keywords": [
-    "BhoomiSetu",
+    "Aarohan",
     "Land Acquisition",
     "AI Intelligence",
     "GIS",
     "NestJS",
     "Next.js"
   ],
-  "author": "BhoomiSetu Team",
+  "author": "Aarohan Team",
   "license": "ISC",
   "devDependencies": {
     "localtunnel": "^2.0.2"

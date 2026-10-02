@@ -1,14 +1,14 @@
-# BhoomiSetu Database Architecture & Schema
+# Aarohan Database Architecture & Schema
 
-This directory contains the canonical PostgreSQL + PostGIS database schema, spatial indexing, and data models for the **BhoomiSetu (भूमिसेतु)** platform.
+This directory contains the canonical PostgreSQL + PostGIS database schema, spatial indexing, and data models for the **Aarohan (आरोहण)** platform.
 
 ---
 
 ## 🏛️ Schema Overview
 
-BhoomiSetu uses a relational PostgreSQL database with PostGIS spatial extensions to support statutory land acquisition under RFCTLARR Act 2013 and national infrastructure projects:
+Aarohan uses a relational PostgreSQL database with PostGIS spatial extensions to support statutory land acquisition under RFCTLARR Act 2013 and national infrastructure projects:
 
-- **Canonical DDL**: [`bhoomiSetu_postgresql.sql`](./bhoomiSetu_postgresql.sql)
+- **Canonical DDL**: [`aarohan_postgresql.sql`](./aarohan_postgresql.sql)
 - **Geometry CRS**: EPSG:4326 (WGS 84 spatial coordinates for parcel boundaries and project corridors)
 - **Spatial Indexing**: GiST indexes on all spatial geometry columns (`boundary_wgs84`)
 - **Data Security**: Field-level AES-256-GCM authenticated encryption for DPDP Act 2023 compliance on citizen PII (`identity_token`, `bank_account_token`, `encrypted_legal_name`)
@@ -23,10 +23,10 @@ BhoomiSetu uses a relational PostgreSQL database with PostGIS spatial extensions
 ### 1. Initialize Database
 ```bash
 # Create the database
-createdb -U postgres bhoomiSetuDb
+createdb -U postgres aarohanDb
 
 # Import canonical schema
-psql -U postgres -d bhoomiSetuDb -f Database/bhoomiSetu_postgresql.sql
+psql -U postgres -d aarohanDb -f Database/aarohan_postgresql.sql
 ```
 
 ### 2. Generate Prisma Client & Seed Data

@@ -73,8 +73,8 @@ function CitizenPortalContent() {
   useEffect(() => {
     setMounted(true);
     if (typeof window !== "undefined") {
-      localStorage.setItem("bhoomi_active_role", "CITIZEN");
-      document.cookie = "bhoomi_role=CITIZEN; path=/; max-age=86400; SameSite=Lax";
+      localStorage.setItem("aarohan_active_role", "CITIZEN");
+      document.cookie = "aarohan_role=CITIZEN; path=/; max-age=86400; SameSite=Lax";
     }
   }, []);
 

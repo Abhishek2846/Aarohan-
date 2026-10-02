@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { GatiShaktiScreener } from "@/components/gati-shakti/gati-shakti-screener";
 
 export const metadata = {
-  title: "PM Gati Shakti NMP Geo-Clearance Screener | BhoomiSetu (भूमिसेतु)",
+  title: "PM Gati Shakti NMP Geo-Clearance Screener | Aarohan (आरोहण)",
   description:
     "National Master Plan Multi-Agency Single Window Regulatory Clearance Engine for Forest, Railway, Defence, and Utility Permissions.",
 };

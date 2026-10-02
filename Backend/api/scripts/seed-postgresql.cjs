@@ -1,5 +1,5 @@
 /*
- * Idempotent development/demo seed for the PostgreSQL BhoomiSetu database.
+ * Idempotent development/demo seed for the PostgreSQL Aarohan database.
  *
  * It deliberately uses pg instead of Prisma create() calls because this
  * schema contains PostGIS columns that Prisma exposes as Unsupported types.
@@ -30,7 +30,7 @@ if (fs.existsSync(envPath)) {
   }
 }
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://bhoomi:bhoomi_pass@127.0.0.1:5432/bhoomi_setu?schema=public';
+const connectionString = process.env.DATABASE_URL || 'postgresql://bhoomi:aarohan_pass@127.0.0.1:5432/aarohan_setu?schema=public';
 const now = new Date();
 const isoDate = (offset = 0) => new Date(now.getTime() + offset * 86400000).toISOString();
 const dateOnly = (offset = 0) => isoDate(offset).slice(0, 10);
@@ -588,7 +588,7 @@ async function seed() {
 
     const roleCodes = ['SYSTEM_ADMIN', 'PIA', 'CENTRAL_MINISTRY', 'STATE_AUTHORITY', 'DISTRICT_OFFICER', 'FIELD_OFFICER', 'AUDITOR', 'CITIZEN'];
     for (const [i, role] of roleCodes.entries()) {
-      await upsert('roles', { role_code: role, display_name: role.replaceAll('_', ' '), description: `BhoomiSetu ${role} demo role`, is_system_role: true }, ['role_code']);
+      await upsert('roles', { role_code: role, display_name: role.replaceAll('_', ' '), description: `Aarohan ${role} demo role`, is_system_role: true }, ['role_code']);
     }
 
     const jurisdictionIds = Array.from({ length: 5 }, (_, i) => uuid(`jurisdiction-${i + 1}`));
@@ -608,7 +608,7 @@ async function seed() {
       }, ['jurisdiction_id']);
     }
 
-    const passwordHash = await bcrypt.hash('bhoomi2026', 10);
+    const passwordHash = await bcrypt.hash('aarohan2026', 10);
     const users = [
       ['ananya.sharma@nic.in', 'Ananya Sharma, IAS', 'CENTRAL_MINISTRY', 0],
       ['v.malhotra@nhai.gov.in', 'Vikram Malhotra', 'PIA', 0],
@@ -629,13 +629,13 @@ async function seed() {
       userIds.push(userId);
       await upsert('users', {
         user_id: userId, login_name: email.split('@')[0], email, password_hash: passwordHash, full_name: name,
-        designation: role.replaceAll('_', ' '), department: 'BhoomiSetu Land Acquisition Directorate',
+        designation: role.replaceAll('_', ' '), department: 'Aarohan Land Acquisition Directorate',
         phone_e164: `+919800000${String(i + 1).padStart(2, '0')}`, account_status: 'ACTIVE', preferred_language: 'en', mfa_enabled: false,
       }, ['user_id']);
       await upsert('user_roles', { user_id: userId, role_code: role, assigned_by: userIds[0] }, ['user_id', 'role_code']);
       await upsert('user_preferences', { user_id: userId, language_code: 'en', timezone_name: 'Asia/Kolkata' }, ['user_id']);
       await upsert('user_jurisdictions', { user_id: userId, jurisdiction_id: jurisdictionIds[jurisdictionIndex], access_type: role === 'CITIZEN' ? 'VIEW' : 'ADMIN', valid_from: dateOnly(-30), assigned_by: userIds[0] }, ['user_id', 'jurisdiction_id']);
-      await upsert('auth_sessions', { session_id: uuid(`session-${i + 1}`), user_id: userId, token_hash: sha256(`seed-session-${i + 1}`), ip_address: '127.0.0.1', user_agent: 'BhoomiSetu seed', expires_at: isoDate(7) }, ['session_id']);
+      await upsert('auth_sessions', { session_id: uuid(`session-${i + 1}`), user_id: userId, token_hash: sha256(`seed-session-${i + 1}`), ip_address: '127.0.0.1', user_agent: 'Aarohan seed', expires_at: isoDate(7) }, ['session_id']);
     }
 
     const documentTypes = ['GAZETTE', 'SURVEY_REPORT', 'AWARD_ORDER', 'POSSESSION_MEMO', 'OBJECTION_RECORD'];
@@ -663,7 +663,7 @@ async function seed() {
       const projectId = uuid(`project-${i + 1}`);
       projectIds.push(projectId);
       await upsert('projects', {
-        project_id: projectId, project_code: `BHOOMI-SEED-${String(i + 1).padStart(2, '0')}`, title: ['Bengaluru Chennai Expressway', 'Western Dedicated Freight Corridor', 'Delhi Mumbai Expressway', 'Karnataka Solar Park', 'Vadodara Urban Mobility Corridor'][i],
+        project_id: projectId, project_code: `AAROHAN-SEED-${String(i + 1).padStart(2, '0')}`, title: ['Bengaluru Chennai Expressway', 'Western Dedicated Freight Corridor', 'Delhi Mumbai Expressway', 'Karnataka Solar Park', 'Vadodara Urban Mobility Corridor'][i],
         sector: ['HIGHWAYS', 'RAILWAYS', 'HIGHWAYS', 'RENEWABLE_ENERGY', 'URBAN_INFRASTRUCTURE'][i], pia_name: 'National Infrastructure Development Agency', pia_user_id: userIds[1], sponsoring_ministry: 'Ministry of Road Transport and Highways', project_status: i === 4 ? 'PLANNING' : 'IN_PROGRESS', primary_state_jurisdiction_id: jurisdictionIds[i % 3 === 0 ? 1 : 2], estimated_budget_inr: 1500000000 + i * 425000000, total_acquisition_area_ha: 120 + i * 35, start_date: dateOnly(-300 + i * 10), target_completion_date: dateOnly(500 + i * 30), description: `Seed infrastructure project ${i + 1}`, version_no: 1, created_by: userIds[0], updated_by: userIds[0],
       }, ['project_id']);
       await upsert('project_jurisdictions', { project_id: projectId, jurisdiction_id: jurisdictionIds[(i % 2) + 1], is_primary: true }, ['project_id', 'jurisdiction_id']);
@@ -676,7 +676,7 @@ async function seed() {
       const sourceId = uuid(`parcel-source-${i + 1}`);
       const parcelId = uuid(`parcel-${i + 1}`);
       sourceIds.push(sourceId); parcelIds.push(parcelId);
-      await upsert('parcel_sources', { parcel_source_id: sourceId, source_code: `BHOOMI-SEED-SOURCE-${i + 1}`, authority_name: 'State Land Records Department', dataset_name: 'Cadastral Seed Dataset', dataset_version: '2026.1', imported_at: isoDate(-10) }, ['parcel_source_id']);
+      await upsert('parcel_sources', { parcel_source_id: sourceId, source_code: `AAROHAN-SEED-SOURCE-${i + 1}`, authority_name: 'State Land Records Department', dataset_name: 'Cadastral Seed Dataset', dataset_version: '2026.1', imported_at: isoDate(-10) }, ['parcel_source_id']);
       await upsert('parcels', { parcel_id: parcelId, parcel_source_id: sourceId, source_record_key: `SEED-PARCEL-${i + 1}`, ulpin: `KA-BLR-SEED-${String(i + 1).padStart(4, '0')}`, survey_number: `${142 + i}/2A`, khasra_number: `${142 + i}/2A`, state_jurisdiction_id: jurisdictionIds[1], district_jurisdiction_id: jurisdictionIds[3], taluk_jurisdiction_id: jurisdictionIds[3], village_jurisdiction_id: jurisdictionIds[3], village_name: 'Doddaballapur', total_area_ha: 1.25 + i * 0.35, land_use_category: i === 2 ? 'COMMERCIAL' : 'AGRICULTURAL', parcel_status: ['IDENTIFIED', 'SURVEY_PENDING', 'POSSESSION_ACQUIRED', 'AWARDED', 'LITIGATION_DISPUTED'][i], owner_reference: `OWNER-SEED-${i + 1}`, owner_name_masked: `Landowner ${i + 1}`, boundary_wgs84: polygon(i), centroid_wgs84: point(i), is_disputed: i === 4, dispute_reason: i === 4 ? 'Seed objection record' : null, estimated_market_value_inr: 2500000 + i * 500000, imported_at: isoDate(-8) }, ['parcel_id']);
       await upsert('parcel_owners', { parcel_owner_id: uuid(`parcel-owner-${i + 1}`), parcel_id: parcelId, owner_reference: `OWNER-SEED-${i + 1}`, owner_type: 'INDIVIDUAL', masked_name: `Landowner ${i + 1}`, ownership_share_percent: 100, verification_status: i % 2 ? 'PENDING' : 'VERIFIED', valid_from: dateOnly(-30), is_primary: true }, ['parcel_owner_id']);
       await upsert('project_parcels', { project_parcel_id: uuid(`project-parcel-${i + 1}`), project_id: projectIds[i], parcel_id: parcelId, alignment_id: uuid(`alignment-${i + 1}`), impact_status: 'IDENTIFIED', impacted_area_ha: 1 + i * 0.2, acquired_area_ha: i > 2 ? 0.5 : 0, impact_geometry_wgs84: polygon(i), intersection_calculated_at: isoDate(-5), intersection_method: 'POSTGIS_BUFFER', notes: 'Seed project parcel intersection' }, ['project_parcel_id']);
@@ -1060,7 +1060,7 @@ async function seed() {
     const nationalStandardsData = [
       { standard_id: "STD-01", code: "DoLR-ULPIN-2026.1", title: "14-Digit Unique Land Parcel Identification Number (Bhu-Aadhaar)", version: "v2.4", status: "MANDATORY", category: "CADASTRAL", compliance_rate: 94.2, summary: "Standardized geospatial algorithm deriving 14-character alphanumeric identifier from WGS84 polygon centroid coordinates for zero-collision parcel tracking." },
       { standard_id: "STD-02", code: "PFMS-RFCTLARR-DBT", title: "Direct Benefit Transfer Central Treasury Integration Standard", version: "v3.1", status: "MANDATORY", category: "FINANCIAL", compliance_rate: 92.4, summary: "Real-time automated reconciliation protocol with National Payments Corporation of India (NPCI) for instantaneous solatium disbursement to Khatedar Aadhaar-seeded accounts." },
-      { standard_id: "STD-03", code: "OGC-WFS-BHOOMI-3.0", title: "OpenGIS Web Feature Service Interoperability for Multi-State Corridors", version: "v3.0", status: "MANDATORY", category: "GIS", compliance_rate: 88.6, summary: "Standardized OGC API Features endpoint schema allowing cross-state linear corridor alignments to automatically calculate intersection boundaries." },
+      { standard_id: "STD-03", code: "OGC-WFS-AAROHAN-3.0", title: "OpenGIS Web Feature Service Interoperability for Multi-State Corridors", version: "v3.0", status: "MANDATORY", category: "GIS", compliance_rate: 88.6, summary: "Standardized OGC API Features endpoint schema allowing cross-state linear corridor alignments to automatically calculate intersection boundaries." },
       { standard_id: "STD-04", code: "RFCTLARR-SCHED-II-RR", title: "Schedule-II Rehabilitation & Resettlement Minimum Entitlement Matrix", version: "v2.0", status: "MANDATORY", category: "LEGAL", compliance_rate: 89.8, summary: "Statutory codified entitlement engine ensuring mandatory index-linked subsistence grant, housing assistance, and cattle shed allowances." },
       { standard_id: "STD-05", code: "ISO-19152-LADM-IND", title: "Land Administration Domain Model (LADM) Cadastral Profile for India", version: "v1.2", status: "RECOMMENDED", category: "CADASTRAL", compliance_rate: 76.5, summary: "ISO international cadastral model mapping land tenure rights, restrictions, and responsibilities (RRR) to Indian revenue khata structures." },
     ];
@@ -1615,7 +1615,7 @@ async function seed() {
 
     await client.query('COMMIT');
     console.log(`Seed completed successfully. PostGIS: ${hasPostgis ? 'enabled' : 'not installed (geometry values stored as text-compatible WKT)'}`);
-    console.log('Demo login password for all seeded users: bhoomi2026\n');
+    console.log('Demo login password for all seeded users: aarohan2026\n');
 
     // Verification audit: Ensure every table in the database has at least 5 rows
     console.log('=== Database Table Row Count Verification (Target: >= 5 rows per table) ===');

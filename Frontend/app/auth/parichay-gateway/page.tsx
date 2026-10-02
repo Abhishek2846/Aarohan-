@@ -54,7 +54,7 @@ const VERIFIED_OFFICERS = [
 
 function GatewayContent() {
   const searchParams = useSearchParams();
-  const clientId = searchParams.get("client_id") || "bhoomi-setu-client-01";
+  const clientId = searchParams.get("client_id") || "aarohan-client-01";
   const redirectUri = searchParams.get("redirect_uri") || `${getApiBaseUrl()}/auth/parichay/callback`;
   const state = searchParams.get("state") || "";
   const requestedRole = searchParams.get("role") || "CENTRAL_MINISTRY";
@@ -129,7 +129,7 @@ function GatewayContent() {
           </span>
           <span className="font-bold text-[#171716] flex items-center gap-1.5">
             <Building2 className="h-3.5 w-3.5 text-[#ef5b2a]" />
-            BhoomiSetu (Land Acquisition Platform)
+            Aarohan (Land Acquisition Platform)
           </span>
         </div>
 
@@ -165,7 +165,7 @@ function GatewayContent() {
             <div className="space-y-3">
               <p className="text-xs text-[#68655e]">
                 {isHindi
-                  ? "भूमिसेतु पोर्टल में प्रवेश करने के लिए अपना आधिकारिक पद चुनें:"
+                  ? "आरोहण पोर्टल में प्रवेश करने के लिए अपना आधिकारिक पद चुनें:"
                   : "Select an official designated officer to authorize your session:"}
               </p>
 

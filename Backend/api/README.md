@@ -38,8 +38,8 @@ The API uses PostgreSQL through Prisma's `@prisma/adapter-pg` driver. PostgreSQL
 Create the database, install the schema, and configure the connection before starting the API:
 
 ```bash
-createdb -U postgres bhoomiSetuDb
-psql -U postgres -d bhoomiSetuDb -f ../../Database/bhoomiSetu_postgresql.sql
+createdb -U postgres aarohanDb
+psql -U postgres -d aarohanDb -f ../../Database/aarohan_postgresql.sql
 copy .env.example .env
 npx prisma generate
 ```

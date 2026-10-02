@@ -48,7 +48,7 @@ class OfflineSyncQueueManager {
   private getStorage(): OfflineQueueItem[] {
     if (typeof window === "undefined") return INITIAL_QUEUE;
     try {
-      const stored = localStorage.getItem("bhoomi_offline_queue");
+      const stored = localStorage.getItem("aarohan_offline_queue");
       return stored ? JSON.parse(stored) : INITIAL_QUEUE;
     } catch {
       return INITIAL_QUEUE;
@@ -58,7 +58,7 @@ class OfflineSyncQueueManager {
   private setStorage(queue: OfflineQueueItem[]): void {
     if (typeof window === "undefined") return;
     try {
-      localStorage.setItem("bhoomi_offline_queue", JSON.stringify(queue));
+      localStorage.setItem("aarohan_offline_queue", JSON.stringify(queue));
     } catch (e) {
       console.error("Queue storage error", e);
     }

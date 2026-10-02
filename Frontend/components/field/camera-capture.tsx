@@ -96,7 +96,7 @@ export function CameraCapture({
       ctx.fillRect(width / 2 - 40, height / 2 - 20, 80, 160);
       ctx.fillStyle = "#0f172a";
       ctx.font = "bold 16px sans-serif";
-      ctx.fillText("BHOOMI", width / 2 - 32, height / 2 + 40);
+      ctx.fillText("AAROHAN", width / 2 - 32, height / 2 + 40);
       ctx.fillText(surveyNo, width / 2 - 20, height / 2 + 70);
     }
 
@@ -112,7 +112,7 @@ export function CameraCapture({
     // Text Overlay
     ctx.fillStyle = "#facc15";
     ctx.font = "bold 18px monospace";
-    ctx.fillText("BHOOMISETU STATUTORY FIELD EVIDENCE • GOVT OF INDIA", 24, height - 75);
+    ctx.fillText("AAROHAN STATUTORY FIELD EVIDENCE • GOVT OF INDIA", 24, height - 75);
 
     ctx.fillStyle = "#ffffff";
     ctx.font = "14px monospace";

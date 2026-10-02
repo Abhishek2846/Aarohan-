@@ -159,13 +159,13 @@ export default function SettingsPage() {
           designation: newDesignation.trim() || "Statutory Officer",
           department: newDepartment.trim() || "Land Acquisition Division",
           role_code: newRole,
-          password: "bhoomi2026",
+          password: "aarohan2026",
         }),
       });
 
       toast.success(
         "Officer Provisioned",
-        `Created account for ${newFullName} with role ${newRole}. Default password: bhoomi2026`
+        `Created account for ${newFullName} with role ${newRole}. Default password: aarohan2026`
       );
       setShowCreateModal(false);
       setNewFullName("");
@@ -282,7 +282,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <h4 className="font-bold text-sm text-[#171716] flex items-center gap-1.5">
                     <UserPlus className="h-4 w-4 text-[#ef5b2a]" />
-                    <span>Provision New Officer in BhoomiSetu</span>
+                    <span>Provision New Officer in Aarohan</span>
                   </h4>
                   <Badge variant="outline" className="text-[10px]">Statutory Onboarding</Badge>
                 </div>
@@ -403,7 +403,7 @@ export default function SettingsPage() {
 
                         <td className="p-3">
                           <div className="text-[#171716] font-medium">{u.designation || "Officer"}</div>
-                          <div className="text-[11px] text-[#68655e]">{u.department || "BhoomiSetu"}</div>
+                          <div className="text-[11px] text-[#68655e]">{u.department || "Aarohan"}</div>
                         </td>
 
                         <td className="p-3">
@@ -564,7 +564,7 @@ export default function SettingsPage() {
             <span>Portal Language & Localization</span>
           </CardTitle>
           <CardDescription className="text-xs">
-            BhoomiSetu supports Indian official languages for citizen notices and field apps.
+            Aarohan supports Indian official languages for citizen notices and field apps.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">

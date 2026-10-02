@@ -1,9 +1,9 @@
 import { test, expect } from "../fixtures/test-base";
 import { authenticateAsRole } from "../fixtures/auth.fixture";
 
-test.describe("BhoomiSetu Route Smoke Tests", () => {
+test.describe("Aarohan Route Smoke Tests", () => {
   const publicRoutes = [
-    { path: "/", title: "BhoomiSetu" },
+    { path: "/", title: "Aarohan" },
     { path: "/login", title: "Role-Based Officer Authentication" },
     { path: "/unauthorized", title: "Unauthorized Jurisdiction Access" },
     { path: "/citizen", title: "Citizen Transparency" },

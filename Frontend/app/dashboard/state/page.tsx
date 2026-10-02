@@ -979,7 +979,7 @@ function StateDashboardContent() {
               </CardTitle>
               <CardDescription className="text-xs">
                 {isHi
-                  ? "भूमिसेतु स्वचालित प्रणाली द्वारा चिह्नित विलंब तथा सुधारात्मक सरकारी कदम।"
+                  ? "आरोहण स्वचालित प्रणाली द्वारा चिह्नित विलंब तथा सुधारात्मक सरकारी कदम।"
                   : "Automated escalation alerts identifying milestone delays and required remedial directives."}
               </CardDescription>
             </CardHeader>
@@ -1020,7 +1020,7 @@ function StateDashboardContent() {
                   </p>
                   <p className="pt-2 border-t border-amber-200 dark:border-amber-900 text-[11px] text-[#ef5b2a] font-medium">
                     {isHi
-                      ? "उपचारात्मक कदम: स्थानीय राजस्व अमीनों को भूमिसेतु ऑफलाइन मोबाइल ऐप से सुसज्जित करें।"
+                      ? "उपचारात्मक कदम: स्थानीय राजस्व अमीनों को आरोहण ऑफलाइन मोबाइल ऐप से सुसज्जित करें।"
                       : "Directive: Issue offline demarcation roving kits to Taluk Amins for same-day digital boundary capture."}
                   </p>
                 </div>

@@ -1,6 +1,6 @@
 import { UserRole } from "@/types/user";
 
-export const APP_NAME = "BhoomiSetu";
+export const APP_NAME = "Aarohan";
 export const APP_TAGLINE = "National Land Acquisition Management Platform";
 export const APP_SUBTITLE = "Smart India Hackathon 2026 • Problem Statement SIH26016";
 

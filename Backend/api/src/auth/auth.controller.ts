@@ -26,8 +26,8 @@ export class AuthController {
         },
         password: {
           type: 'string',
-          example: 'bhoomi2026',
-          description: 'Account password (default seeded password: bhoomi2026)',
+          example: 'aarohan2026',
+          description: 'Account password (default seeded password: aarohan2026)',
         },
       },
       required: ['email', 'password'],

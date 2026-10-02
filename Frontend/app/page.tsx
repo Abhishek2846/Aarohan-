@@ -483,7 +483,7 @@ export default function HomePage() {
                 letterSpacing: "0.04em",
               }}
             >
-              {lang === "hi" ? "भूमिसेतु" : "BHOOMI SETU"}
+              {lang === "hi" ? "आरोहण" : "AAROHAN"}
             </span>
           </div>
 
@@ -720,7 +720,7 @@ export default function HomePage() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              {lang === "hi" ? "भूमिसेतु" : "BhoomiSetu"}
+              {lang === "hi" ? "आरोहण" : "Aarohan"}
             </span>
             <br />
             <span
@@ -981,8 +981,8 @@ export default function HomePage() {
               }}
             >
               {lang === "hi"
-                ? "भूमिसेतु भारत का पहला GIS-सक्षम, भूमिका-आधारित राष्ट्रीय भूमि अधिग्रहण प्रबंधन मंच है। यह RFCTLARR अधिनियम 2013 के सभी 12 वैधानिक चरणों को डिजिटाइज करता है — SIA सामाजिक प्रभाव आकलन से लेकर भौतिक कब्जा हस्तांतरण तक।"
-                : "BhoomiSetu is India's first GIS-enabled, role-based National Land Acquisition Management Platform. It digitizes all 12 statutory stages of the RFCTLARR Act 2013 — from Social Impact Assessment to physical possession handover — connecting every stakeholder in real time."}
+                ? "आरोहण भारत का पहला GIS-सक्षम, भूमिका-आधारित राष्ट्रीय भूमि अधिग्रहण प्रबंधन मंच है। यह RFCTLARR अधिनियम 2013 के सभी 12 वैधानिक चरणों को डिजिटाइज करता है — SIA सामाजिक प्रभाव आकलन से लेकर भौतिक कब्जा हस्तांतरण तक।"
+                : "Aarohan is India's first GIS-enabled, role-based National Land Acquisition Management Platform. It digitizes all 12 statutory stages of the RFCTLARR Act 2013 — from Social Impact Assessment to physical possession handover — connecting every stakeholder in real time."}
             </p>
             <p
               style={{
@@ -1729,7 +1729,7 @@ export default function HomePage() {
             >
               {lang === "hi"
                 ? "कोई साइनअप नहीं। पूरी तरह से पारदर्शी। भारत के बुनियादी ढांचे के निर्माण को गति दें।"
-                : "No barriers. Full transparency. Accelerate India's infrastructure delivery with BhoomiSetu."}
+                : "No barriers. Full transparency. Accelerate India's infrastructure delivery with Aarohan."}
             </p>
             <motion.div
               animate={{

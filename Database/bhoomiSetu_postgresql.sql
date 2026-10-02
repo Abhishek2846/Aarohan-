@@ -1,4 +1,4 @@
--- BhoomiSetu production database bootstrap
+-- Aarohan production database bootstrap
 -- Target: PostgreSQL 14+ with PostGIS
 -- Converted from MySQL schema; review application-specific behavior before production use.
 --
@@ -8,7 +8,7 @@
 --   * it seeds reference data idempotently.
 --
 -- Import with:
---   psql -U <user> -d <database> -f bhoomiSetu_postgresql.sql
+--   psql -U <user> -d <database> -f aarohan_postgresql.sql
 --
 -- Spatial convention:
 --   * GPS/map geometries use WGS 84 (SRID 4326).

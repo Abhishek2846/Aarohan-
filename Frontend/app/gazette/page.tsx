@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { GazettePublisher } from "@/components/gazette/gazette-publisher";
 
 export const metadata = {
-  title: "Official Bilingual E-Gazette Statutory Publisher | BhoomiSetu (भूमिसेतु)",
+  title: "Official Bilingual E-Gazette Statutory Publisher | Aarohan (आरोहण)",
   description:
     "Automated statutory gazette publication for RFCTLARR Act 2013 (Section 11, 15, 19, 23/30) with authentic bilingual layout and SHA-256 QR-code authentication.",
 };

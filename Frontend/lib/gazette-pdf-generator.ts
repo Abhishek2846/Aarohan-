@@ -110,7 +110,7 @@ export async function generateGazettePdf(notice: GazetteNotice): Promise<Blob> {
 
   doc.setFont("times", "normal");
   doc.setFontSize(8.5);
-  doc.text(`Project: ${notice.projectTitle || "National Highway / Corridor Development"} (${notice.projectCode || "BHOOMI-01"})`, margin + 4, y + 5);
+  doc.text(`Project: ${notice.projectTitle || "National Highway / Corridor Development"} (${notice.projectCode || "AAROHAN-01"})`, margin + 4, y + 5);
   doc.text(`Notice Reference: ${notice.noticeNumber}`, margin + 4, y + 10);
   doc.text(`Competent Authority (CALA): ${notice.bilingualContent?.competent_authority_english || "Special Land Acquisition Officer"}`, margin + 4, y + 15);
   doc.text(`District / State: ${notice.district}, ${notice.state}`, margin + 4, y + 19);
@@ -262,7 +262,7 @@ export async function generateGazettePdf(notice: GazetteNotice): Promise<Blob> {
   doc.setFontSize(6.5);
   doc.setTextColor(100, 116, 139);
   doc.text(
-    "Uploaded by BhoomiSetu e-Gazette Statutory Publisher. Cryptographically signed under Section 4 of the Information Technology Act, 2000. Verified against Revenue Court standards.",
+    "Uploaded by Aarohan e-Gazette Statutory Publisher. Cryptographically signed under Section 4 of the Information Technology Act, 2000. Verified against Revenue Court standards.",
     pageWidth / 2,
     pageHeight - 8,
     { align: "center" }

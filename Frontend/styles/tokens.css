@@ -1,4 +1,4 @@
-/* BhoomiSetu Theme Tokens & Specialized UI Styles */
+/* Aarohan Theme Tokens & Specialized UI Styles */
 
 :root {
   --status-draft: #64748b;
@@ -13,7 +13,7 @@
 }
 
 /* Map Containers */
-.bhoomi-map-container {
+.aarohan-map-container {
   min-height: 480px;
   width: 100%;
   border-radius: var(--radius);

@@ -1,7 +1,7 @@
 import { test, expect } from "../fixtures/test-base";
 import { UserRole } from "../fixtures/auth.fixture";
 
-test.describe("BhoomiSetu Authentication & Role Tests", () => {
+test.describe("Aarohan Authentication & Role Tests", () => {
   test("Login portal displays 7 official roles and authenticates each", async ({ page }) => {
     await page.goto("/login");
 
@@ -61,7 +61,7 @@ test.describe("BhoomiSetu Authentication & Role Tests", () => {
     expect(page.url()).toMatch(/\/$/);
 
     // Verify token removed
-    const token = await page.evaluate(() => localStorage.getItem("bhoomi_token"));
+    const token = await page.evaluate(() => localStorage.getItem("aarohan_token"));
     expect(token).toBeNull();
   });
 });

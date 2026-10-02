@@ -59,7 +59,7 @@ export function GeotaggedPhotoViewer({ photo, onClose, onLocateOnMap }: Geotagge
             </span>
           </div>
           <DialogDescription className="text-xs text-slate-500 dark:text-slate-400">
-            Cadastral Survey Khasra #{photo.surveyNo} • Geotagged Demarcation Evidence Sealed by Survey of India & Bhoomi
+            Cadastral Survey Khasra #{photo.surveyNo} • Geotagged Demarcation Evidence Sealed by Survey of India & Aarohan
           </DialogDescription>
         </DialogHeader>
 
@@ -97,7 +97,7 @@ export function GeotaggedPhotoViewer({ photo, onClose, onLocateOnMap }: Geotagge
               <div className="flex items-center justify-between">
                 <span className="text-amber-400 font-bold tracking-wide flex items-center gap-1">
                   <ShieldCheck className="h-3 w-3" />
-                  BHOOMISETU CADASTRAL TELEMETRY STAMP
+                  AAROHAN CADASTRAL TELEMETRY STAMP
                 </span>
                 <span className="text-emerald-400 font-bold">ACCURACY ±{photo.accuracyMeters}M</span>
               </div>

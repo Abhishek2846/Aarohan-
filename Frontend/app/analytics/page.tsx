@@ -106,7 +106,7 @@ export default function MinistryAnalyticsPage() {
         <CardHeader className="pb-3">
           <CardTitle className="text-base font-bold">Interstate Acquisition Performance & Timeline Compliance</CardTitle>
           <CardDescription className="text-xs">
-            Benchmarking state revenue departments under the unified BhoomiSetu framework.
+            Benchmarking state revenue departments under the unified Aarohan framework.
           </CardDescription>
         </CardHeader>
         <CardContent>

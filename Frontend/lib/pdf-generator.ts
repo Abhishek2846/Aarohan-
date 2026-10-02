@@ -59,7 +59,7 @@ export function downloadStatutoryPdf(docTitle: string, data?: Partial<CitizenPdf
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.setTextColor(191, 219, 254);
-  doc.text("BHOOMISETU STATUTORY CADASTRAL & LAND ACQUISITION PORTAL", pageWidth / 2, 19, { align: "center" });
+  doc.text("AAROHAN STATUTORY CADASTRAL & LAND ACQUISITION PORTAL", pageWidth / 2, 19, { align: "center" });
 
   // 2. Gazette Document Title Box
   doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
@@ -370,7 +370,7 @@ export function downloadStatutoryPdf(docTitle: string, data?: Partial<CitizenPdf
   doc.setFontSize(7.5);
   doc.setTextColor(slate[0], slate[1], slate[2]);
   doc.text("Special Land Acquisition Officer (CALA) & Competent Authority", margin + 4, y + 16.5);
-  doc.text("Department of Revenue, Govt. of Karnataka (BhoomiSetu Authority)", margin + 4, y + 20.5);
+  doc.text("Department of Revenue, Govt. of Karnataka (Aarohan Authority)", margin + 4, y + 20.5);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(7);
@@ -390,7 +390,7 @@ export function downloadStatutoryPdf(docTitle: string, data?: Partial<CitizenPdf
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8);
-  doc.text("BHOOMISETU", sealX + sealW / 2, sealY + 6.5, { align: "center" });
+  doc.text("AAROHAN", sealX + sealW / 2, sealY + 6.5, { align: "center" });
   doc.setFontSize(7);
   doc.text("OFFICIAL STATUTORY SEAL", sealX + sealW / 2, sealY + 11.5, { align: "center" });
   doc.setFontSize(6);
@@ -405,7 +405,7 @@ export function downloadStatutoryPdf(docTitle: string, data?: Partial<CitizenPdf
   doc.setFontSize(6.5);
   doc.setTextColor(slate[0], slate[1], slate[2]);
   doc.text("Legally admissible computer-generated gazette certificate under Section 65B of Indian Evidence Act 1872 & Information Technology Act 2000.", margin, pageHeight - 7.5);
-  doc.text("Page 1 of 1  |  BhoomiSetu (bhoomi-setu.gov.in)", margin + contentWidth, pageHeight - 7.5, { align: "right" });
+  doc.text("Page 1 of 1  |  Aarohan (aarohan.gov.in)", margin + contentWidth, pageHeight - 7.5, { align: "right" });
 
   // Native File Save
   const cleanName = docTitle.replace(/[^a-zA-Z0-9]/g, "_");
@@ -475,7 +475,7 @@ export function downloadAuditorComplianceReportPdf(
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.setTextColor(226, 232, 240);
-  doc.text("BHOOMISETU NATIONAL LAND ACQUISITION MANAGEMENT PLATFORM (SIH 2026)", pageWidth / 2, 19, { align: "center" });
+  doc.text("AAROHAN NATIONAL LAND ACQUISITION MANAGEMENT PLATFORM (SIH 2026)", pageWidth / 2, 19, { align: "center" });
 
   // 2. Gazette Document Title Box
   doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
@@ -500,7 +500,7 @@ export function downloadAuditorComplianceReportPdf(
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7.5);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("Audit Ref: CAG/BHOOMI/2026/AUD-0892   |   Date: 10 September 2026   |   Lead Auditor: K. N. Raghavan, IA&AS", margin + 4, 46.5);
+  doc.text("Audit Ref: CAG/AAROHAN/2026/AUD-0892   |   Date: 10 September 2026   |   Lead Auditor: K. N. Raghavan, IA&AS", margin + 4, 46.5);
 
   // 3. Section I: Executive Audit Summary KPI Metrics
   let y = 53;
@@ -711,7 +711,7 @@ export function downloadAuditorComplianceReportPdf(
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  const certText = "This audit report has been compiled under the statutory mandate of Comptroller and Auditor General of India (CAG) in accordance with the RFCTLARR Act 2013 and Information Technology Act 2000. All logs, hash states, and telemetry data have been cryptographically verified against the BhoomiSetu national ledger. Any unauthorized stage deviations or compensation anomalies flagged above require mandatory action by the concerned District Officer / CALA within 15 statutory working days.";
+  const certText = "This audit report has been compiled under the statutory mandate of Comptroller and Auditor General of India (CAG) in accordance with the RFCTLARR Act 2013 and Information Technology Act 2000. All logs, hash states, and telemetry data have been cryptographically verified against the Aarohan national ledger. Any unauthorized stage deviations or compensation anomalies flagged above require mandatory action by the concerned District Officer / CALA within 15 statutory working days.";
   doc.text(doc.splitTextToSize(certText, contentWidth - 48), margin + 4, y + 11.5);
 
   // Sign-off box
@@ -741,8 +741,8 @@ export function downloadAuditorComplianceReportPdf(
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6.5);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("Statutory compliance audit certificate generated via BhoomiSetu. Legally admissible under Section 65B of Indian Evidence Act 1872.", margin, pageHeight - 6.5);
-  doc.text("Page 1 of 1  |  cag.gov.in / bhoomi-setu.gov.in", margin + contentWidth, pageHeight - 6.5, { align: "right" });
+  doc.text("Statutory compliance audit certificate generated via Aarohan. Legally admissible under Section 65B of Indian Evidence Act 1872.", margin, pageHeight - 6.5);
+  doc.text("Page 1 of 1  |  cag.gov.in / aarohan.gov.in", margin + contentWidth, pageHeight - 6.5, { align: "right" });
 
   const cleanName = reportTitle.replace(/[^a-zA-Z0-9]/g, "_");
   doc.save(`${cleanName}.pdf`);
@@ -801,7 +801,7 @@ export function generateDistrictOfficerPdf(reportTitle: string, data?: Partial<D
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7);
   doc.setTextColor(191, 219, 254);
-  doc.text("BHOOMISETU DISTRICT LAND ACQUISITION & REVENUE ADJUDICATION CONSOLE", pageWidth / 2, 19, { align: "center" });
+  doc.text("AAROHAN DISTRICT LAND ACQUISITION & REVENUE ADJUDICATION CONSOLE", pageWidth / 2, 19, { align: "center" });
 
   // 2. Document Title Box
   doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
@@ -992,7 +992,7 @@ export function generateDistrictOfficerPdf(reportTitle: string, data?: Partial<D
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6.5);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("This document is sealed electronically using the District Magistrate's Class-3 Digital Signature Certificate. Admissible under Section 65B of the Indian Evidence Act 1872 and verified by the BhoomiSetu National Governance Ledger.", margin + 4, y + 12, { maxWidth: contentWidth - 52 });
+  doc.text("This document is sealed electronically using the District Magistrate's Class-3 Digital Signature Certificate. Admissible under Section 65B of the Indian Evidence Act 1872 and verified by the Aarohan National Governance Ledger.", margin + 4, y + 12, { maxWidth: contentWidth - 52 });
 
   const sigX = margin + contentWidth - 46;
   doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
@@ -1019,7 +1019,7 @@ export function generateDistrictOfficerPdf(reportTitle: string, data?: Partial<D
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("District Land Acquisition Administration • Government of Karnataka • bhoomi-setu.gov.in", margin, pageHeight - 6.5);
+  doc.text("District Land Acquisition Administration • Government of Karnataka • aarohan.gov.in", margin, pageHeight - 6.5);
   doc.text("Page 1 of 1  |  Official Sealed Copy", margin + contentWidth, pageHeight - 6.5, { align: "right" });
 
   const cleanName = reportTitle.replace(/[^a-zA-Z0-9]/g, "_");
@@ -1263,7 +1263,7 @@ export function generateStateAuthorityPdf(data: StatePdfData) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("State Revenue Administration • Government of Karnataka • bhoomi-setu.gov.in", margin, pageHeight - 6.5);
+  doc.text("State Revenue Administration • Government of Karnataka • aarohan.gov.in", margin, pageHeight - 6.5);
   doc.text("Page 1 of 1  |  Official State Record", margin + contentWidth, pageHeight - 6.5, { align: "right" });
 
   const cleanName = data.reportTitle.replace(/[^a-zA-Z0-9]/g, "_");
@@ -1329,7 +1329,7 @@ export function generateCentralMinistryPdf(data: CentralMinistryPdfData) {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8.5);
   doc.setTextColor(239, 91, 42);
-  doc.text("DEPARTMENT OF LAND RESOURCES (DoLR) • BHOOMISETU NATIONAL COMMAND", pageWidth / 2, 16.5, { align: "center" });
+  doc.text("DEPARTMENT OF LAND RESOURCES (DoLR) • AAROHAN NATIONAL COMMAND", pageWidth / 2, 16.5, { align: "center" });
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(7);
@@ -1484,7 +1484,7 @@ export function generateCentralMinistryPdf(data: CentralMinistryPdfData) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6.5);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("Issued under the authority of the Joint Secretary (Land Resources), Ministry of Rural Development, Government of India. Transmitted digitally across State Chief Secretaries and SLAOs via BhoomiSetu Central Hub.", margin + 4, y + 11, { maxWidth: contentWidth - 52 });
+  doc.text("Issued under the authority of the Joint Secretary (Land Resources), Ministry of Rural Development, Government of India. Transmitted digitally across State Chief Secretaries and SLAOs via Aarohan Central Hub.", margin + 4, y + 11, { maxWidth: contentWidth - 52 });
 
   const sigX = margin + contentWidth - 46;
   doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
@@ -1511,7 +1511,7 @@ export function generateCentralMinistryPdf(data: CentralMinistryPdfData) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("BhoomiSetu National Command Center • Department of Land Resources, GoI • dolr.gov.in", margin, pageHeight - 6);
+  doc.text("Aarohan National Command Center • Department of Land Resources, GoI • dolr.gov.in", margin, pageHeight - 6);
   doc.text("Official Cabinet Record  |  Page 1 of 1", margin + contentWidth, pageHeight - 6, { align: "right" });
 
   const cleanName = data.reportTitle.replace(/[^a-zA-Z0-9]/g, "_");
@@ -1585,7 +1585,7 @@ export function generatePiaProjectReportPdf(data: PiaPdfData) {
 
   y += 3.5;
   doc.setFontSize(6.5);
-  doc.text("BhoomiSetu Infrastructure Land Acquisition & Alignment Feasibility Management System", pageWidth / 2, y, { align: "center" });
+  doc.text("Aarohan Infrastructure Land Acquisition & Alignment Feasibility Management System", pageWidth / 2, y, { align: "center" });
 
   // 3. Document Title Box
   y += 5;
@@ -1736,7 +1736,7 @@ export function generatePiaProjectReportPdf(data: PiaPdfData) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6.5);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("Authorized signatory of the Project Implementing Agency (Technical Division). Transmitted digitally to the State Revenue Department and Special Land Acquisition Officers via BhoomiSetu Enterprise Portal.", margin + 4, y + 11, { maxWidth: contentWidth - 52 });
+  doc.text("Authorized signatory of the Project Implementing Agency (Technical Division). Transmitted digitally to the State Revenue Department and Special Land Acquisition Officers via Aarohan Enterprise Portal.", margin + 4, y + 11, { maxWidth: contentWidth - 52 });
 
   const sigX = margin + contentWidth - 46;
   doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
@@ -1763,7 +1763,7 @@ export function generatePiaProjectReportPdf(data: PiaPdfData) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(6);
   doc.setTextColor(slate[0], slate[1], slate[2]);
-  doc.text("BhoomiSetu Project Requisition & Alignment Review • Infrastructure Implementing Division", margin, pageHeight - 6);
+  doc.text("Aarohan Project Requisition & Alignment Review • Infrastructure Implementing Division", margin, pageHeight - 6);
   doc.text("Official PIA Record  |  Page 1 of 1", margin + contentWidth, pageHeight - 6, { align: "right" });
 
   const cleanName = data.reportTitle.replace(/[^a-zA-Z0-9]/g, "_");

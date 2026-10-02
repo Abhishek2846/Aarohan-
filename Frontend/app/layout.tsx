@@ -14,11 +14,11 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "BhoomiSetu (भूमिसेतु) | Land Acquisition Management Platform",
+  title: "Aarohan (आरोहण) | Land Acquisition Management Platform",
   description:
     "Centralized, GIS-enabled, role-based land acquisition management platform for national infrastructure projects (SIH 2026 - Problem SIH26016).",
   keywords: [
-    "BhoomiSetu",
+    "Aarohan",
     "Land Acquisition",
     "GIS",
     "ULPIN",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "BhoomiSetu",
+    title: "Aarohan",
   },
 };
 

@@ -1,7 +1,7 @@
 import { test, expect } from "../fixtures/test-base";
 import { authenticateAsRole } from "../fixtures/auth.fixture";
 
-test.describe("BhoomiSetu Zero Console Errors Audit", () => {
+test.describe("Aarohan Zero Console Errors Audit", () => {
   const routesToTest = [
     { path: "/", role: null },
     { path: "/login", role: null },

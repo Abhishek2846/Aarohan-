@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * BhoomiSetu Comprehensive Frontend Playwright Configuration
+ * Aarohan Comprehensive Frontend Playwright Configuration
  * Covers Desktop, Tablet, and Mobile viewports with accessibility and visual testing.
  */
 export default defineConfig({

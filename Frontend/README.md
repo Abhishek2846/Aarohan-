@@ -1,6 +1,6 @@
-# BhoomiSetu Frontend Application
+# Aarohan Frontend Application
 
-Production-grade Next.js 14 web application for the **BhoomiSetu (भूमिसेतु)** Land Acquisition & AI Intelligence Platform.
+Production-grade Next.js 14 web application for the **Aarohan (आरोहण)** Land Acquisition & AI Intelligence Platform.
 
 ---
 

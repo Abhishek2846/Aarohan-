@@ -24,12 +24,12 @@ if (fs.existsSync(envPath)) {
 
 const connectionString =
   process.env.DATABASE_URL ||
-  'postgresql://postgres@localhost:5432/bhoomiSetuDb?schema=public';
+  'postgresql://postgres@localhost:5432/aarohanDb?schema=public';
 
 const ALGORITHM = 'aes-256-gcm';
 const KEY = crypto
   .createHash('sha256')
-  .update(process.env.ENCRYPTION_KEY || 'bhoomi-setu-enterprise-pii-secret-key-32bytes')
+  .update(process.env.ENCRYPTION_KEY || 'aarohan-enterprise-pii-secret-key-32bytes')
   .digest();
 
 function encrypt(text) {

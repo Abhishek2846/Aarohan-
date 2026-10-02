@@ -6,7 +6,7 @@ const backendDir = path.join(rootDir, 'Backend', 'api');
 const frontendDir = path.join(rootDir, 'Frontend');
 
 console.log('\n========================================');
-console.log('   BhoomiSetu Full Workspace Build     ');
+console.log('   Aarohan Full Workspace Build     ');
 console.log('========================================\n');
 
 try {
@@ -18,7 +18,7 @@ try {
   execSync('npm run build', { cwd: frontendDir, stdio: 'inherit' });
   console.log('✅ Frontend build complete.\n');
 
-  console.log('🎉 Full BhoomiSetu Workspace Build Succeeded!\n');
+  console.log('🎉 Full Aarohan Workspace Build Succeeded!\n');
 } catch (error) {
   console.error('❌ Build failed:', error.message);
   process.exit(1);

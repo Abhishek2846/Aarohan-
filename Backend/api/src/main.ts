@@ -52,7 +52,7 @@ async function bootstrap() {
 
   // Swagger Documentation Setup
   const config = new DocumentBuilder()
-    .setTitle('BhoomiSetu API')
+    .setTitle('Aarohan API')
     .setDescription('Land Acquisition Management Platform API Documentation')
     .setVersion('1.0')
     .addBearerAuth()
@@ -63,7 +63,7 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3001;
   await app.listen(port, '0.0.0.0');
-  logger.log(`🚀 BhoomiSetu Backend Server running on port ${port}`);
+  logger.log(`🚀 Aarohan Backend Server running on port ${port}`);
   logger.log(`📚 Swagger Documentation available at http://localhost:${port}/api/docs`);
 }
 bootstrap().catch((err) => {

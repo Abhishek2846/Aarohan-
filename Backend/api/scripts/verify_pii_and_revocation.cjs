@@ -1,4 +1,4 @@
-// PII Encryption & JWT Session Revocation Test Suite for BhoomiSetu
+// PII Encryption & JWT Session Revocation Test Suite for Aarohan
 const http = require('http');
 const crypto = require('crypto');
 const path = require('path');
@@ -26,12 +26,12 @@ if (fs.existsSync(envPath)) {
 
 const connectionString =
   process.env.DATABASE_URL ||
-  'postgresql://postgres@localhost:5432/bhoomiSetuDb?schema=public';
+  'postgresql://postgres@localhost:5432/aarohanDb?schema=public';
 
 const ALGORITHM = 'aes-256-gcm';
 const KEY = crypto
   .createHash('sha256')
-  .update(process.env.ENCRYPTION_KEY || 'bhoomi-setu-enterprise-pii-secret-key-32bytes')
+  .update(process.env.ENCRYPTION_KEY || 'aarohan-enterprise-pii-secret-key-32bytes')
   .digest();
 
 function decrypt(buf) {
@@ -94,7 +94,7 @@ async function request(options, postData = null) {
 
 async function run() {
   console.log('================================================================');
-  console.log('🔒 BHOOMISETU PII DATA-AT-REST ENCRYPTION & TOKEN REVOCATION TEST');
+  console.log('🔒 AAROHAN PII DATA-AT-REST ENCRYPTION & TOKEN REVOCATION TEST');
   console.log('================================================================\n');
 
   let passed = 0;
@@ -157,7 +157,7 @@ async function run() {
       path: '/v1/auth/login',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-    }, { email: 'citizen@public.bhoomsetu.gov.in', password: 'bhoomi2026' });
+    }, { email: 'citizen@public.bhoomsetu.gov.in', password: 'aarohan2026' });
 
     const citizenToken = getToken(citizenLogin);
     assert(!!citizenToken, 'Citizen login successful');
@@ -195,7 +195,7 @@ async function run() {
       path: '/v1/auth/login',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-    }, { email: 'ananya.sharma@nic.in', password: 'bhoomi2026' });
+    }, { email: 'ananya.sharma@nic.in', password: 'aarohan2026' });
     const officerAdminToken = getToken(officerAdminLogin);
 
     const compRes = await request({
@@ -267,7 +267,7 @@ async function run() {
       path: '/v1/auth/login',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-    }, { email: 's.patil@karnataka.gov.in', password: 'bhoomi2026' });
+    }, { email: 's.patil@karnataka.gov.in', password: 'aarohan2026' });
 
     const officerToken = getToken(officerLogin);
     const officerUser = getUser(officerLogin);
@@ -332,7 +332,7 @@ async function run() {
       path: '/v1/auth/login',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-    }, { email: 's.patil@karnataka.gov.in', password: 'bhoomi2026' });
+    }, { email: 's.patil@karnataka.gov.in', password: 'aarohan2026' });
     const freshOfficerToken = getToken(officerLogin2);
     assert(!!freshOfficerToken, 'Officer re-authenticated with new active session');
 
@@ -353,7 +353,7 @@ async function run() {
       path: '/v1/auth/login',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-    }, { email: 'ananya.sharma@nic.in', password: 'bhoomi2026' });
+    }, { email: 'ananya.sharma@nic.in', password: 'aarohan2026' });
     const adminToken = getToken(adminLogin);
     assert(!!adminToken, 'Admin (Central Ministry) login successful');
 

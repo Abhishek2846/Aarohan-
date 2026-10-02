@@ -35,6 +35,13 @@ next-env.d.ts
 /generated/prisma
 Backend/api/generated/
 
+# Python caches and local virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+ENV/
+
 # ------------------------------------------------------------------------------
 # 3. ENVIRONMENT VARIABLES & SECURITY SECRETS (CRITICAL - DO NOT COMMIT)
 # ------------------------------------------------------------------------------

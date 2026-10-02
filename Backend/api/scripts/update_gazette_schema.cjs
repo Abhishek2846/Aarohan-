@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://bhoomi:bhoomi_pass@127.0.0.1:5432/bhoomi_setu?schema=public';
+const connectionString = process.env.DATABASE_URL || 'postgresql://bhoomi:aarohan_pass@127.0.0.1:5432/aarohan_setu?schema=public';
 const client = new Client({ connectionString });
 
 async function run() {

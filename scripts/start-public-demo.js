@@ -76,7 +76,7 @@ function cleanupProcesses(exitCode = 0) {
   if (isShuttingDown) return;
   isShuttingDown = true;
 
-  console.log('\n\x1b[33m[SHUTDOWN] Shutting down BhoomiSetu Public Demo services...\x1b[0m');
+  console.log('\n\x1b[33m[SHUTDOWN] Shutting down Aarohan Public Demo services...\x1b[0m');
 
   if (isWin) {
     if (ngrokProc && ngrokProc.pid) {
@@ -302,11 +302,11 @@ function openBrowser(url) {
  */
 function printDashboardBanner(publicFrontendUrl, publicBackendUrl, dbStatus) {
   console.log('\n\x1b[42m\x1b[30m\x1b[1m                                                                    \x1b[0m');
-  console.log('\x1b[42m\x1b[30m\x1b[1m  🚀 BHOOMISETU PUBLIC DEMO IS LIVE & READY FOR REMOTE ACCESS!      \x1b[0m');
+  console.log('\x1b[42m\x1b[30m\x1b[1m  🚀 AAROHAN PUBLIC DEMO IS LIVE & READY FOR REMOTE ACCESS!      \x1b[0m');
   console.log('\x1b[42m\x1b[30m\x1b[1m                                                                    \x1b[0m\n');
 
   console.log('\x1b[1m==================================================================\x1b[0m');
-  console.log('       BhoomiSetu (भूमिसेतु) Public Demo Dashboard');
+  console.log('       Aarohan (आरोहण) Public Demo Dashboard');
   console.log('\x1b[1m==================================================================\x1b[0m\n');
 
   console.log(`  👉 Public Demo URL (Shareable) : \x1b[1m\x1b[33m${publicFrontendUrl}\x1b[0m`);
@@ -323,9 +323,9 @@ function printDashboardBanner(publicFrontendUrl, publicBackendUrl, dbStatus) {
   console.log('    • Next.js API Proxy   : \x1b[32m✓ Rewrites /v1/* to Local Backend (Zero CORS issues)\x1b[0m\n');
 
   console.log('  Pre-Seeded Demo Accounts for Testing:');
-  console.log('    1. Central Ministry Official : \x1b[1mananya.sharma@nic.in\x1b[0m (Password: \x1b[32mbhoomi2026\x1b[0m)');
-  console.log('    2. District Magistrate / SLAO: \x1b[1mdc.bengaluru@karnataka.gov.in\x1b[0m (Password: \x1b[32mbhoomi2026\x1b[0m)');
-  console.log('    3. Project Implementing (PIA): \x1b[1mv.malhotra@nhai.gov.in\x1b[0m (Password: \x1b[32mbhoomi2026\x1b[0m)');
+  console.log('    1. Central Ministry Official : \x1b[1mananya.sharma@nic.in\x1b[0m (Password: \x1b[32maarohan2026\x1b[0m)');
+  console.log('    2. District Magistrate / SLAO: \x1b[1mdc.bengaluru@karnataka.gov.in\x1b[0m (Password: \x1b[32maarohan2026\x1b[0m)');
+  console.log('    3. Project Implementing (PIA): \x1b[1mv.malhotra@nhai.gov.in\x1b[0m (Password: \x1b[32maarohan2026\x1b[0m)');
   console.log('    4. Public Citizen Portal     : \x1b[1mcitizen\x1b[0m (or click Citizen tab on login screen)\n');
 
   console.log('  \x1b[35mSecurity Guarantee\x1b[0m:');
@@ -342,7 +342,7 @@ function printDashboardBanner(publicFrontendUrl, publicBackendUrl, dbStatus) {
  */
 async function startPublicDemo() {
   console.log('\n==================================================================');
-  console.log('      BhoomiSetu Single-Command Public Demo (NGROK Engine)');
+  console.log('      Aarohan Single-Command Public Demo (NGROK Engine)');
   console.log('==================================================================\n');
 
   // Step 1: Check NGROK installation
@@ -496,7 +496,7 @@ async function startPublicDemo() {
   // Write active URLs to PUBLIC_URL.txt
   const publicUrlFile = path.join(rootDir, 'PUBLIC_URL.txt');
   const fileContent = `==================================================================
-  BHOOMISETU SHAREABLE PUBLIC DEMO LINKS (NGROK ENGINE)
+  AAROHAN SHAREABLE PUBLIC DEMO LINKS (NGROK ENGINE)
 ==================================================================
 
 1. PUBLIC INTERNET LINK (Share with anyone on any PC / Mobile):
@@ -514,9 +514,9 @@ async function startPublicDemo() {
 ------------------------------------------------------------------
 PRE-SEEDED DEMO ACCOUNTS:
 ------------------------------------------------------------------
-- Central Ministry  : ananya.sharma@nic.in (Password: bhoomi2026)
-- District SLAO     : dc.bengaluru@karnataka.gov.in (Password: bhoomi2026)
-- Implementing (PIA): v.malhotra@nhai.gov.in (Password: bhoomi2026)
+- Central Ministry  : ananya.sharma@nic.in (Password: aarohan2026)
+- District SLAO     : dc.bengaluru@karnataka.gov.in (Password: aarohan2026)
+- Implementing (PIA): v.malhotra@nhai.gov.in (Password: aarohan2026)
 - Citizen Portal    : citizen (or click Citizen tab on login screen)
 
 ------------------------------------------------------------------
