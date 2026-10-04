@@ -177,10 +177,9 @@
   );
 }
 
-/* Government Civic Stamp Badge */
+/* Government Civic Stamp Badge - removed */
 .civic-watermark {
-  background-image: radial-gradient(#1e3a8a 0.75px, transparent 0.75px);
-  background-size: 16px 16px;
+  background-image: none;
 }
 
 /* Completely Disable and Suppress Any Translator Highlight Frames */
@@ -404,7 +403,7 @@ button, a, .card, [role="tab"] {
 .bhoomi-landing .bs-hero {
   min-height: 0 !important;
   display: block !important;
-  padding: clamp(5.5rem, 10vw, 9rem) clamp(1.25rem, 5vw, 5rem) clamp(5rem, 9vw, 8rem) !important;
+  padding: clamp(5rem, 8vw, 7rem) clamp(1.25rem, 5vw, 5rem) clamp(4rem, 7vw, 6rem) !important;
   background: var(--bs-paper) !important;
 }
 
@@ -416,7 +415,7 @@ button, a, .card, [role="tab"] {
 .bhoomi-landing .bs-hero-content {
   width: 100% !important;
   max-width: 1180px !important;
-  min-height: 610px;
+  min-height: auto;
   padding: 3rem 0 !important;
   margin: 0 auto !important;
   text-align: left !important;
@@ -444,20 +443,7 @@ button, a, .card, [role="tab"] {
 }
 
 .bhoomi-landing .bs-hero-content::after {
-  content: "LIVE CADASTRAL GIS / 01";
-  position: absolute;
-  z-index: 1;
-  right: clamp(1rem, 4vw, 4rem);
-  bottom: 6%;
-  padding: 0.55rem 0.75rem;
-  color: #171716;
-  background: rgba(255, 253, 248, 0.95);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--bs-rule);
-  border-radius: 6px;
-  font: 700 0.62rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-  letter-spacing: 0.14em;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: none;
 }
 
 .bhoomi-landing .bs-hero-content > * {
@@ -473,16 +459,7 @@ button, a, .card, [role="tab"] {
   background: transparent !important;
 }
 
-.bhoomi-landing .bs-hero-content > div:first-child span:last-child {
-  color: var(--bs-orange) !important;
-  font-size: 0.66rem !important;
-  letter-spacing: 0.16em !important;
-}
 
-.bhoomi-landing .bs-hero-content > div:first-child span:first-child {
-  background: var(--bs-orange) !important;
-  box-shadow: none !important;
-}
 
 .bhoomi-landing .bs-hero h1 {
   max-width: 820px;
@@ -521,40 +498,52 @@ button, a, .card, [role="tab"] {
   color: var(--bs-ink) !important;
 }
 
-.bhoomi-landing .bs-hero-content > div:nth-last-child(2) {
+.bhoomi-landing .bs-hero-actions {
   justify-content: flex-start !important;
+  gap: 1rem !important;
 }
 
-.bhoomi-landing .bs-hero-content > div:nth-last-child(2) a {
+.bhoomi-landing .bs-hero-actions a {
   min-height: 48px;
-  padding: 0.82rem 1.25rem !important;
-  border: 1px solid var(--bs-ink) !important;
+  padding: 0.85rem 1.75rem !important;
   border-radius: 999px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+}
+
+.bhoomi-landing .bs-hero-btn-primary,
+.bhoomi-landing .bs-hero-actions a:first-child {
   background: var(--bs-ink) !important;
   color: var(--bs-paper-bright) !important;
-  box-shadow: none !important;
+  border: 1px solid var(--bs-ink) !important;
+  box-shadow: 0 2px 8px rgba(23, 23, 22, 0.12) !important;
 }
 
-.bhoomi-landing .bs-hero-content > div:nth-last-child(2) a[href="/citizen"] {
-  background: transparent !important;
+.bhoomi-landing .bs-hero-btn-primary:hover,
+.bhoomi-landing .bs-hero-actions a:first-child:hover {
+  background: #2d2d2c !important;
+  box-shadow: 0 4px 14px rgba(23, 23, 22, 0.18) !important;
+  transform: translateY(-1px);
+}
+
+.bhoomi-landing .bs-hero-btn-secondary,
+.bhoomi-landing .bs-hero-actions a[href="/citizen"] {
+  background: #fffdf8 !important;
   color: var(--bs-ink) !important;
+  border: 1px solid var(--bs-ink) !important;
+  box-shadow: 0 1px 3px rgba(23, 23, 22, 0.05) !important;
 }
 
-.bhoomi-landing .bs-hero-content > div:last-child {
-  justify-content: flex-start !important;
-  margin-top: 2.2rem !important;
-}
-
-.bhoomi-landing .bs-hero-content > div:last-child > div {
-  padding: 0.45rem 0.7rem !important;
-  border: 1px solid var(--bs-rule) !important;
-  border-radius: 999px !important;
-  background: transparent !important;
-  backdrop-filter: none !important;
-}
-
-.bhoomi-landing .bs-hero-content > div:last-child > div span:last-child {
-  color: var(--bs-muted) !important;
+.bhoomi-landing .bs-hero-btn-secondary:hover,
+.bhoomi-landing .bs-hero-actions a[href="/citizen"]:hover {
+  background: #eae6dc !important;
+  border-color: var(--bs-ink) !important;
+  transform: translateY(-1px);
 }
 
 .bhoomi-landing .bs-about,
@@ -692,7 +681,7 @@ button, a, .card, [role="tab"] {
 }
 
 .bhoomi-landing .bs-cta {
-  padding-bottom: 6rem !important;
+  padding-bottom: 3.5rem !important;
 }
 
 .bhoomi-landing .bs-cta h2 {
@@ -737,13 +726,13 @@ button, a, .card, [role="tab"] {
     font-size: clamp(3rem, 15vw, 5.5rem) !important;
   }
 
-  .bhoomi-landing .bs-hero-content > div:nth-last-child(2) {
-    align-items: stretch;
-    flex-direction: column;
+  .bhoomi-landing .bs-hero-actions {
+    align-items: stretch !important;
+    flex-direction: column !important;
   }
 
-  .bhoomi-landing .bs-hero-content > div:nth-last-child(2) a {
-    justify-content: center;
+  .bhoomi-landing .bs-hero-actions a {
+    justify-content: center !important;
   }
 }
 

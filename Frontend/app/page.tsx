@@ -17,6 +17,28 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import type { LucideIcon } from "lucide-react";
+import {
+  Activity,
+  AlertCircle,
+  BarChart3,
+  Building2,
+  ClipboardList,
+  Cpu,
+  FolderArchive,
+  GitBranch,
+  IndianRupee,
+  Landmark,
+  Lock,
+  Map,
+  MapPin,
+  Radio,
+  Satellite,
+  Scale,
+  ShieldCheck,
+  Smartphone,
+  Users,
+} from "lucide-react";
 
 // ── Animated Counter Hook ──
 function useCounter(target: number, inView: boolean, duration = 1800) {
@@ -169,7 +191,7 @@ interface FeatureCard {
   desc: string;
   descHi: string;
   href: string;
-  icon: string;
+  icon: LucideIcon;
   color: string;
   badge: string;
   isPublic?: boolean;
@@ -183,7 +205,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "All-India infrastructure highway and rail projects tracking, inter-state progress and time-limit checks.",
     descHi: "देश भर की राजमार्ग व रेल परियोजनाओं की प्रगति, अंतरराज्यीय समन्वय और समय सीमा की निगरानी।",
     href: "/dashboard/national",
-    icon: "⚡",
+    icon: BarChart3,
     color: "#F59E0B",
     badge: "National",
   },
@@ -194,7 +216,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Satellite maps, 14-digit Bhu-Aadhaar (ULPIN) parcel lines, and road width boundary checks.",
     descHi: "इसरो उपग्रह नक्शा, 14-अंकीय भू-आधार (यूलपिन) खेत की सीमाएं और सड़क का दायरा।",
     href: "/gis",
-    icon: "🗺️",
+    icon: Map,
     color: "#3B82F6",
     badge: "Land Map",
   },
@@ -205,7 +227,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Complete step-by-step progress from survey notice, farmer hearings to final bank payout.",
     descHi: "सर्वे नोटिस, किसान सुनवाई, मुआवजा फैसले से लेकर सीधे बैंक खाते में भुगतान तक पूरे 12 चरण।",
     href: "/cases",
-    icon: "📋",
+    icon: ClipboardList,
     color: "#8B5CF6",
     badge: "12 Steps",
   },
@@ -216,7 +238,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Expressways, railway corridors, metro lines, and energy pipelines across all states.",
     descHi: "सभी राज्यों में एक्सप्रेसवे, रेल कॉरिडोर, मेट्रो और पाइपलाइन परियोजनाएं।",
     href: "/projects",
-    icon: "🏗️",
+    icon: Building2,
     color: "#10B981",
     badge: "Projects",
   },
@@ -227,7 +249,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Automatic compensation calculation with 100% extra government bonus and direct transfer to farmer accounts.",
     descHi: "100% अतिरिक्त सरकारी बोनस (दोगुना पैसा) के साथ मुआवजा गणना और सीधे बैंक खाते में भुगतान।",
     href: "/compensation",
-    icon: "💰",
+    icon: IndianRupee,
     color: "#F59E0B",
     badge: "Direct Bank",
   },
@@ -238,7 +260,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Compare alternate routes to minimize displacement of farmer families and reduce costs.",
     descHi: "किसान परिवारों और उपजाऊ खेतों को बचाने के लिए विभिन्न सड़क रास्तों की आपस में तुलना।",
     href: "/simulation",
-    icon: "🔮",
+    icon: GitBranch,
     color: "#EC4899",
     badge: "Compare",
   },
@@ -249,7 +271,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Surveyors measure land plots, record boundary pillars, and take verified on-site field photos.",
     descHi: "अमीन व पटवारी खेत की नाप-जोख करते हैं, पिलर दर्ज करते हैं और मौके की प्रमाणित फोटो लेते हैं।",
     href: "/field",
-    icon: "📱",
+    icon: Smartphone,
     color: "#06B6D4",
     badge: "Field App",
   },
@@ -260,7 +282,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Secure cryptographic ledger ensuring no officer or person can tamper with records or payout amounts.",
     descHi: "सुरक्षित डिजिटल खाता जिससे कोई भी अधिकारी या व्यक्ति रिकॉर्ड या मुआवजे के पैसे में हेराफेरी न कर सके।",
     href: "/audit",
-    icon: "🔐",
+    icon: ShieldCheck,
     color: "#EF4444",
     badge: "Secure",
   },
@@ -271,7 +293,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Official repository of signed gazette notices, compensation calculation receipts, and order copies.",
     descHi: "हस्ताक्षरित सरकारी गजट, अधिसूचनाएं, मुआवजा गणना रसीद और आदेश प्रतियों का सुरक्षित संग्रह।",
     href: "/documents",
-    icon: "🗂️",
+    icon: FolderArchive,
     color: "#6366F1",
     badge: "Papers",
   },
@@ -282,7 +304,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     desc: "Direct tracking for farmers: plot status, bank transfer updates, gazette copies, and free objections.",
     descHi: "किसानों के लिए सीधी सुविधा: खेत की स्थिति, बैंक में आने वाला पैसा, सरकारी कागजात और निःशुल्क आपत्ति।",
     href: "/citizen",
-    icon: "👥",
+    icon: Users,
     color: "#14B8A6",
     badge: "Farmer",
     isPublic: true,
@@ -308,7 +330,7 @@ const WORKFLOW_PIPELINE = [
 // ── Platform Features ──
 const PLATFORM_FEATURES = [
   {
-    icon: "📊",
+    icon: Activity,
     title: "Live Tracking & Timelines",
     titleHi: "लाइव ट्रैकिंग व समय सीमा",
     color: "#F59E0B",
@@ -316,7 +338,7 @@ const PLATFORM_FEATURES = [
     descHi: "सभी परियोजनाओं में काम की प्रगति, देरी और अधिकारियों की कार्रवाई की लाइव स्थिति।",
   },
   {
-    icon: "🛰️",
+    icon: Satellite,
     title: "Satellite Land Mapping",
     titleHi: "उपग्रह से खेत का नक्शा",
     color: "#3B82F6",
@@ -324,7 +346,7 @@ const PLATFORM_FEATURES = [
     descHi: "14-अंकीय भू-आधार से जुड़ा सैटेलाइट नक्शा जो खेत की सही सीमाएं दिखाता है।",
   },
   {
-    icon: "⚖️",
+    icon: Scale,
     title: "100% Farmer Protection Rules",
     titleHi: "कानूनी सुरक्षा व अधिकार",
     color: "#8B5CF6",
@@ -332,7 +354,7 @@ const PLATFORM_FEATURES = [
     descHi: "भूमि कानून 2013 का कड़ाई से पालन: 100% अतिरिक्त बोनस (दोगुना पैसा) और निष्पक्ष सुनवाई की गारंटी।",
   },
   {
-    icon: "🔗",
+    icon: Lock,
     title: "Tamper-Proof Records",
     titleHi: "छेड़छाड़-मुक्त रिकॉर्ड",
     color: "#EF4444",
@@ -340,7 +362,7 @@ const PLATFORM_FEATURES = [
     descHi: "डिजिटल सुरक्षा जिससे खेत की नाप या मुआवजे के पैसे में कोई भी हेराफेरी न कर सके।",
   },
   {
-    icon: "📡",
+    icon: Radio,
     title: "Mobile App for Field Surveys",
     titleHi: "खेत पर नाप-जोख मोबाइल ऐप",
     color: "#06B6D4",
@@ -348,7 +370,7 @@ const PLATFORM_FEATURES = [
     descHi: "अमीन व पटवारी बिना इंटरनेट के भी खेत पर जीपीएस और कैमरा से सही नाप-जोख दर्ज करते हैं।",
   },
   {
-    icon: "🤖",
+    icon: Cpu,
     title: "Smart Delay Alert System",
     titleHi: "स्मार्ट विलंब चेतावनी प्रणाली",
     color: "#EC4899",
@@ -473,7 +495,7 @@ export default function HomePage() {
                 fontSize: "14px",
               }}
             >
-              🏛️
+              <Landmark className="w-3.5 h-3.5 text-white" />
             </div>
             <span
               style={{
@@ -659,46 +681,7 @@ export default function HomePage() {
             margin: "0 auto",
           }}
         >
-          {/* Status Pill */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "5px 14px",
-              borderRadius: "9999px",
-              border: "1px solid rgba(245,158,11,0.3)",
-              background: "rgba(245,158,11,0.06)",
-              marginBottom: "2rem",
-            }}
-          >
-            <span
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                background: "#F59E0B",
-                boxShadow: "0 0 8px #F59E0B",
-                animation: "lp-pulse 2s ease-in-out infinite",
-              }}
-            />
-            <span
-              style={{
-                fontFamily: lang === "hi" ? "var(--font-hindi)" : "monospace",
-                fontSize: "0.68rem",
-                color: "#F59E0B",
-                textTransform: "uppercase",
-                letterSpacing: "0.15em",
-              }}
-            >
-              {lang === "hi"
-                ? "भारत सरकार • SIH 2026 • SIH26016"
-                : "GOVERNMENT OF INDIA • SIH 2026 • SIH26016"}
-            </span>
-          </motion.div>
+
 
           {/* Main Title */}
           <motion.h1
@@ -745,7 +728,7 @@ export default function HomePage() {
               color: "rgba(199,196,215,0.82)",
               lineHeight: 1.7,
               maxWidth: 650,
-              margin: "0 auto 2.5rem",
+              margin: "0 auto 2rem",
             }}
           >
             {lang === "hi" ? (
@@ -770,91 +753,61 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.72 }}
+            className="bs-hero-actions"
             style={{
               display: "flex",
               gap: "1rem",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               flexWrap: "wrap",
             }}
           >
             <Link
               href={loginRoute}
+              className="bs-hero-btn-primary"
               style={{
-                padding: "1rem 2.5rem",
-                background: "linear-gradient(135deg, #F59E0B, #D97706)",
-                color: "#000",
+                minHeight: 48,
+                padding: "0.85rem 1.75rem",
+                background: "#171716",
+                color: "#fffdf8",
                 borderRadius: "9999px",
-                fontSize: "1rem",
+                border: "1px solid #171716",
+                fontSize: "0.95rem",
                 fontWeight: 700,
                 textDecoration: "none",
-                boxShadow: "0 0 32px rgba(245,158,11,0.5)",
+                boxShadow: "0 2px 8px rgba(23, 23, 22, 0.12)",
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.5rem",
-                transition: "all 0.25s ease",
+                transition: "all 0.2s ease",
               }}
             >
-              🚀 {lang === "hi" ? "अधिकारी डैशबोर्ड खोलें" : "Open Officer Dashboard"}
+              {lang === "hi" ? "अधिकारी डैशबोर्ड खोलें" : "Open Officer Dashboard"}
             </Link>
 
             <Link
               href="/citizen"
+              className="bs-hero-btn-secondary"
               style={{
-                padding: "1rem 2rem",
-                background: "rgba(255,255,255,0.04)",
-                color: "rgba(199,196,215,0.88)",
+                minHeight: 48,
+                padding: "0.85rem 1.75rem",
+                background: "#fffdf8",
+                color: "#171716",
                 borderRadius: "9999px",
-                border: "1px solid rgba(255,255,255,0.12)",
-                fontSize: "1rem",
-                fontWeight: 600,
+                border: "1px solid #171716",
+                fontSize: "0.95rem",
+                fontWeight: 700,
                 textDecoration: "none",
+                boxShadow: "0 1px 3px rgba(23, 23, 22, 0.05)",
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.5rem",
-                transition: "all 0.25s ease",
-                backdropFilter: "blur(10px)",
+                transition: "all 0.2s ease",
               }}
             >
-              👥 {lang === "hi" ? "नागरिक पोर्टल" : "Citizen Portal"}
+              {lang === "hi" ? "नागरिक पोर्टल" : "Citizen Portal"}
             </Link>
-          </motion.div>
-
-          {/* Quick Stat Chips */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
-            style={{
-              display: "flex",
-              gap: "0.75rem",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              marginTop: "3rem",
-            }}
-          >
-            {[
-              { label: lang === "hi" ? "48 गलियारे" : "48 Corridors", icon: "🛤️" },
-              { label: lang === "hi" ? "14 राज्य" : "14 States", icon: "🏛️" },
-              { label: lang === "hi" ? "42,890 ULPIN" : "42,890 ULPINs", icon: "📍" },
-              { label: lang === "hi" ? "12 वैधानिक चरण" : "12 Statutory Stages", icon: "⚖️" },
-            ].map(({ label, icon }) => (
-              <div
-                key={label}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  padding: "5px 13px",
-                  borderRadius: "9999px",
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  backdropFilter: "blur(10px)",
-                }}
-              >
-                <span style={{ fontSize: "0.82rem" }}>{icon}</span>
-                <span style={{ fontSize: "0.73rem", color: "rgba(199,196,215,0.65)" }}>{label}</span>
-              </div>
-            ))}
           </motion.div>
         </div>
 
@@ -895,7 +848,7 @@ export default function HomePage() {
       </section>
 
       {/* ══════════ ABOUT / MISSION ══════════ */}
-      <section id="about" className="bs-about" style={{ padding: "7rem 1.5rem", position: "relative" }}>
+      <section id="about" className="bs-about" style={{ padding: "4.5rem 1.5rem", position: "relative" }}>
         <div
           style={{
             position: "absolute",
@@ -914,7 +867,7 @@ export default function HomePage() {
             margin: "0 auto",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "4rem",
+            gap: "2.5rem",
             alignItems: "center",
           }}
         >
@@ -924,30 +877,7 @@ export default function HomePage() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7 }}
           >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "4px 12px",
-                borderRadius: "9999px",
-                border: "1px solid rgba(245,158,11,0.3)",
-                background: "rgba(245,158,11,0.06)",
-                marginBottom: "1.25rem",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: lang === "hi" ? "var(--font-hindi)" : "monospace",
-                  fontSize: "0.68rem",
-                  color: "#F59E0B",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                }}
-              >
-                {lang === "hi" ? "मंच के बारे में" : "About the Platform"}
-              </span>
-            </div>
+
             <h2
               style={{
                 fontSize: "clamp(1.8rem, 4vw, 2.75rem)",
@@ -1026,15 +956,15 @@ export default function HomePage() {
             style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.9rem" }}
           >
             {[
-              { icon: "🗺️", label: lang === "hi" ? "GIS भुवन एकीकरण" : "Bhuvan GIS Integration", color: "#3B82F6" },
-              { icon: "⚖️", label: lang === "hi" ? "12-चरणीय कार्यप्रवाह" : "12-Stage RFCTLARR", color: "#8B5CF6" },
-              { icon: "📍", label: lang === "hi" ? "14-अंकीय ULPIN" : "14-Digit ULPIN", color: "#10B981" },
-              { icon: "💰", label: lang === "hi" ? "PFMS DBT संवितरण" : "PFMS DBT Disbursement", color: "#F59E0B" },
-              { icon: "🔐", label: lang === "hi" ? "SHA-256 ऑडिट" : "SHA-256 Audit Trail", color: "#EF4444" },
-              { icon: "📡", label: lang === "hi" ? "ऑफ़लाइन PWA" : "Offline-First PWA", color: "#06B6D4" },
-              { icon: "🤖", label: lang === "hi" ? "AI विलंब भविष्यवाणी" : "AI Delay Predictor", color: "#EC4899" },
-              { icon: "📊", label: lang === "hi" ? "वास्तविक समय डैशबोर्ड" : "Real-time Dashboards", color: "#F59E0B" },
-            ].map(({ icon, label, color }, i) => (
+              { icon: Map, label: lang === "hi" ? "GIS भुवन एकीकरण" : "Bhuvan GIS Integration", color: "#3B82F6" },
+              { icon: Scale, label: lang === "hi" ? "12-चरणीय कार्यप्रवाह" : "12-Stage RFCTLARR", color: "#8B5CF6" },
+              { icon: MapPin, label: lang === "hi" ? "14-अंकीय ULPIN" : "14-Digit ULPIN", color: "#10B981" },
+              { icon: IndianRupee, label: lang === "hi" ? "PFMS DBT संवितरण" : "PFMS DBT Disbursement", color: "#F59E0B" },
+              { icon: ShieldCheck, label: lang === "hi" ? "SHA-256 ऑडिट" : "SHA-256 Audit Trail", color: "#EF4444" },
+              { icon: Smartphone, label: lang === "hi" ? "ऑफ़लाइन PWA" : "Offline-First PWA", color: "#06B6D4" },
+              { icon: Cpu, label: lang === "hi" ? "AI विलंब भविष्यवाणी" : "AI Delay Predictor", color: "#EC4899" },
+              { icon: Activity, label: lang === "hi" ? "वास्तविक समय डैशबोर्ड" : "Real-time Dashboards", color: "#F59E0B" },
+            ].map(({ icon: Icon, label, color }, i) => (
               <motion.div
                 className="bs-about-tile"
                 key={label}
@@ -1052,7 +982,9 @@ export default function HomePage() {
                   borderRadius: "0.7rem",
                 }}
               >
-                <span style={{ fontSize: "1.05rem", flexShrink: 0 }}>{icon}</span>
+                <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon className="w-4 h-4" style={{ color }} />
+                </span>
                 <span style={{ fontSize: "0.78rem", color: "rgba(199,196,215,0.82)", lineHeight: 1.3 }}>
                   {label}
                 </span>
@@ -1067,7 +999,7 @@ export default function HomePage() {
         className="bs-modules"
         id="modules"
         style={{
-          padding: "7rem 1.5rem",
+          padding: "4.5rem 1.5rem",
           background: "linear-gradient(180deg, rgba(5,5,8,0) 0%, rgba(13,14,18,0.7) 50%, rgba(5,5,8,0) 100%)",
         }}
       >
@@ -1077,32 +1009,9 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ textAlign: "center", marginBottom: "3.5rem" }}
+            style={{ textAlign: "center", marginBottom: "2.5rem" }}
           >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "4px 12px",
-                borderRadius: "9999px",
-                border: "1px solid rgba(59,130,246,0.3)",
-                background: "rgba(59,130,246,0.05)",
-                marginBottom: "1rem",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: lang === "hi" ? "var(--font-hindi)" : "monospace",
-                  fontSize: "0.68rem",
-                  color: "#3B82F6",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                }}
-              >
-                {lang === "hi" ? "10 मॉड्यूल • सभी एकीकृत" : "10 Modules · Fully Integrated"}
-              </span>
-            </div>
+
             <h2
               style={{
                 fontSize: "clamp(1.8rem, 4vw, 2.75rem)",
@@ -1198,10 +1107,9 @@ export default function HomePage() {
                           alignItems: "center",
                           justifyContent: "center",
                           marginBottom: "1.25rem",
-                          fontSize: "1.4rem",
                         }}
                       >
-                        {feat.icon}
+                        <feat.icon className="w-5 h-5" style={{ color: c }} />
                       </div>
                       {/* Title & Badge */}
                       <div
@@ -1273,7 +1181,7 @@ export default function HomePage() {
       </section>
 
       {/* ══════════ FEATURES ══════════ */}
-      <section id="features" className="bs-features" style={{ padding: "7rem 1.5rem", position: "relative" }}>
+      <section id="features" className="bs-features" style={{ padding: "4.5rem 1.5rem", position: "relative" }}>
         <div
           style={{
             position: "absolute",
@@ -1291,32 +1199,9 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ textAlign: "center", marginBottom: "3.5rem" }}
+            style={{ textAlign: "center", marginBottom: "2.5rem" }}
           >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "4px 12px",
-                borderRadius: "9999px",
-                border: "1px solid rgba(139,92,246,0.3)",
-                background: "rgba(139,92,246,0.05)",
-                marginBottom: "1rem",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: lang === "hi" ? "var(--font-hindi)" : "monospace",
-                  fontSize: "0.68rem",
-                  color: "#8B5CF6",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                }}
-              >
-                {lang === "hi" ? "मुख्य विशेषताएं" : "Core Capabilities"}
-              </span>
-            </div>
+
             <h2
               style={{
                 fontSize: "clamp(1.8rem, 4vw, 2.75rem)",
@@ -1384,8 +1269,8 @@ export default function HomePage() {
                 />
                 <div
                   style={{
-                    width: 46,
-                    height: 46,
+                    width: 44,
+                    height: 44,
                     borderRadius: "0.7rem",
                     background: `${f.color}14`,
                     border: `1px solid ${f.color}28`,
@@ -1393,10 +1278,9 @@ export default function HomePage() {
                     alignItems: "center",
                     justifyContent: "center",
                     marginBottom: "1.2rem",
-                    fontSize: "1.3rem",
                   }}
                 >
-                  {f.icon}
+                  <f.icon className="w-5 h-5" style={{ color: f.color }} />
                 </div>
                 <h3
                   style={{
@@ -1429,7 +1313,7 @@ export default function HomePage() {
         className="bs-workflow"
         id="workflow"
         style={{
-          padding: "7rem 1.5rem",
+          padding: "4.5rem 1.5rem",
           background: "linear-gradient(180deg, rgba(5,5,8,0) 0%, rgba(13,14,18,0.7) 50%, rgba(5,5,8,0) 100%)",
         }}
       >
@@ -1439,32 +1323,9 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ textAlign: "center", marginBottom: "3.5rem" }}
+            style={{ textAlign: "center", marginBottom: "2.5rem" }}
           >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "4px 12px",
-                borderRadius: "9999px",
-                border: "1px solid rgba(245,158,11,0.3)",
-                background: "rgba(245,158,11,0.05)",
-                marginBottom: "1rem",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: lang === "hi" ? "var(--font-hindi)" : "monospace",
-                  fontSize: "0.68rem",
-                  color: "#F59E0B",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                }}
-              >
-                {lang === "hi" ? "वैधानिक कार्यप्रवाह" : "Statutory Lifecycle"}
-              </span>
-            </div>
+
             <h2
               style={{
                 fontSize: "clamp(1.8rem, 4vw, 2.75rem)",
@@ -1548,7 +1409,7 @@ export default function HomePage() {
       </section>
 
       {/* ══════════ STATS ══════════ */}
-      <section className="bs-stats" style={{ padding: "6rem 1.5rem", position: "relative", overflow: "hidden" }}>
+      <section className="bs-stats" style={{ padding: "4rem 1.5rem", position: "relative", overflow: "hidden" }}>
         <div
           style={{
             position: "absolute",
@@ -1589,7 +1450,7 @@ export default function HomePage() {
               color: "#e3e2e8",
               letterSpacing: "-0.02em",
               textAlign: "center",
-              marginBottom: "3.5rem",
+              marginBottom: "2.5rem",
             }}
           >
             {lang === "hi" ? "राष्ट्रीय भूमि अधिग्रहण सांख्यिकी" : "National Governance Tally"}
@@ -1622,7 +1483,7 @@ export default function HomePage() {
       </section>
 
       {/* ══════════ CTA ══════════ */}
-      <section className="bs-cta" style={{ padding: "7rem 1.5rem 5rem", position: "relative", overflow: "hidden" }}>
+      <section className="bs-cta" style={{ padding: "4.5rem 1.5rem 3.5rem", position: "relative", overflow: "hidden" }}>
         <div
           style={{
             position: "absolute",
@@ -1644,40 +1505,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "4px 14px",
-                borderRadius: "9999px",
-                border: "1px solid rgba(19,136,8,0.3)",
-                background: "rgba(19,136,8,0.05)",
-                marginBottom: "1.5rem",
-              }}
-            >
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: "#138808",
-                  boxShadow: "0 0 6px #138808",
-                  animation: "lp-pulse 2s ease-in-out infinite",
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: lang === "hi" ? "var(--font-hindi)" : "monospace",
-                  fontSize: "0.68rem",
-                  color: "#138808",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                }}
-              >
-                {lang === "hi" ? "तैयार हैं?" : "Ready to Transform?"}
-              </span>
-            </div>
+
             <h2
               style={{
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
@@ -1724,7 +1552,7 @@ export default function HomePage() {
                 color: "rgba(199,196,215,0.68)",
                 lineHeight: 1.7,
                 maxWidth: 500,
-                margin: "0 auto 2.5rem",
+                margin: "0 auto 2rem",
               }}
             >
               {lang === "hi"
@@ -1762,7 +1590,7 @@ export default function HomePage() {
                   transition: "transform 0.25s ease",
                 }}
               >
-                🚀 {lang === "hi" ? "डैशबोर्ड खोलें" : "Launch Dashboard"}
+                {lang === "hi" ? "डैशबोर्ड खोलें" : "Launch Dashboard"}
               </button>
             </motion.div>
           </motion.div>
@@ -1794,7 +1622,8 @@ export default function HomePage() {
                 marginBottom: "0.25rem",
               }}
             >
-              🔐 {lang === "hi" ? "सुरक्षित अधिकारी कार्यक्षेत्र" : "Officer Authentication Required"}
+              <Lock className="w-3.5 h-3.5" />
+              <span>{lang === "hi" ? "सुरक्षित अधिकारी कार्यक्षेत्र" : "Officer Authentication Required"}</span>
             </div>
             <DialogTitle style={{ color: "#e3e2e8", fontSize: "1.25rem", fontWeight: 800 }}>
               {lang === "hi" ? "कृपया लॉगिन करें" : "Sign In to Access Module"}
@@ -1820,9 +1649,13 @@ export default function HomePage() {
                   border: "1px solid rgba(239,68,68,0.25)",
                   color: "#EF4444",
                   fontSize: "0.78rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
                 }}
               >
-                ⚠️ {loginError}
+                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                <span>{loginError}</span>
               </div>
             )}
 
@@ -1912,10 +1745,12 @@ export default function HomePage() {
                 gap: "0.5rem",
               }}
             >
-              🔐{" "}
-              {loginLoading
-                ? lang === "hi" ? "सत्यापन हो रहा है..." : "Authenticating..."
-                : lang === "hi" ? "प्रमाणित करें एवं आगे बढ़ें" : "Authenticate & Proceed"}
+              <Lock className="w-4 h-4" />
+              <span>
+                {loginLoading
+                  ? lang === "hi" ? "सत्यापन हो रहा है..." : "Authenticating..."
+                  : lang === "hi" ? "प्रमाणित करें एवं आगे बढ़ें" : "Authenticate & Proceed"}
+              </span>
             </button>
 
             <div style={{ textAlign: "center", paddingTop: "0.5rem", borderTop: "1px solid rgba(255,255,255,0.06)", fontSize: "0.75rem", color: "rgba(199,196,215,0.4)" }}>
