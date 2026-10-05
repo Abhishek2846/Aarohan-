@@ -253,8 +253,8 @@ To guarantee strict compliance with the **Digital Personal Data Protection (DPDP
 
 The platform defines **7 distinct user personas**, each equipped with tailored dashboards and granular statutory capabilities:
 
-| Role Code | User Persona | Primary Responsibilities | Pre-Seeded Demo Login |
-| :--- | :--- | :--- | :--- |
+| Role Code | User Persona | Primary Responsibilities | 
+| :--- | :--- | :--- | 
 | `CENTRAL_MINISTRY` | Central Ministry / Cabinet Sec | National corridor monitoring, inter-state escalations, policy benchmarks. | 
 | `PIA` | Project Implementing Agency | Corridor alignment drafting, buffer creation, project progress tracking. | 
 | `STATE_AUTHORITY` | State Revenue Authority | Administrative sanctions, state approvals, Section 11/19 gazette publishing. | 
