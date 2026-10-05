@@ -255,15 +255,13 @@ The platform defines **7 distinct user personas**, each equipped with tailored d
 
 | Role Code | User Persona | Primary Responsibilities | Pre-Seeded Demo Login |
 | :--- | :--- | :--- | :--- |
-| `CENTRAL_MINISTRY` | Central Ministry / Cabinet Sec | National corridor monitoring, inter-state escalations, policy benchmarks. | `ananya.sharma@nic.in` |
-| `PIA` | Project Implementing Agency | Corridor alignment drafting, buffer creation, project progress tracking. | `v.malhotra@nhai.gov.in` |
-| `STATE_AUTHORITY` | State Revenue Authority | Administrative sanctions, state approvals, Section 11/19 gazette publishing. | `r.rao@karnataka.gov.in` |
-| `DISTRICT_OFFICER` | District Collector / CALA | Section 15 objection hearings, award calculations, PFMS payment approvals. | `dc.bengaluru@karnataka.gov.in` |
-| `FIELD_OFFICER` | Revenue Inspector / Amin | GPS field survey, boundary demarcation, geotagged camera evidence capture. | `s.patil@karnataka.gov.in` |
-| `AUDITOR` | CAG / Vigilance Auditor | Merkle audit ledger verification, anomaly investigations, compliance scoring. | `kn.raghavan@cag.gov.in` |
-| `CITIZEN` | Affected Landowner | Land parcel lookup, claim verification, objection filing, DBT payment tracking. | `citizen@public.aarohan.gov.in` |
-
-> 🔑 **Demo Password for all seeded accounts:** `aarohan2026`
+| `CENTRAL_MINISTRY` | Central Ministry / Cabinet Sec | National corridor monitoring, inter-state escalations, policy benchmarks. | 
+| `PIA` | Project Implementing Agency | Corridor alignment drafting, buffer creation, project progress tracking. | 
+| `STATE_AUTHORITY` | State Revenue Authority | Administrative sanctions, state approvals, Section 11/19 gazette publishing. | 
+| `DISTRICT_OFFICER` | District Collector / CALA | Section 15 objection hearings, award calculations, PFMS payment approvals. | 
+| `FIELD_OFFICER` | Revenue Inspector / Amin | GPS field survey, boundary demarcation, geotagged camera evidence capture. | 
+| `AUDITOR` | CAG / Vigilance Auditor | Merkle audit ledger verification, anomaly investigations, compliance scoring. | 
+| `CITIZEN` | Affected Landowner | Land parcel lookup, claim verification, objection filing, DBT payment tracking. | 
 
 ---
 
